@@ -1,0 +1,9 @@
+# Folders
+.vscode/
+bin/
+obj/
+
+# Files
+.env.example
+.gitignore
+README.md
