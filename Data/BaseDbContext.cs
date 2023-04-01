@@ -8,6 +8,8 @@ namespace Data
         {
         }
 
+        public DbSet<Departamento> Departamentos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
