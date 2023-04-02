@@ -5,6 +5,9 @@
 
 <h1>@ViewData["Titulo"]</h1>
 
+<p>
+    <a asp-action="Create">Cadastrar</a>
+</p>
 @foreach (var item in Model)
 {
     <div>@item.Nome</div>
