@@ -4,11 +4,33 @@
 }
 
 <h1>@ViewData["Titulo"]</h1>
-
 <p>
-    <a asp-action="Cadastrar">Cadastrar</a>
+    <a class="btn btn-primary" asp-action="Cadastrar">Cadastrar</a>
 </p>
-@foreach (var item in Model)
-{
-    <div>@item.Nome</div>
-}
+<table style="max-width: 400px;" class="table table-hover">
+    <thead>
+        <tr>
+            <th class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th class="col-sm-6">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="col-sm-9">
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td class="col-sm-1">
+                    <a asp-action="Editar" asp-route-id="@item.Id"><ion-icon style="color: blue;" name="pencil-outline"></ion-icon></a>
+                    <a asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon style="color: green;" name="document-text-outline"></ion-icon></a>
+                    <a asp-action="Excluir" asp-route-id="@item.Id"><ion-icon style="color: red;" name="trash-outline"></ion-icon></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>

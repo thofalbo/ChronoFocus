@@ -5,6 +5,7 @@ global using Core.Settings;
 global using Data;
 
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
 
 global using System.Diagnostics;
 global using System.Globalization;

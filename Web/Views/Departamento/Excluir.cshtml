@@ -1,0 +1,21 @@
+@model Core.Models.Departamento
+@{
+    ViewData["Title"] = "Excluir";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Tem certeza que quer excluir este departamento?</h4>
+<hr />
+<dl class="row">
+  <dt class="col-sm-1">
+    @Html.DisplayNameFor(Model => Model.Nome)
+  </dt>
+  <dd class="col-sm-11">
+    @Html.DisplayFor(Model => Model.Nome)
+  </dd>
+</dl>
+<form asp-action="Excluir">
+  <input type="hidden" asp-for="Id" />
+  <input type="submit" value="Excluir" class="btn btn-danger" />
+  <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</form>
