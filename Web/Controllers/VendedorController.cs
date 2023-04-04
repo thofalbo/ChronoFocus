@@ -1,9 +1,10 @@
 namespace Web.Controllers
 {
+    [Route("vendedor")]
     public class VendedorController : Controller
     {
-        private readonly BaseDbContext _dbContext;
-        public VendedorController(BaseDbContext dbContext)
+        private readonly ApplicationDbContext _dbContext;
+        public VendedorController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

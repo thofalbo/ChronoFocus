@@ -2,17 +2,17 @@ namespace Web.Controllers
 {
     public class DepartamentoController : Controller
     {
-        private readonly BaseDbContext _dbContext;
-        public DepartamentoController(BaseDbContext dbContext)
+        private readonly ApplicationDbContext _dbContext;
+        public DepartamentoController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public ActionResult<Departamento> Index() => View(_dbContext.Departamentos.ToList());
-        
-        public ActionResult<Departamento> Create() => View();
+        public IActionResult Index() => View(_dbContext.Departamentos.ToList());
+
+        public IActionResult Cadastrar() => View();
 
         [HttpPost]
-        public IActionResult Create(Departamento departamento)
+        public IActionResult Cadastrar(Departamento departamento)
         {
             if (ModelState.IsValid)
             {
