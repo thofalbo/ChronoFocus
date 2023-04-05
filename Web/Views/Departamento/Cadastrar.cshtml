@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Cadastrar">
+        <form id="formCadastrar" onsubmit="departamento.cadastrar()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
@@ -26,3 +26,11 @@
         </form>
     </div>
 </div>
+    <script src="~/js/Pages/departamento.js" asp-append-version="true"></script>
+<script>
+    departamento.init({
+        urls: {
+            cadastrar: '@Url.Action("CadastrarAction", "Departamento")'
+        }
+    })
+</script>

@@ -3,6 +3,7 @@ using Web.ViewModels;
 
 namespace Web.Controllers
 {
+    [Route("Departamento")]
     public class DepartamentoController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -14,12 +15,14 @@ namespace Web.Controllers
         }
         public IActionResult Index() => View(_dbContext.Departamentos.ToList());
 
+        [HttpGet("Cadastrar")]
         public IActionResult Cadastrar() => View();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Cadastrar(Departamento departamento)
+        [HttpPost("CadastrarAction")]
+        [ValidateAntiForgeryToken]  
+        public async Task<IActionResult> CadastrarAction(Departamento departamento)
         {
+            System.Console.WriteLine(departamento.Nome);
             if (ModelState.IsValid)
             {
                 await _departamentoService.CadastrarAsync(new Departamento {
