@@ -1,3 +1,5 @@
+using Core.Dto.Departamento;
+
 namespace Core.Services
 {
     public class DepartamentoService : IDepartamentoService
@@ -7,6 +9,13 @@ namespace Core.Services
         public DepartamentoService(IDepartamentoRepository departamentoRepository)
         {
             _departamentoRepository = departamentoRepository;
+        }
+        
+        public async Task CadastrarAsync(Departamento departamento)
+        {
+            await _departamentoRepository.CadastrarAsync(new DepartamentoCadastroDto{
+                Nome = departamento.Nome
+            });
         }
     }
 }
