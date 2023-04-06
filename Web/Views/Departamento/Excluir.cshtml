@@ -14,8 +14,16 @@
     @Html.DisplayFor(Model => Model.Nome)
   </dd>
 </dl>
-<form asp-action="Excluir">
+<form  id="formExcluir" onsubmit="departamento.excluir()">
   <input type="hidden" asp-for="Id" />
   <input type="submit" value="Excluir" class="btn btn-danger" />
   <a asp-action="Index" class="btn btn-secondary">Voltar</a>
 </form>
+    <script src="~/js/Pages/departamento.js" asp-append-version="true"></script>
+<script>
+    departamento.init({
+        urls: {
+            excluir: '@Url.Action("ExcluirAction", "Departamento")'
+        }
+    })
+</script>

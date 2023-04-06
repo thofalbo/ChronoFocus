@@ -1,7 +1,9 @@
 var departamento = (function () {
     var configs = {
         urls: {
-            cadastrar: ''
+            cadastrar: '',
+            excluir: '',
+            index: ''
         }
     };
 
@@ -10,15 +12,23 @@ var departamento = (function () {
     };
 
     var cadastrar = function () {
-        console.log(configs.urls.cadastrar);
         var model = $('#formCadastrar').serializeObject();
+        $.post(configs.urls.cadastrar, model).done(() => {      
+            location.href = (configs.urls.index)
+        });
+    };
+
+    var excluir = function () {
+        console.log(configs.urls.excluir);
+        var model = $('#formExcluir').serializeObject();
         console.log(model);
-        $.post(configs.urls.cadastrar, model).done(() => {            
+        $.post(configs.urls.excluir, model).done(() => {       
         })
     };
 
     return {
         init: init,
-        cadastrar: cadastrar
+        cadastrar: cadastrar,
+        excluir: excluir
     };
 })()
