@@ -1,5 +1,3 @@
-using Core.Dto.Departamento;
-
 namespace Data.Repositories
 {
     public class DepartamentoRepository : IDepartamentoRepository
@@ -17,6 +15,12 @@ namespace Data.Repositories
                 Nome = departamentoCadastroDto.Nome
             });
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task ExcluirAsync(int id)
+        {
+            await _dbContext.Database.ExecuteSqlRawAsync(
+                $@"DELETE FROM dbo.departamento WHERE id = {id};");
         }
     }
 }

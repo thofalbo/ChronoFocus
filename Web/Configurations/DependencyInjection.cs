@@ -11,6 +11,7 @@ namespace Web.Configurations
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
             services.AddScoped<IDepartamentoService, DepartamentoService>();
+            services.AddScoped<IVendedorRepository, VendedorRepository>();
         }
     }
 }

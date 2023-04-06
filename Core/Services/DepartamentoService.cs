@@ -1,21 +1,23 @@
-using Core.Dto.Departamento;
-
 namespace Core.Services
 {
     public class DepartamentoService : IDepartamentoService
     {
         private readonly IDepartamentoRepository _departamentoRepository;
+        private readonly IVendedorRepository _vendedorRepository;
 
-        public DepartamentoService(IDepartamentoRepository departamentoRepository)
+        public DepartamentoService(IDepartamentoRepository departamentoRepository, IVendedorRepository vendedorRepository)
         {
             _departamentoRepository = departamentoRepository;
+            _vendedorRepository = vendedorRepository;
         }
-        
-        public async Task CadastrarAsync(Departamento departamento)
+
+        public async Task ExcluirAsync(int id)
         {
-            await _departamentoRepository.CadastrarAsync(new DepartamentoCadastroDto{
-                Nome = departamento.Nome
-            });
+            var teste = await _vendedorRepository.BuscarVendedorDepartamento(id);
+            if (teste == null)
+            {
+                await _departamentoRepository.ExcluirAsync(id);
+            }
         }
     }
 }

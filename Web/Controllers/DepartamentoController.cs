@@ -1,3 +1,4 @@
+using Core.Dto.Departamento;
 using Core.Interfaces.Services;
 using Web.ViewModels;
 
@@ -8,10 +9,16 @@ namespace Web.Controllers
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IDepartamentoService _departamentoService;
-        public DepartamentoController(ApplicationDbContext dbContext, IDepartamentoService departamentoService)
+        private readonly IDepartamentoRepository _departamentoRepository;
+        public DepartamentoController(
+            ApplicationDbContext dbContext,
+            IDepartamentoService departamentoService,
+            IDepartamentoRepository departamentoRepository
+        )
         {
             _dbContext = dbContext;
             _departamentoService = departamentoService;
+            _departamentoRepository = departamentoRepository;
         }
 
         [HttpGet("Index")]
@@ -26,7 +33,7 @@ namespace Web.Controllers
             System.Console.WriteLine(departamento.Nome);
             if (ModelState.IsValid)
             {
-                await _departamentoService.CadastrarAsync(new Departamento {
+                await _departamentoRepository.CadastrarAsync(new DepartamentoCadastroDto {
                     Nome = departamento.Nome
                 });
                 
@@ -36,12 +43,12 @@ namespace Web.Controllers
         }
 
         [HttpGet("Detalhes")]
-        public async Task<IActionResult> Detalhes(int? id, DepartamentoViewModel departamentoViewModel)
+        public async Task<IActionResult> Detalhes(DepartamentoViewModel departamentoViewModel)
         {
-            if (id == null || _dbContext.Departamentos == null)
+            if (departamentoViewModel.Id == null || _dbContext.Departamentos == null)
                 return NotFound();
 
-            var departamento = await _dbContext.Departamentos.FirstOrDefaultAsync(x => x.Id == id);
+            var departamento = await _dbContext.Departamentos.FirstOrDefaultAsync(x => x.Id == departamentoViewModel.Id);
             if (departamento == null)
                 return NotFound();
             return View(new DepartamentoViewModel(departamento));
@@ -57,9 +64,7 @@ namespace Web.Controllers
         [HttpPost("ExcluirAction")]
         public async Task<IActionResult> ExcluirAction(int id)
         {
-            var departamento = await _dbContext.Departamentos.FindAsync(id);
-            _dbContext.Departamentos.Remove(departamento);
-            await _dbContext.SaveChangesAsync();
+            await _departamentoService.ExcluirAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
