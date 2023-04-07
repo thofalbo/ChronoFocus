@@ -1,0 +1,21 @@
+
+.visor .form-floating {}
+.visor {
+    justify-content: space-between;
+}
+
+.cronometro {
+    font-size: 3.5rem;
+}
+
+.container-visor {
+    background-color: aqua;
+}
+@media (max-width: 992px) {
+    .visor {
+        flex-direction: column;
+    }
+    .cronometro {
+        text-align: center;
+    }
+  }

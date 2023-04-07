@@ -1,4 +1,5 @@
 
+global using Core.Dto.Departamento;
 global using Core.Interfaces.Repositories;
 global using Core.Interfaces.Services;
 global using Core.Models;
@@ -15,3 +16,4 @@ global using System.Diagnostics;
 global using System.Globalization;
 
 global using Web.Configurations;
+global using Web.ViewModels;

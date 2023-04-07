@@ -1,7 +1,3 @@
-using Core.Dto.Departamento;
-using Core.Interfaces.Services;
-using Web.ViewModels;
-
 namespace Web.Controllers
 {
     [Route("Departamento")]
