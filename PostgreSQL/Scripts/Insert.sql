@@ -22,4 +22,21 @@ INSERT INTO vendedor (
 	(5, 'Rubens Batista', 'r@hotmail.com', '1964-03-16 00:00:00'),
 	(6, 'Bob Brown', 'bob@yahoo.com', '1950-12-30 00:00:00'),
 	(7, 'Oliver Queen', 'oliver.queen@gmail.com.br', '1987-07-28 00:00:00');
-	
+
+INSERT INTO usuario (
+	login,
+	email,
+	senha,
+	data_cadastro
+) VALUES
+	('Bakumito', 'baku@msn.com.br', 'Senha#12' , now());
+
+INSERT INTO tarefa (
+	id_usuario,
+	atividade,
+	tipo_atividade,
+	plataforma,
+	tempo_tarefa,
+	data_cadastro
+) VALUES
+	(1, 'Atividade1', null, null, '1987-07-28 00:00:00', now());

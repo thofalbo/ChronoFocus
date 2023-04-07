@@ -9,9 +9,13 @@ namespace Web.Configurations
             services.AddControllersWithViews();
 
             services.AddScoped<ApplicationDbContext>();
+
             services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
-            services.AddScoped<IDepartamentoService, DepartamentoService>();
+            services.AddScoped<ITarefaRepository, TarefaRepository>();
             services.AddScoped<IVendedorRepository, VendedorRepository>();
+
+            services.AddScoped<IDepartamentoService, DepartamentoService>();
+            services.AddScoped<ITarefaService, TarefaService>();
         }
     }
 }

@@ -9,5 +9,7 @@ namespace Data
 
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Vendedor> Vendedores { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Tarefa> Tarefas { get; set; }
     }
 }

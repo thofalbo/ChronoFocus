@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Editar">
+        <form id="formEditar" asp-action="Editar" onsubmit="departamento.editar()">
                 <input type="hidden" asp-for="Id">
                 <div class="form-group">
                     <label asp-for="Nome" class="form-label mt-4"></label>
@@ -25,3 +25,13 @@
         </form>
     </div>
 </div>
+
+<script src="~/js/Pages/departamento.js" asp-append-version="true"></script>
+<script>
+    departamento.init({
+        urls: {
+            editar: '@Url.Action("Editar", "departamento")',
+            index: '@Url.Action("Index", "departamento")'
+        }
+    })
+</script>

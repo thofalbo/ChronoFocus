@@ -22,5 +22,14 @@ namespace Data.Repositories
             await _dbContext.Database.ExecuteSqlRawAsync(
                 $@"DELETE FROM dbo.departamento WHERE id = {id};");
         }
+
+        public async Task EditarAsync(DepartamentoCadastroDto departamentoCadastroDto)
+        {
+            _dbContext.Departamentos.Update(new Departamento{
+                Nome = departamentoCadastroDto.Nome
+            });
+            await _dbContext.SaveChangesAsync();
+        }
+
     }
 }

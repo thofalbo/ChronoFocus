@@ -5,7 +5,10 @@ namespace Core.Services
         private readonly IDepartamentoRepository _departamentoRepository;
         private readonly IVendedorRepository _vendedorRepository;
 
-        public DepartamentoService(IDepartamentoRepository departamentoRepository, IVendedorRepository vendedorRepository)
+        public DepartamentoService(
+            IDepartamentoRepository departamentoRepository,
+            IVendedorRepository vendedorRepository
+        )
         {
             _departamentoRepository = departamentoRepository;
             _vendedorRepository = vendedorRepository;
@@ -13,8 +16,8 @@ namespace Core.Services
 
         public async Task ExcluirAsync(int id)
         {
-            var teste = await _vendedorRepository.BuscarVendedorDepartamento(id);
-            if (teste == null)
+            var filtro = await _vendedorRepository.BuscarVendedorDepartamento(id);
+            if (filtro == null)
             {
                 await _departamentoRepository.ExcluirAsync(id);
             }

@@ -1,6 +1,6 @@
 namespace Web.Controllers
 {
-    [Route("Departamento")]
+    [Route("departamento")]
     public class DepartamentoController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -17,31 +17,28 @@ namespace Web.Controllers
             _departamentoRepository = departamentoRepository;
         }
 
-        [HttpGet("Index")]
+        [HttpGet("index")]
         public IActionResult Index() => View(_dbContext.Departamentos.ToList());
 
-        [HttpGet("Cadastrar")]
+        [HttpGet("cadastrar")]
         public IActionResult Cadastrar() => View();
 
-        [HttpPost("CadastrarAction")]
-        public async Task<IActionResult> CadastrarAction(Departamento departamento)
+        [HttpPost("cadastrar")]
+        public async Task<IActionResult> Cadastrar(Departamento departamento)
         {
-            System.Console.WriteLine(departamento.Nome);
             if (ModelState.IsValid)
             {
                 await _departamentoRepository.CadastrarAsync(new DepartamentoCadastroDto {
                     Nome = departamento.Nome
                 });
-                
-                return RedirectToAction(nameof(Index));
             }
-            return View(departamento);
+            return Ok("Cadastro efetuado");
         }
 
-        [HttpGet("Detalhes")]
+        [HttpGet("detalhes")]
         public async Task<IActionResult> Detalhes(DepartamentoViewModel departamentoViewModel)
         {
-            if (departamentoViewModel.Id == null || _dbContext.Departamentos == null)
+            if (departamentoViewModel.Id == default || _dbContext.Departamentos == default)
                 return NotFound();
 
             var departamento = await _dbContext.Departamentos.FirstOrDefaultAsync(x => x.Id == departamentoViewModel.Id);
@@ -50,21 +47,21 @@ namespace Web.Controllers
             return View(new DepartamentoViewModel(departamento));
         }
 
-        [HttpGet("Excluir")]
+        [HttpGet("excluir")]
         public async Task<IActionResult> Excluir(int? id)
         {
             var obj = await _dbContext.Departamentos.FindAsync(id.Value);
             
             return View(obj);
         }
-        [HttpPost("ExcluirAction")]
-        public async Task<IActionResult> ExcluirAction(int id)
+        [HttpPost("excluir")]
+        public async Task<IActionResult> Excluir(int id)
         {
             await _departamentoService.ExcluirAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("Editar")]
+        [HttpGet("editar")]
         public async Task<IActionResult> Editar(int? id)
         {
             var obj = await _dbContext.Departamentos.FindAsync(id.Value);
@@ -76,8 +73,8 @@ namespace Web.Controllers
             return View(obj);
         }
 
-        [HttpPost("EditarAction")]
-        public async Task<IActionResult> EditarAction(Departamento departamento)
+        [HttpPost("editar")]
+        public async Task<IActionResult> Editar(Departamento departamento)
         {
             if (!ModelState.IsValid)
             {

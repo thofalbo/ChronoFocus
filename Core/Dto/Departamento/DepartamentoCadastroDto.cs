@@ -1,4 +1,4 @@
-namespace Core.Dto.Departamento
+namespace Core.Dto
 {
     public class DepartamentoCadastroDto
     {
