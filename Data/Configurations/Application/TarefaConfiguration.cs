@@ -12,6 +12,7 @@ namespace Data.Configurations.Application
             builder.Property(x => x.IdUsuario).HasColumnName("id_usuario");
             builder.Property(x => x.Atividade).HasColumnName("atividade");
             builder.Property(x => x.TipoAtividade).HasColumnName("tipo_atividade");
+            builder.Property(x => x.Plataforma).HasColumnName("plataforma");
             builder.Property(x => x.TempoTarefa).HasColumnName("tempo_tarefa");
             builder.Property(x => x.DataCadastro).HasColumnName("data_cadastro");
 

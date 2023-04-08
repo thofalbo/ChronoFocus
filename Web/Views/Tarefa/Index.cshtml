@@ -1,43 +1,90 @@
-@model Core.Models.Tarefa
+@model IEnumerable<Core.Models.Tarefa>
 <head>
     <link rel="stylesheet" href="~/css/Pages/tarefa.css" asp-append-version="true" />
-    <script src="~/js/Pages/tarefa.js" asp-append-version="true"></script>
 </head>
-<section class="container-visor">
-    <form id="visorForm" action="submit" onsubmit="tarefa.cadastrar()">
-        <fieldset>
-            <legend>Legend</legend>
-            <div class="visor form-group d-flex">
-                <label class="form-label mt-4"></label>
-                <div class="form-floating mb-3">
-                    <input asp-for="Atividade"  type="text" class="form-control" placeholder="Atividade">
-                    <label asp-for="Atividade"></label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="TipoAtividade"  type="text" class="form-control" placeholder="Senha">
-                    <label asp-for="TipoAtividade"></label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Plataforma"  type="text" class="form-control" placeholder="Plataforma">
-                    <label asp-for="Plataforma"></label>
-                </div>
-                <div>
-                    <h1 class="cronometro">00.00.00</h1>
-                    <input type="button" value="iniciar">
-                    <input type="button" value="pausar">
-                    <input type="submit" value="finalizar">
-                </div>
-            </div>
-            @* <button type="submit" class="btn btn-primary">Submit</button> *@
-        </fieldset>
-    </form>
+
+<section>
+    <p>
+        <a class="btn btn-primary" onclick="tarefa.getCadastrar()">Cadastrar</a>
+    </p>
+    <div class="table-responsive-sm">
+        <table class="table table-hover">
+            <thead class="table-success">
+                <tr>
+                    <th scope="col" class="col-xs-1">
+                        @Html.DisplayNameFor(Model => Model.IdUsuario)
+                    </th>
+                    <th scope="col" class="col-xs-2">
+                        @Html.DisplayNameFor(Model => Model.Atividade)
+                    </th>
+                    <th scope="col" class="col-xs-2">
+                        @Html.DisplayNameFor(Model => Model.TipoAtividade)
+                    </th>
+                    <th scope="col" class="col-xs-2">
+                        @Html.DisplayNameFor(Model => Model.Plataforma)
+                    </th>
+                    <th scope="col" class="col-xs-1">
+                        @Html.DisplayNameFor(Model => Model.TempoTarefa)
+                    </th>
+                    <th scope="col" class="col-xs-1">
+                        @Html.DisplayNameFor(Model => Model.DataCadastro)
+                    </th>
+                    <th scope="col" class="col-xs-1">
+                        Editar
+                    </th>
+                    <th scope="col" class="col-xs-1">
+                        Detalhes
+                    </th>
+                    <th scope="col" class="col-xs-1">
+                        Excluir
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="tabela-usuario">
+                    <th scope="row" class="col-xs-1">
+                        @item.IdUsuario
+                    </th>
+                    <td class="col-xs-2">
+                        @item.Atividade
+                    </td>
+                    <td class="col-xs-2">
+                        @item.TipoAtividade
+                    </td>
+                    <td class="col-xs-2">
+                        @item.Plataforma
+                    </td>
+                    <td class="col-xs-1">
+                        @item.TempoTarefa.ToString("HH:mm:ss")
+                    </td>
+                    <td class="col-xs-1">
+                        @item.DataCadastro.ToString("dd/MM/yyyy")
+                    </td>
+                    <td class="col-xs-1">
+                        <a asp-action="Editar" asp-route-id="@item.Id"><ion-icon style="color: blue;" name="pencil-outline"></ion-icon></a>
+                    </td>
+                    <td class="col-xs-1">
+                        <a asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon style="color: green;" name="document-text-outline"></ion-icon></a>
+                    </td>
+                    <td class="col-xs-1">
+                        <a asp-action="Excluir" asp-route-id="@item.Id"><ion-icon style="color: red;" name="trash-outline"></ion-icon></a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 </section>
 
-    <script>
-        tarefa.init({
-            urls: {
-                cadastrar: '@Url.Action("cadastrar", "tarefa")',
-                index: '@Url.Action("index", "tarefa")'
-            }
-        })
-    </script>
+<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+<script src="~/js/Pages/tarefa.js" asp-append-version="true"></script>
+<script>
+    tarefa.init({
+        urls: {
+            cadastrar: '@Url.Action("cadastrar", "tarefa")',
+            index: '@Url.Action("index", "tarefa")'
+        }
+    })
+</script>
