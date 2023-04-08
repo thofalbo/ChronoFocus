@@ -1,0 +1,77 @@
+@model IEnumerable<Core.Models.Usuario>
+@{
+    ViewData["Titulo"] = "Usuarios do Sistema";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Pages/usuario.css" asp-append-version="true" />
+
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+</head>
+
+<h1>@ViewData["Titulo"]</h1>
+<div class="table-responsive-sm">
+    
+<table class="table table-hover">
+    <thead class="table-success">
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(Model => Model.Login)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(Model => Model.Email)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(Model => Model.DataCadastro)
+            </th>
+            <th scope="col">
+                Editar
+            </th>
+            <th scope="col">
+                Detalhes
+            </th>
+            <th scope="col">
+                Excluir
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="tabela-usuario">
+                <th scope="row">
+                    @Html.DisplayFor(modelItem => item.Login)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataCadastro)
+                </td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@item.Id"><ion-icon style="color: blue;" name="pencil-outline"></ion-icon></a>
+                </td>
+                <td>
+                    <a asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon style="color: green;" name="document-text-outline"></ion-icon></a>
+                </td>
+                <td>
+                    <a asp-action="Excluir" asp-route-id="@item.Id"><ion-icon style="color: red;" name="trash-outline"></ion-icon></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+<p>
+    <a class="btn btn-primary" onclick="usuario.getCadastrar()">Cadastrar</a>
+</p>
+
+<script src="~/js/Pages/usuario.js" asp-append-version="true"></script>
+<script>
+    usuario.init({
+        urls: {
+            index: '@Url.Action("index", "usuario")',
+            cadastrar: '@Url.Action("cadastrar", "usuario")'
+        }
+    })
+</script>

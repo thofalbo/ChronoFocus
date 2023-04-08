@@ -7,9 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configurations = builder.Configuration;
 
-// builder.Services.AddDbContext<BaseDbContext>(options =>
-//     options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionString")));
-
 var appSettings = configurations.Get<AppSettings>();
 
 builder.Services.AddDependencies(appSettings);
