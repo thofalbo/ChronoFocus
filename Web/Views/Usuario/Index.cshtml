@@ -16,6 +16,9 @@
     <thead class="table-success">
         <tr>
             <th scope="col">
+                @Html.DisplayNameFor(Model => Model.Id)
+            </th>
+            <th scope="col">
                 @Html.DisplayNameFor(Model => Model.Login)
             </th>
             <th scope="col">
@@ -39,6 +42,9 @@
         @foreach (var item in Model)
         {
             <tr class="tabela-usuario">
+                <th scope="row">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </th>
                 <th scope="row">
                     @Html.DisplayFor(modelItem => item.Login)
                 </th>

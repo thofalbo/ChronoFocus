@@ -7,12 +7,16 @@
     <p>
         <a class="btn btn-primary" onclick="tarefa.getCadastrar()">Cadastrar</a>
     </p>
+
+    <div id="formCadastro">
+
+    </div>
     <div class="table-responsive-sm">
         <table class="table table-hover">
             <thead class="table-success">
                 <tr>
                     <th scope="col" class="col-xs-1">
-                        @Html.DisplayNameFor(Model => Model.IdUsuario)
+                        @Html.DisplayNameFor(Model => Model.Usuario.Login)
                     </th>
                     <th scope="col" class="col-xs-2">
                         @Html.DisplayNameFor(Model => Model.Atividade)
@@ -45,7 +49,7 @@
             {
                 <tr class="tabela-usuario">
                     <th scope="row" class="col-xs-1">
-                        @item.IdUsuario
+                        @item.Usuario?.Login
                     </th>
                     <td class="col-xs-2">
                         @item.Atividade

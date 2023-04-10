@@ -18,7 +18,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("index")]
-        public IActionResult Index() => View(_tarefaService.MostrarTarefas(1));
+        public IActionResult Index() => View(_tarefaService.MostrarTarefas(5));
 
         [HttpGet("cadastrar")]
         public IActionResult Cadastrar() => View();

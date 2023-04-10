@@ -8,19 +8,12 @@ namespace Data.Repositories
         {
             _dbContext = dbContext;
         }
-
-        public async Task<Tarefa> BuscarTarefaUsuarioAsync(int idUsuario)
-        {
-            return await _dbContext.Usuarios
-                .Where(x => x.Id == idUsuario)
-                .Select(x => new Tarefa{IdUsuario = x.Id})
-                .FirstOrDefaultAsync();
-        }
         public IEnumerable<Tarefa> MostrarTarefas(int idUsuario)
         {
-            var tarefas = _dbContext.Tarefas.ToList()
+            var tarefas = _dbContext.Tarefas
+                .Include(obj => obj.Usuario)
+                .ToList()
                 .Where(x => x.IdUsuario == idUsuario);
-
             return tarefas;
         }
         public async Task CadastrarAsync(Tarefa tarefa)

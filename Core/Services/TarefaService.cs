@@ -29,7 +29,7 @@ namespace Core.Services
             }
             await _tarefaRepository.CadastrarAsync(new Tarefa
             {
-                IdUsuario = 1,
+                IdUsuario = 5,
                 Atividade = tarefa.Atividade,
                 TipoAtividade = tarefa.TipoAtividade,
                 Plataforma = tarefa.Plataforma,
@@ -41,14 +41,6 @@ namespace Core.Services
         public async Task ExcluirAsync(int id)
         {
                 await _tarefaRepository.ExcluirAsync(id);
-        }
-        // public async Task EditarAsync(DepartamentoCadastroDto departamentoCadastroDto)
-        // {
-        //     _dbContext.Departamentos.Update(new Departamento{
-        //         Nome = departamentoCadastroDto.Nome
-        //     });
-        //     await _dbContext.SaveChangesAsync();
-        // }
-        
+        }        
     }
 }

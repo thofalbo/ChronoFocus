@@ -11,8 +11,12 @@ var tarefa = (function () {
         configs = $configs;
     };
 
-    var getCadastrar = function () {
-        location.href = (configs.urls.cadastrar)
+    var getCadastrar = function () { 
+        $.get(configs.urls.cadastrar).done((html) => {       
+            $('#formCadastro').html(html);
+            // clearInterval(contadorSegundos);
+        })
+        // location.href = (configs.urls.cadastrar)
     };
 
     var getExcluir = function () {
@@ -25,7 +29,7 @@ var tarefa = (function () {
         console.log(model)
         $.post(configs.urls.cadastrar, model).done(() => {
             clearInterval(contadorSegundos);
-            location.href = (configs.urls.index)
+            // location.href = (configs.urls.index)
         })
     };
     
