@@ -27,7 +27,7 @@ var tarefa = (function () {
         console.log(model)
         $.post(configs.urls.cadastrar, model).done(() => {
             clearInterval(contadorSegundos);
-            // location.href = (configs.urls.index)
+            location.reload();
         })
     };
     

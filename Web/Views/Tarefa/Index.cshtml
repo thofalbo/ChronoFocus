@@ -4,10 +4,6 @@
 </head>
 
 <section>
-    <p>
-        <a class="btn btn-primary" onclick="tarefa.getCadastrar()">Cadastrar</a>
-    </p>
-
     <div id="formCadastro">
 
     </div>
@@ -91,5 +87,6 @@
             cadastrar: '@Url.Action("cadastrar", "tarefa")',
             index: '@Url.Action("index", "tarefa")'
         }
-    })
+    });
+    tarefa.getCadastrar();
 </script>
