@@ -29,7 +29,7 @@ namespace Core.Services
             }
             await _tarefaRepository.CadastrarAsync(new Tarefa
             {
-                IdUsuario = 5,
+                IdUsuario = 1,
                 Atividade = tarefa.Atividade,
                 TipoAtividade = tarefa.TipoAtividade,
                 Plataforma = tarefa.Plataforma,

@@ -14,9 +14,7 @@ var tarefa = (function () {
     var getCadastrar = function () { 
         $.get(configs.urls.cadastrar).done((html) => {       
             $('#formCadastro').html(html);
-            // clearInterval(contadorSegundos);
         })
-        // location.href = (configs.urls.cadastrar)
     };
 
     var getExcluir = function () {
