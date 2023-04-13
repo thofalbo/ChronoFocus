@@ -9,12 +9,13 @@ namespace Data.Repositories
             _dbContext = dbContext;
         }
 
-        public static Usuario Get(string login, string senha)
+        public async Task<Usuario> Get(string login, string senha)
         {
-            var users = new List<Usuario>();
-            users.Add(new Usuario { Id = 1, Login = "Bakumito"});
-            users.Add(new Usuario { Id = 2, Login = "robin"});
-            return users.Where(x => x.Login.ToLower() == login.ToLower() && x.Senha == x.Senha).FirstOrDefault();
+            var usuarios = _dbContext.Usuarios.ToList();
+            // var users = new List<Usuario>();
+            // users.Add(new Usuario { Id = 1, Login = "Bakumito"});
+            // users.Add(new Usuario { Id = 5, Login = "teste"});
+            return usuarios.Where(x => x.Login.ToLower() == login.ToLower() && x.Senha == x.Senha).FirstOrDefault();
         }
 
         public async Task CadastrarAsync(Usuario usuario)

@@ -17,17 +17,15 @@ namespace Web.Controllers
         [HttpGet("index")]
         public IActionResult Index() => View();
 
-        [HttpPost]
+        [HttpPost("auth")]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody]Usuario model)
         {
-            var usuario = UsuarioRepository.Get(model.Login, model.Senha);
+            var usuario = await _usuarioRepository.Get(model.Login, model.Senha);
 
             if (usuario == null)
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
             var token = TokenService.GenerateToken(usuario, _appSettings.Chave.Segredo);
-
-            usuario.Senha = "";
             
             return new
             {
