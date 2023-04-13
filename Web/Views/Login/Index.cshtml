@@ -1,15 +1,42 @@
-<form id="formLogin" action="submit" onsubmit="login.cadastrar()">
-    <div>
-        <input type="text">
-        <input type="text">
-    </div>
-</form>
-<script src="~/js/Pages/login.js" asp-append-version="true"></script>
-<script>
-    login.init({
-        urls: {
-            cadastrar: '@Url.Action("cadastrar", "login")',
-            index: '@Url.Action("index", "login")'
-        }
-    });
-</script>
+@{
+    Layout = null;
+    ViewData["Title"] = "Login - ChronoFocus";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <section>
+        <form id="form-login" onsubmit="login.login()">
+            <div>
+                <label for="login-usuario">Login</label>
+                <div>
+                    <input id="login-usuario" type="text" name="Login" placeholder="Digite seu login" />
+                </div>
+            </div>
+            <div>
+                <label for="senha-usuario">Senha</label>
+                <div>
+                    <input id="senha-usuario" type="password" name="Senha" placeholder="Digite sua senha" />
+                </div>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+    </section>
+    <script src="~/js/Pages/login.js" asp-append-version="true"></script>
+    <script>
+        login.init({
+            urls: {
+                log: '@Url.Action("Authenticate", "login")',
+                index: '@Url.Action("index", "login")'
+            }
+        });
+    </script>
+</body>
+</html>

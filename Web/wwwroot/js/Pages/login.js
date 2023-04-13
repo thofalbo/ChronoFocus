@@ -2,7 +2,7 @@ var login = (function () {
     var configs = {
         urls: {
             index: '',
-            excluir: ''
+            log: ''
         }
     };
 
@@ -10,15 +10,15 @@ var login = (function () {
         configs = $configs;
     };
     
-    var excluir = function () {
+    var login = function () {
         var model = $('formLogin').serializeObject();
         console.log(model)
-        $.post(configs.urls.cadastrar, model).done(() => {
+        $.post(configs.urls.log, model).done(() => {
         })
     };
 
     return {
         init: init,
-        excluir: excluir
+        login: login
     };
 })()
