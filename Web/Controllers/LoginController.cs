@@ -14,6 +14,9 @@ namespace Web.Controllers
             _appSettings = appSettings;
         }
 
+        [HttpGet("index")]
+        public IActionResult Index() => View();
+
         [HttpPost]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody]Usuario model)
         {

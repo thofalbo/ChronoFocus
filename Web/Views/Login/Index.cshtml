@@ -1,0 +1,15 @@
+<form id="formLogin" action="submit" onsubmit="login.cadastrar()">
+    <div>
+        <input type="text">
+        <input type="text">
+    </div>
+</form>
+<script src="~/js/Pages/login.js" asp-append-version="true"></script>
+<script>
+    login.init({
+        urls: {
+            cadastrar: '@Url.Action("cadastrar", "login")',
+            index: '@Url.Action("index", "login")'
+        }
+    });
+</script>
