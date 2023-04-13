@@ -26,15 +26,17 @@
                     <input id="senha-usuario" type="password" name="Senha" placeholder="Digite sua senha" />
                 </div>
             </div>
-            <button type="submit">Entrar</button>
+            <input type="submit">Entrar</input>
         </form>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/Pages/login.js" asp-append-version="true"></script>
     <script>
         login.init({
             urls: {
                 log: '@Url.Action("auth", "login")',
-                index: '@Url.Action("index", "login")'
+                index: '@Url.Action("index", "login")',
+                home: '@Url.Action("index", "tarefa")'
             }
         });
     </script>

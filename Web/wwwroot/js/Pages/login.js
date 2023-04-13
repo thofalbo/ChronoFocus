@@ -2,7 +2,8 @@ var login = (function () {
     var configs = {
         urls: {
             index: '',
-            log: ''
+            log: '',
+            home: ''
         }
     };
 
@@ -11,10 +12,16 @@ var login = (function () {
     };
     
     var login = function () {
-        var model = $('formLogin').serializeObject();
-        console.log(model)
-        $.post(configs.urls.log, model).done(() => {
-        })
+        console.log("teste");
+        var model = $('#form-login').serializeObject();
+        console.log(model);
+        $.post(configs.urls.log, model).done(function() {
+            location.href = configs.urls.home;
+            console.log("passando"); // Updated this line
+            console.log(model);
+        }).fail(function() { // Updated this line
+            console.log("falhou o token");
+        });
     };
 
     return {
@@ -22,3 +29,4 @@ var login = (function () {
         login: login
     };
 })()
+
