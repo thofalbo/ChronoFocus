@@ -11,7 +11,13 @@ namespace Data.Repositories
 
         public async Task CadastrarAsync(Usuario usuario)
         {
-            await _dbContext.Usuarios.AddAsync(usuario);
+            await _dbContext.Usuarios.AddAsync(new Usuario
+            {
+                Login = usuario.Login,
+                Email = usuario.Email,
+                Senha = usuario.Senha,
+                DataCadastro = usuario.DataCadastro.ToUniversalTime()
+            });
             await _dbContext.SaveChangesAsync();
         }
         

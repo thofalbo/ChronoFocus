@@ -27,13 +27,7 @@ namespace Web.Controllers
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Usuario usuario)
         {
-            await _usuarioRepository.CadastrarAsync(new Usuario
-            {
-                Login = usuario.Login,
-                Email = usuario.Email,
-                Senha = usuario.Senha,
-                DataCadastro = usuario.DataCadastro.ToUniversalTime()
-            });
+            await _usuarioRepository.CadastrarAsync(usuario);
         }
     }
 }
