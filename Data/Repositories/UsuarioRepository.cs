@@ -11,9 +11,9 @@ namespace Data.Repositories
 
         public async Task<Usuario> Get(string login, string senha)
         {
-            return _dbContext.Usuarios.ToList()
+            return await _dbContext.Usuarios
                 .Where(x => x.Login.ToLower() == login.ToLower() && x.Senha == x.Senha)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
         public async Task CadastrarAsync(Usuario usuario)
