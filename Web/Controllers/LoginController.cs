@@ -18,20 +18,16 @@ namespace Web.Controllers
         public IActionResult Index() => View();
 
         [HttpPost("auth")]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody]Usuario model)
+        public async Task<ActionResult> Authenticate(Usuario model)
         {
             var usuario = await _usuarioRepository.Get(model.Login, model.Senha);
 
             if (usuario == null)
-                return NotFound(new { message = "Usuário ou senha inválidos" });
-
+                return NotFound("Usuário ou senha inválidos");
+                
             var token = TokenService.GenerateToken(usuario, _appSettings.Chave.Segredo);
             
-            return new
-            {
-                usuario = usuario,
-                token = token
-            };
+            return View("../Home/Index");
         }
     }
 }

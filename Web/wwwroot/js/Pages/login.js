@@ -19,8 +19,6 @@ var login = (function () {
             location.href = configs.urls.home;
             console.log("passando"); // Updated this line
             console.log(model);
-        }).fail(function() { // Updated this line
-            console.log("falhou o token");
         });
     };
 
