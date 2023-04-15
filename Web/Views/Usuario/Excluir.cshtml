@@ -1,0 +1,42 @@
+@model Core.Models.Usuario
+@{
+    ViewData["Title"] = "Excluir";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Tem certeza que quer excluir esta tarefa?</h4>
+<hr />
+<dl class="row">
+  <dt class="col-sm-1">
+    @Html.DisplayNameFor(Model => Model.Login)
+  </dt>
+  <dd class="col-sm-11">
+    @Html.DisplayFor(Model => Model.Login)
+  </dd>
+  <dt class="col-sm-1">
+    @Html.DisplayNameFor(Model => Model.Email)
+  </dt>
+  <dd class="col-sm-11">
+    @Html.DisplayFor(Model => Model.Email)
+  </dd>
+  <dt class="col-sm-1">
+    @Html.DisplayNameFor(Model => Model.DataCadastro)
+  </dt>
+  <dd class="col-sm-11">
+    @Html.DisplayFor(Model => Model.DataCadastro)
+  </dd>
+</dl>
+<form  id="formExcluirUsuario" onsubmit="usuario.excluir()">
+  <input type="hidden" asp-for="Id" />
+  <input type="submit" value="Excluir" class="btn btn-danger" />
+  <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</form>
+    <script src="~/js/Pages/usuario.js" asp-append-version="true"></script>
+<script>
+    usuario.init({
+        urls: {
+            excluir: '@Url.Action("excluir", "usuario")',
+            index: '@Url.Action("index", "usuario")'
+        }
+    })
+</script>

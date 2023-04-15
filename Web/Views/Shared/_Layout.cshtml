@@ -68,3 +68,207 @@ site.init({
 </script>
 </body>
 </html>
+
+
+
+
+@* 
+@{
+    var cookie = Context.Request.Cookies["KritaAuthentication"];
+    var UsuarioLogado = CookieExtensions.SerializarToken(cookie);
+    var opcaoSistemaMae = @UsuarioLogado.OpcoesSistema.Where(x => x.IdOpcaoMae == null);
+    var opcoesSistemaGeral = @UsuarioLogado.OpcoesSistema;
+}
+
+@functions 
+{
+    public async Task imprimirMenu(IEnumerable<OpcaoSistemaViewModel> opcoesSistemaMae, IEnumerable<OpcaoSistemaViewModel> opcaoSistemasUsuario)
+    {
+        @foreach (var item in opcoesSistemaMae)
+        {
+            var opcoesSistemaFilhas = opcaoSistemasUsuario.Where(x => x.IdOpcaoMae == item.Id);
+
+            bool ultimoItem = opcoesSistemaMae.LastOrDefault() == item;
+            
+            if(ultimoItem)
+            {
+                <div class="container-menu-pai @item.Descricao menu-active" data-opcao-item-id="@item.Id">
+                <div class="container-menu" data-nome-opcao="@item.Descricao"> 
+                    @if(opcoesSistemaFilhas != null && opcoesSistemaFilhas.Any() && item.IdOpcaoMae == null)
+                    {
+                        <div class="uk-animation-toggle hover-menu" style="width:100%!important">
+                            <label>
+                                <ul>
+                                    <li class="uk-parent">
+                                        <a onclick="site.abrirOpcao(@item.Id)">@item.Descricao <span data-icon-menu="@item.Id" uk-icon="icon: chevron-up" class="uk-third"></span></a>            
+                                    </li>
+                                </ul>
+                            </label>
+                        </div>
+                    }
+                    else if(opcoesSistemaFilhas != null && opcoesSistemaFilhas.Any() && item.IdOpcaoMae != null)
+                    {
+                        <div class="linha-vertical-final"></div>
+                        <div class="linha-horizontal"></div>
+                        <div class="uk-animation-toggle padding-filhos hover-menu" data-opcao-menu="@item.IdOpcaoMae" style="width:100%!important">
+                            <label>
+                                <ul>
+                                    <li class="uk-parent filhos-menu-borda">
+                                        <a data-pai-menu="@item.Id" onclick="site.abrirOpcao(@item.Id)">@item.Descricao <span data-icon-menu="@item.Id" uk-icon="icon: chevron-up" class="uk-third"></span></a>            
+                                    </li>
+                                </ul>
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="linha-vertical-final"></div>
+                        <div class="linha-horizontal"></div>
+                        <div data-opcao-menu="@item.IdOpcaoMae" class="padding-filhos hover-menu">
+                            <label>
+                                <li>
+                                    <a asp-controller='@item.Descricao.RemoveDiacritics().Replace(" ","")' asp-action="Index">@item.Descricao</a>            
+                                </li>   
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+            }
+            else 
+            {
+                <div class="container-menu-pai @item.Descricao menu-active" data-opcao-item-id="@item.Id">
+                <div class="container-menu" data-nome-opcao="@item.Descricao"> 
+                    @if(opcoesSistemaFilhas != null && opcoesSistemaFilhas.Any() && item.IdOpcaoMae == null)
+                    {
+                        <div class="uk-animation-toggle hover-menu opcao-hierarquica" style="width:100%!important">
+                            <label>
+                                <ul>
+                                    <li class="uk-parent">
+                                        <a onclick="site.abrirOpcao(@item.Id)">@item.Descricao <span data-icon-menu="@item.Id" uk-icon="icon: chevron-up" class="uk-third"></span></a>            
+                                    </li>
+                                </ul>
+                            </label>
+                        </div>
+                    }
+                    else if(opcoesSistemaFilhas != null && opcoesSistemaFilhas.Any() && item.IdOpcaoMae != null)
+                    {
+                        <div class="linha-vertical"></div>
+                        <div class="linha-horizontal"></div>
+                        <div class="uk-animation-toggle padding-filhos hover-menu opcao-hierarquica" data-opcao-menu="@item.IdOpcaoMae" style="width:100%!important">
+                            <label>
+                                <ul>
+                                    <li class="uk-parent filhos-menu-borda">
+                                        <a data-pai-menu="@item.Id" onclick="site.abrirOpcao(@item.Id)">@item.Descricao <span data-icon-menu="@item.Id" uk-icon="icon: chevron-up" class="uk-third"></span></a>            
+                                    </li>
+                                </ul>
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="linha-vertical"></div>
+                        <div class="linha-horizontal"></div>
+                        <div data-opcao-menu="@item.IdOpcaoMae" class="padding-filhos hover-menu">
+                            <label>
+                                <li>
+                                    <a asp-controller='@item.Descricao.RemoveDiacritics().Replace(" ","")' asp-action="Index">@item.Descricao</a>            
+                                </li>   
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+            }
+
+            <div class="filhos" id="@item.Descricao" data-opcao-mae-menu="@item.Descricao" data-opcao-menu="@item.Id"
+                style="width:100%!important">
+
+                @if(opcoesSistemaFilhas != null && opcoesSistemaFilhas.Any() && item.IdOpcaoMae != null && ultimoItem == false)
+                {
+                    <div class="linha-vertical-secundaria"></div>
+                }
+
+                @if (opcoesSistemaFilhas != null && opcoesSistemaFilhas.Any())
+                {
+                    await imprimirMenu(opcoesSistemaFilhas, opcaoSistemasUsuario);
+                }
+            </div>
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Krita</title>
+        <link rel="stylesheet" href="~/lib/iziToast/css/iziToast.min.css">
+        <link rel="stylesheet" href="~/lib/uikit/css/uikit.min.css" />
+        <link rel="stylesheet" href="~/lib/uikit/css/uikit-rtl.min.css">
+        <link rel="stylesheet" href="~/lib/jquery/tabela/jquery-ui.min.css">
+        <link rel="stylesheet" href="~/lib/jquery/data/jquery-ui.min.css">
+        <link rel="stylesheet" href="~/lib/jquery-nice-select-1.1.0/css/nice-select.css">
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" type="text/css" href="~/css/pages/usuario.css" />
+        <link rel="stylesheet" href="~/css/pages/home.css" />
+
+        <script src="~/lib/jquery/data/external/jquery/jquery.js"></script>
+        <script src="~/lib/iziToast/js/iziToast.min.js"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery/tabela/external/jquery/jquery.js"></script>
+        <script src="~/lib/jquery/tabela/jquery-ui.min.js"></script>
+        <script src="~/lib/uikit/js/uikit.min.js"></script>
+        <script src="~/lib/uikit/js/uikit-icons.min.js"></script>
+        <script src="~/lib/jquery-nice-select-1.1.0/js/jquery.nice-select.min.js"></script>
+        <script src="~/lib/jQuery-Mask-Plugin-master/src/jquery.mask.js"></script>
+        <script src="~/lib/jquery-maskmoney-master/jquery-maskmoney-master/src/jquery.maskMoney.js"></script>
+        <script src="~/lib/jquery/data/jquery-ui.min.js"></script>
+        <script src="~/js/site.js"></script>
+    </head>
+    <body>
+        <div class="layout-body">
+            <section class="menu-lateral">
+                <div class="img-logo">
+                    <a asp-controller="Home" asp-action="Index">
+                        <img src="~/img/logo-krita.png" alt="krita-logo">
+                    </a>
+                </div>
+                <div class="perfil-user">
+                    <span uk-icon="icon: user; ratio: 1"></span>
+                    <span align="center">@UsuarioLogado.Apelido</span>
+                </div>
+                <div class="buscar-opcoes">
+
+                <form class="uk-search uk-search-default">
+                    <a uk-search-icon></a>
+                    <input id="opcoes-sistema-busca" class="uk-search-input " type="search" placeholder="Procurar" aria-label="Search">
+                </form>
+                </div>
+                <div class="menu-itens">
+                  <ul class="uk-nav-primary" uk-nav>
+                    @{
+                        await imprimirMenu(opcaoSistemaMae, @UsuarioLogado.OpcoesSistema);
+                    }
+                  </ul>
+                </div>
+            </section>
+            <section class="header-main">
+                <div class="header">
+                    <h1 id="titulo-pagina">@ViewData["Title"]</h1>
+                    <a uk-tooltip="title: Sair; pos: bottom" asp-controller="Login" asp-action="Logout" uk-icon="icon: sign-out; ratio: 1.25"></a>
+                </div>
+                <div class="main">
+                    @RenderBody()
+                </div>
+            </section>
+        </div>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+</html>
+<script>
+    site.init({
+        
+    })
+</script> *@

@@ -1,6 +1,5 @@
 namespace Web.Controllers
 {
-    [Route("login")]
     public class LoginController : Controller
     {
         private readonly IUsuarioRepository _usuarioRepository;
@@ -14,20 +13,23 @@ namespace Web.Controllers
             _appSettings = appSettings;
         }
 
-        [HttpGet("index")]
+        [HttpGet]
         public IActionResult Index() => View();
 
-        [HttpPost("auth")]
+
+        [HttpPost]
         public async Task<ActionResult> Authenticate(Usuario model)
         {
             var usuario = await _usuarioRepository.Get(model.Login, model.Senha);
 
             if (usuario == null)
                 return NotFound("Usuário ou senha inválidos");
-                
-            var token = TokenService.GenerateToken(usuario, _appSettings.Chave.Segredo);
-            
-            return View("../Home/Index");
+
+            var jwtToken = TokenService.GenerateToken(usuario, _appSettings.Chave.Segredo);
+
+            HttpContext.Session.SetString("JwtToken", jwtToken);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

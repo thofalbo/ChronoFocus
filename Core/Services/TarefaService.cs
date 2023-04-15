@@ -21,7 +21,7 @@ namespace Core.Services
             return tarefas;
         }
 
-        public async Task CadastrarAsync(Tarefa tarefa)
+        public async Task CadastrarAsync(Tarefa tarefa, int usuarioLogado)
         {
             if (tarefa.TempoTarefa == default)
             {
@@ -29,7 +29,7 @@ namespace Core.Services
             }
             await _tarefaRepository.CadastrarAsync(new Tarefa
             {
-                IdUsuario = 1,
+                IdUsuario = usuarioLogado,
                 Atividade = tarefa.Atividade,
                 TipoAtividade = tarefa.TipoAtividade,
                 Plataforma = tarefa.Plataforma,

@@ -12,13 +12,9 @@ var login = (function () {
     };
     
     var login = function () {
-        console.log("teste");
         var model = $('#form-login').serializeObject();
-        console.log(model);
         $.post(configs.urls.log, model).done(function() {
             location.href = configs.urls.home;
-            console.log("passando"); // Updated this line
-            console.log(model);
         });
     };
 
@@ -27,4 +23,3 @@ var login = (function () {
         login: login
     };
 })()
-

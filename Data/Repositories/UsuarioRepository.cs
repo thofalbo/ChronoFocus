@@ -12,7 +12,7 @@ namespace Data.Repositories
         public async Task<Usuario> Get(string login, string senha)
         {
             return await _dbContext.Usuarios
-                .Where(x => x.Login.ToLower() == login.ToLower() && x.Senha == x.Senha)
+                .Where(x => x.Login.ToLower() == login.ToLower() && x.Senha == senha)
                 .FirstOrDefaultAsync();
         }
 

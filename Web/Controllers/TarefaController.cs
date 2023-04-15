@@ -6,14 +6,17 @@ namespace Web.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly ITarefaRepository _tarefaRepository;
         private readonly ITarefaService _tarefaService;
+        private readonly IUsuarioRepository _usuarioRepository;
         public TarefaController(
             ApplicationDbContext dbContext,
             ITarefaRepository tarefaRepository,
-            ITarefaService tarefaService
+            ITarefaService tarefaService,
+            IUsuarioRepository usuarioRepository
         )
         {
             _dbContext = dbContext;
             _tarefaRepository = tarefaRepository;
+            _usuarioRepository = usuarioRepository;
             _tarefaService = tarefaService;
         }
 
@@ -26,7 +29,7 @@ namespace Web.Controllers
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Tarefa tarefa)
         {
-            await _tarefaService.CadastrarAsync(tarefa);
+            await _tarefaService.CadastrarAsync(tarefa, 1);
         }
 
         [HttpGet("excluir")]
