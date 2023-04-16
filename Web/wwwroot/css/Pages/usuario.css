@@ -1,3 +1,11 @@
 .tabela-usuario a {
     font-size: 1.3rem;
 }
+
+.cadastrar-usuario {
+    justify-content: center;
+}
+.cadastrar-usuario input,
+.cadastrar-usuario hr{
+    max-width: 60%;
+}

@@ -1,17 +1,29 @@
 @model Core.Models.Usuario
 
 @{
+    Layout = null;
     ViewData["Title"] = "Cadastro de Usuario";
 }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-slate.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Pages/usuario.css" asp-append-version="true" />
+</head>
+<body>
 
-<h1>@ViewData["Title"]</h1>
-<hr />
-
-<div class="row">
+<div class="cadastrar-usuario row">
     <div class="col-md-4">
         <form id="formCadastrarUsuario" onsubmit="usuario.cadastrar()">
+            <h1>@ViewData["Title"]</h1>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+            <hr />
                 <label asp-for="Login" class="control-label"></label>
                 <input asp-for="Login" class="form-control" />
                 <span asp-validation-for="Login" class="text-danger"></span>
@@ -37,7 +49,10 @@
         </form>
     </div>
 </div>
-    <script src="~/js/Pages/usuario.js" asp-append-version="true"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/Pages/usuario.js" asp-append-version="true"></script>
 <script>
     usuario.init({
         urls: {
@@ -46,3 +61,5 @@
         }
     })
 </script>
+</body>
+</html>

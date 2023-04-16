@@ -21,10 +21,34 @@ namespace Web.Controllers
         }
 
         [HttpGet("index")]
-        public IActionResult Index() => View(_tarefaService.MostrarTarefas(TokenService.UsuarioLogado(HttpContext.Session.GetString("JwtToken"))));
+        public IActionResult Index()
+        {
+            var jwtToken = HttpContext.Session.GetString("JwtToken");
+
+            if (jwtToken != null)
+            {
+            var usuarioLogado = TokenService.UsuarioLogado(jwtToken);
+            var tarefas = _tarefaService.MostrarTarefas(usuarioLogado);
+            return View(tarefas);
+            }
+            else {
+                return RedirectToAction("Index", "Login");
+            }
+        }
 
         [HttpGet("cadastrar")]
-        public IActionResult Cadastrar() => View();
+        public IActionResult Cadastrar()
+        {
+            var jwtToken = HttpContext.Session.GetString("JwtToken");
+
+            if (jwtToken != null)
+            {
+            return View();
+            }
+            else {
+                return RedirectToAction("Index", "Login");
+            }
+        }
         
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Tarefa tarefa)
@@ -35,10 +59,19 @@ namespace Web.Controllers
         [HttpGet("excluir")]
         public async Task<IActionResult> Excluir(int? id)
         {
-            var obj = await _dbContext.Tarefas.FindAsync(id.Value);
-            
-            return View(obj);
+            var jwtToken = HttpContext.Session.GetString("JwtToken");
+
+            if (jwtToken != null)
+            {
+                var obj = await _dbContext.Tarefas.FindAsync(id.Value);
+                
+                return View(obj);
+            }
+            else {
+                return RedirectToAction("Index", "Login");
+            }
         }
+        
         [HttpPost("excluir")]
         public async Task<IActionResult> Excluir(int id)
         {

@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
 namespace Web.Controllers
 {
     public class LoginController : Controller

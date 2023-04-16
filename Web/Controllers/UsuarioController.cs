@@ -22,13 +22,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("cadastrar")]
-        public IActionResult Cadastrar()
-        {
-            var jwtToken = HttpContext.Session.GetString("JwtToken");
-            return jwtToken.IsNullOrEmpty()
-                ? RedirectToAction("Index", "Login")
-                : View();
-        }
+        public IActionResult Cadastrar() => View();
 
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Usuario usuario) => await _usuarioRepository.CadastrarAsync(usuario);
@@ -36,9 +30,11 @@ namespace Web.Controllers
         [HttpGet("excluir")]
         public async Task<IActionResult> Excluir(int? id)
         {
-            var obj = await _dbContext.Usuarios.FindAsync(id.Value);
-
-            return View(obj);
+            var usuario = await _dbContext.Usuarios.FindAsync(id.Value);
+            var jwtToken = HttpContext.Session.GetString("JwtToken");
+            return jwtToken.IsNullOrEmpty()
+                ? RedirectToAction("Index", "Login")
+                : View(usuario);
         }
 
         [HttpPost("excluir")]
