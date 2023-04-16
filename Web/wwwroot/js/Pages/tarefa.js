@@ -1,4 +1,4 @@
-var tarefa = (function () {
+var tarefa = (() => {
     var configs = {
         urls: {
             index: '',
@@ -12,41 +12,41 @@ var tarefa = (function () {
     let isPaused = false;
     let tempoPausado = 0;
 
-    var init = function ($configs) {
+    var init = ($configs) => {
         configs = $configs;
     };
 
-    var getCadastrar = function () {
+    var getCadastrar = () => {
         $.get(configs.urls.cadastrar).done((html) => {
             $('#formCadastro').html(html);
         });
     };
     
-    var hideCadastrar = function () {
+    var hideCadastrar = () => {
         $('#formCadastro').toggle();
         $('#tabelaTarefas').toggle();
         $('.botoes-relogio').toggle();
     };
 
-    var hideBotoes = () => {
-        $('#formCadastro').toggle();
-        $('#tabelaTarefas').toggle();
-    }
-
-    var getExcluir = function () {
+    var getExcluir = () => {
         location.href = configs.urls.excluir;
     };
 
-    var cadastrar = function () {
-        $('#tempoTarefa').val($('#relogio').text());
-        var model = $('#visorForm').serializeObject();
-        $.post(configs.urls.cadastrar, model).done(() => {
-            clearInterval(contadorTempo);
-            location.reload();
-        });
+    var cadastrar = () => {
+        if ($('#cadastroAtividade').val()) {
+            $('#tempoTarefa').val($('#relogio').text());
+            var model = $('#visorForm').serializeObject();
+            $.post(configs.urls.cadastrar, model).done(() => {
+                clearInterval(contadorTempo);
+                location.reload();
+            });
+        }
+        else {
+            hideCadastrar();
+        }
     };
 
-    var excluir = function () {
+    var excluir = () => {
         var model = $('formExcluir').serializeObject();
         $.post(configs.urls.cadastrar, model).done(() => {
             location.href = configs.urls.index;
@@ -113,6 +113,23 @@ var tarefa = (function () {
         }
         hideCadastrar();
     };
+    
+    const ordenarTabela = (prop) => {
+        const tabela = $(".tabelaTarefas");
+        const linhas = tabela.find(".linha").toArray();
+        const cabecalho = $(`th[ordenar="${prop}"]`);
+        const ordem = cabecalho.hasClass("asc") ? -1 : 1;
+        
+        cabecalho.toggleClass("asc desc");
+    
+        linhas.sort((a, b) => {
+            const linhaA = $(a).find(`td[ordenado="${prop}"]`).text().trim().toLowerCase();
+            const linhaB = $(b).find(`td[ordenado="${prop}"]`).text().trim().toLowerCase();
+            return ordem * linhaA.localeCompare(linhaB);
+        });
+    
+        tabela.find(".corpo-tabela-tarefas").empty().append(linhas);
+    };
 
     return {
         init: init,
@@ -124,6 +141,7 @@ var tarefa = (function () {
         playPause: playPause,
         hideCadastrar: hideCadastrar,
         fnCadastrarAtividade: fnCadastrarAtividade,
-        fnFinalizarAtividade: fnFinalizarAtividade
+        fnFinalizarAtividade: fnFinalizarAtividade,
+        ordenarTabela: ordenarTabela
     };
 })();
