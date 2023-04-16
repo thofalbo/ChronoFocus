@@ -32,7 +32,7 @@ CREATE TABLE tarefa (
 	atividade varchar(64) NOT NULL,
 	tipo_atividade varchar(64),
 	plataforma varchar(64),
-	tempo_tarefa timestamp NOT NULL,
+	tempo_tarefa time NOT NULL,
 	data_cadastro timestamp NOT NULL,
 	constraint pk_tarefa primary key(id),
     constraint fk_usuario_tarefa foreign key(id_usuario)
