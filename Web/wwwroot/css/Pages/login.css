@@ -1,5 +1,21 @@
 .visor {
-    display: inline-block;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto;
+    padding: 10%;
+}
+
+.form-floating {
+    width: 20%;
+
+}
+
+.btn-container {
+    min-width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+.btn {
+    width: 50%;
 }
