@@ -25,9 +25,13 @@ namespace Data.Repositories
         public async Task ExcluirAsync(int id)
         {
             _dbContext.Tarefas.Remove(await _dbContext.Tarefas.FirstOrDefaultAsync(x => x.Id == id));
+            await _dbContext.SaveChangesAsync(); 
+        }
+
+        public async Task AtualizarAsync(Tarefa tarefa)
+        {
+            _dbContext.Tarefas.Update(tarefa);
             await _dbContext.SaveChangesAsync();
-            // await _dbContext.Database.ExecuteSqlRawAsync(
-            //     $@"DELETE FROM dbo.tarefa WHERE id = {id};");
         }
     }
 }
