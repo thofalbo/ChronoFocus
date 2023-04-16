@@ -21,20 +21,17 @@ var tarefa = (function () {
             $('#formCadastro').html(html);
         });
     };
-    // var hideCadastrar = function () {
-    //     $.get(configs.urls.cadastrar).done(() => {
-    //         $('#formCadastro').html('');
-    //     });
-    // };
+    
     var hideCadastrar = function () {
-        $('#formCadastro').toggle(); // Toggle the visibility of the formCadastro element
+        $('#formCadastro').toggle();
         $('#tabelaTarefas').toggle();
+        $('.botoes-relogio').toggle();
     };
-    // var hideCadastrar = function () {
-    //     $('#formCadastro').hide(); // Hide the formCadastro element
-    //     console.log("formCadastro hidden");
-    // };
 
+    var hideBotoes = () => {
+        $('#formCadastro').toggle();
+        $('#tabelaTarefas').toggle();
+    }
 
     var getExcluir = function () {
         location.href = configs.urls.excluir;
@@ -65,6 +62,7 @@ var tarefa = (function () {
     };
 
     const fnContador = () => {
+
         tempoInicio = new Date();
 
         contadorTempo = setInterval(() => {
@@ -78,15 +76,42 @@ var tarefa = (function () {
     };
 
     const playPause = () => {
-        if (!isPaused) {
-            isPaused = true;
-            clearInterval(contadorTempo);
-            tempoPausado += Math.floor((new Date() - tempoInicio));
-        } else {
-            isPaused = false;
-            tempoInicio = new Date();
+        if ($('#cadastroAtividade').val()) {
+            if (!isPaused) {
+                isPaused = true;
+                clearInterval(contadorTempo);
+                tempoPausado += Math.floor((new Date() - tempoInicio));
+            } else {
+                isPaused = false;
+                tempoInicio = new Date();
+                fnContador();
+            }
+            $('.botao-relogio').toggle();
+            $('#botaoInicio').toggle();
+        }
+        else {
+            hideCadastrar();
+        }
+    };
+
+    const fnCadastrarAtividade = () => {
+        if ($('#cadastroAtividade').val()) {
+            hideCadastrar();
+        }
+        else {
+            $('.botoes-relogio').toggle();
+            hideCadastrar();
+        };
+    };
+
+    
+    const fnFinalizarAtividade = () => {        
+        if ($('#cadastroAtividade').val()) {
+            $('.botoes-relogio').toggle();
+            $('#botaoInicio').toggle();
             fnContador();
         }
+        hideCadastrar();
     };
 
     return {
@@ -97,6 +122,8 @@ var tarefa = (function () {
         excluir: excluir,
         fnContador: fnContador,
         playPause: playPause,
-        hideCadastrar: hideCadastrar
+        hideCadastrar: hideCadastrar,
+        fnCadastrarAtividade: fnCadastrarAtividade,
+        fnFinalizarAtividade: fnFinalizarAtividade
     };
 })();

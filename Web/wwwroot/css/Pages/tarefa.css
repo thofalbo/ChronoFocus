@@ -4,6 +4,8 @@
 
 .cronometro {
     font-size: 6rem;
+    height: 6rem;
+    width: 22rem;
 }
 
 @media (max-width: 992px) {
@@ -21,7 +23,7 @@ table {
 
 tbody {
     display: block;
-    height: 700px;
+    height: 500px;
     overflow: auto;
 }
 
@@ -53,5 +55,17 @@ thead, tbody tr {
 .ion-icon {
     width: 1.6rem;
     height: 1.6rem;
-    margin-right: 1.6rem;
+    margin-left: 1.6rem;
+}
+
+.botao-relogio {
+    height: 4rem;
+    width: 4rem;
+    font-size: 4rem;
+    border: none;
+    border-radius: 50%;
+    line-height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

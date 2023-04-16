@@ -3,37 +3,44 @@
     <link rel="stylesheet" href="~/css/Pages/tarefa.css" asp-append-version="true" />
 </head>
 
-<section>        
 <section class="container-visor">
-    <form id="visorForm" action="submit" onsubmit="tarefa.cadastrar()">
-        <fieldset>
-            <div class="visor form-group d-flex">
-                <div class="visor-cronometro">
-                    <h1 id="relogio" class="cronometro">00.00.00</h1>
-                    <div class="botoes-relogio">
-                        @* <input type="button" value="iniciar" onclick="tarefa.fnContador()">
-                        <input type="button" value="pausar" onclick="tarefa.playPause()"> *@
-                        <a type="button" onclick="tarefa.fnContador()">Iniciar</a>
-                        <a type="button" onclick="tarefa.playPause()">Pausar</a>
-                        @* <input type="submit" value="finalizar"> *@
-                        <a type="submit" onclick="tarefa.cadastrar()">Finalizar</a>
-                    </div>
+    <form id="visorForm" action="submit">
+        <div class="visor form-group d-flex">
+            <div class="visor-cronometro">
+                <h1 id="relogio" class="cronometro">00.00.00</h1>
+                <div id="botoesCadastrar" class="botoes-relogio">
+                    <button class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.hideCadastrar()">
+                        <p>+</p>
+                    </button>
+                    <button style="display: none;" class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.fnCadastrarAtividade()">
+                        <p>x</p>
+                    </button>
                 </div>
-
-
+                <div class="botoes-relogio" style="display: none;">
+                    <button id="botaoInicio" class="botao-relogio" type="button" onclick="tarefa.fnFinalizarAtividade()">
+                        <img src="~/img/Tarefa/play.svg">
+                    </button>
+                    <button class="botao-relogio" type="button" onclick="tarefa.playPause()">
+                        <img src="~/img/Tarefa/pause.svg">
+                    </button>
+                    <button style="display: none;" class="botao-relogio" type="button" onclick="tarefa.playPause()">
+                        <img src="~/img/Tarefa/play.svg">
+                    </button>
+                    <button class="botao-relogio" type="submit" onclick="tarefa.cadastrar()">
+                        <img src="~/img/Tarefa/stop.svg">
+                    </button>
+                </div>
             </div>
-        </fieldset>
+        </div>
         <div id="formCadastro" style="display: none;"></div>
     </form>
 </section>
-    
+
+<section>
     <div id="tabelaTarefas" class="table-responsive-sm">
         <table class="table table-hover">
             <thead class="table-success">
                 <tr>
-                    @* <th scope="col" class="col-xs-1">
-                        @Html.DisplayNameFor(Model => Model.Usuario.Login)
-                    </th> *@
                     <th scope="col" class="col-xs-2">
                         @Html.DisplayNameFor(Model => Model.Atividade)
                     </th>
@@ -43,14 +50,13 @@
                     <th scope="col" class="col-xs-2">
                         @Html.DisplayNameFor(Model => Model.Plataforma)
                     </th>
-                    <th scope="col" class="col-xs-1">
+                    <th scope="col" class="col-xs-2">
                         @Html.DisplayNameFor(Model => Model.TempoTarefa)
                     </th>
-                    <th scope="col" class="col-xs-1">
+                    <th scope="col" class="col-xs-2">
                         @Html.DisplayNameFor(Model => Model.DataCadastro)
                     </th>
-                    <th scope="col" class="col-xs-1">
-                        <button onclick="tarefa.hideCadastrar()">Nova Tarefa</button>
+                    <th scope="col" class="col-xs-2">
                     </th>
                 </tr>
             </thead>
@@ -58,9 +64,6 @@
             @foreach (var item in Model)
             {
                 <tr class="tabela-usuario">
-                    @* <th scope="row" class="col-xs-1">
-                        @item.Usuario?.Login
-                    </th> *@
                     <td class="col-xs-2">
                         @item.Atividade
                     </td>
@@ -70,16 +73,16 @@
                     <td class="col-xs-2">
                         @item.Plataforma
                     </td>
-                    <td class="col-xs-1">
+                    <td class="col-xs-2">
                         @item.TempoTarefa.ToString("HH:mm:ss")
                     </td>
-                    <td class="col-xs-1">
+                    <td class="col-xs-2">
                         @item.DataCadastro.ToString("dd/MM/yyyy")
                     </td>
-                    <td class="col-xs-1">
-                        <a asp-action="Editar" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: blue;" name="pencil-outline"></ion-icon></a>
-                        <a asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: green;" name="document-text-outline"></ion-icon></a>
-                        <a asp-action="Excluir" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: red;" name="trash-outline"></ion-icon></a>
+                    <td class="col-xs-2">
+                        <a class="botao-ion"  asp-action="Editar" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: blue;" name="pencil-outline"></ion-icon></a>
+                        <a class="botao-ion" asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: green;" name="document-text-outline"></ion-icon></a>
+                        <a class="botao-ion" asp-action="Excluir" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: red;" name="trash-outline"></ion-icon></a>
                     </td>
                 </tr>
             }
