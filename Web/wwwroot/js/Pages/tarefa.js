@@ -1,4 +1,5 @@
 var tarefa = (function () {
+    // Configs object
     var configs = {
         urls: {
             index: '',
@@ -7,6 +8,11 @@ var tarefa = (function () {
         }
     };
 
+    let tempoInicio = null;
+    let contadorTempo;
+    let isPaused = false;
+    let tempoPausado = 0;
+
     var init = function ($configs) {
         configs = $configs;
     };
@@ -14,51 +20,60 @@ var tarefa = (function () {
     var getCadastrar = function () {
         $.get(configs.urls.cadastrar).done((html) => {
             $('#formCadastro').html(html);
-        })
+        });
     };
 
     var getExcluir = function () {
-        location.href = (configs.urls.excluir)
+        location.href = configs.urls.excluir;
     };
 
     var cadastrar = function () {
         $('#tempoTarefa').val($('#relogio').text());
         var model = $('#visorForm').serializeObject();
-        console.log(model)
         $.post(configs.urls.cadastrar, model).done(() => {
-            clearInterval(contadorTempo); // Stop the elapsed time interval
+            clearInterval(contadorTempo);
             location.reload();
-        })
+        });
     };
 
     var excluir = function () {
         var model = $('formExcluir').serializeObject();
-        console.log(model)
         $.post(configs.urls.cadastrar, model).done(() => {
-            location.href = (configs.urls.index)
-        })
+            location.href = configs.urls.index;
+        });
     };
 
-    let tempoInicio = null;
-    let contadorTempo;
-
     const fnVisor = segundos => {
-        const tempo = new Date(segundos * 1000)
+        const tempo = new Date(segundos);
         return tempo.toLocaleTimeString('pt-BR', {
             hour12: false,
             timeZone: 'UTC'
-        })
+        });
     };
 
     const fnContador = () => {
         tempoInicio = new Date();
 
         contadorTempo = setInterval(() => {
-            let tempoAtual = new Date();
-            let intervaloTempo = Math.floor((tempoAtual - tempoInicio) / 1000);
+            if (!isPaused) {
+                let tempoAtual = new Date();
+                let intervaloTempo = Math.floor((tempoAtual - tempoInicio) + tempoPausado);
 
-            $('#relogio').text(fnVisor(intervaloTempo));
+                $('#relogio').text(fnVisor(intervaloTempo));
+            }
         }, 1000);
+    };
+
+    const playPause = () => {
+        if (!isPaused) {
+            isPaused = true;
+            clearInterval(contadorTempo);
+            tempoPausado += Math.floor((new Date() - tempoInicio));
+        } else {
+            isPaused = false;
+            tempoInicio = new Date();
+            fnContador();
+        }
     };
 
     return {
@@ -67,6 +82,7 @@ var tarefa = (function () {
         getCadastrar: getCadastrar,
         getExcluir: getExcluir,
         excluir: excluir,
-        fnContador: fnContador
+        fnContador: fnContador,
+        playPause: playPause
     };
 })();

@@ -1,0 +1,5 @@
+.visor {
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+}

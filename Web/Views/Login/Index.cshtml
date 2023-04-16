@@ -10,24 +10,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-slate.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Pages/login.css" asp-append-version="true" />
 </head>
 <body>
     <section>
         <form id="form-login" onsubmit="login.login()">
-            <div>
-                <label for="login-usuario">Login</label>
-                <div>
-                    <input id="login-usuario" type="text" name="Login" placeholder="Digite seu login" />
+            <fieldset>
+            <div class="visor form-group d-flex">
+                <label class="form-label mt-4"></label>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="login-usuario" type="text" name="Login" placeholder="Digite seu login" />
+                    <label for="login-usuario">Login</label>
                 </div>
-            </div>
-            <div>
-                <label for="senha-usuario">Senha</label>
-                <div>
-                    <input id="senha-usuario" type="password" name="Senha" placeholder="Digite sua senha" />
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="senha-usuario" type="password" name="Senha" placeholder="Digite sua Senha" />
+                    <label for="senha-usuario">Senha</label>
                 </div>
+            <button class="btn btn-success" type="submit">Entrar</button>
             </div>
-            <input type="submit">Entrar</input>
         </form>
+        </fieldset>
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/Pages/login.js" asp-append-version="true"></script>

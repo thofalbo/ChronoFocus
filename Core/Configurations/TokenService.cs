@@ -17,7 +17,7 @@ namespace Core.Configurations
                     new Claim(ClaimTypes.Name, usuario.Login)
                 }),
 
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
