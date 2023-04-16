@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Core.Configurations
 {
     public class TokenService
@@ -10,7 +12,8 @@ namespace Core.Configurations
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                    new Claim("idUsuario", usuario.Id.ToString()),
+                    new Claim("emailUsuario", usuario.Email),
                     new Claim(ClaimTypes.Name, usuario.Login)
                 }),
 
@@ -21,6 +24,15 @@ namespace Core.Configurations
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public static int UsuarioLogado(string jwtToken)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(jwtToken);
+
+            var idUsuarioLogado = int.Parse(token.Claims.FirstOrDefault(c => c.Type == "idUsuario")?.Value);
+            return idUsuarioLogado;
         }
     }
 }

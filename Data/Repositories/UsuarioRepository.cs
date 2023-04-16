@@ -27,6 +27,16 @@ namespace Data.Repositories
             });
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task ExcluirAsync(int id)
+        {
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == id);
+            if (usuario != null)
+            {
+                _dbContext.Usuarios.Remove(usuario);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
         
     }
 }

@@ -4,5 +4,6 @@ namespace Core.Interfaces.Repositories
     {
         Task CadastrarAsync(Usuario usuario);
         Task<Usuario> Get(string login, string senha);
+        Task ExcluirAsync(int id);
     }
 }

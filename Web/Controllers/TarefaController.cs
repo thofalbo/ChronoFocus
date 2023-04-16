@@ -21,7 +21,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("index")]
-        public IActionResult Index() => View(_tarefaService.MostrarTarefas(1));
+        public IActionResult Index() => View(_tarefaService.MostrarTarefas(TokenService.UsuarioLogado(HttpContext.Session.GetString("JwtToken"))));
 
         [HttpGet("cadastrar")]
         public IActionResult Cadastrar() => View();
@@ -29,7 +29,7 @@ namespace Web.Controllers
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Tarefa tarefa)
         {
-            await _tarefaService.CadastrarAsync(tarefa, 1);
+            await _tarefaService.CadastrarAsync(tarefa, TokenService.UsuarioLogado(HttpContext.Session.GetString("JwtToken")));
         }
 
         [HttpGet("excluir")]
