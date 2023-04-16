@@ -11,8 +11,8 @@ var tarefa = (function () {
         configs = $configs;
     };
 
-    var getCadastrar = function () { 
-        $.get(configs.urls.cadastrar).done((html) => {       
+    var getCadastrar = function () {
+        $.get(configs.urls.cadastrar).done((html) => {
             $('#formCadastro').html(html);
         })
     };
@@ -26,11 +26,11 @@ var tarefa = (function () {
         var model = $('#visorForm').serializeObject();
         console.log(model)
         $.post(configs.urls.cadastrar, model).done(() => {
-            clearInterval(contadorSegundos);
+            clearInterval(contadorTempo); // Stop the elapsed time interval
             location.reload();
         })
     };
-    
+
     var excluir = function () {
         var model = $('formExcluir').serializeObject();
         console.log(model)
@@ -39,27 +39,34 @@ var tarefa = (function () {
         })
     };
 
-    let segundos = 0;
+    let tempoInicio = null;
+    let contadorTempo;
+
     const fnVisor = segundos => {
         const tempo = new Date(segundos * 1000)
         return tempo.toLocaleTimeString('pt-BR', {
-          hour12: false,
-          timeZone: 'UTC'
+            hour12: false,
+            timeZone: 'UTC'
         })
-      }
+    };
+
     const fnContador = () => {
-        contadorSegundos = setInterval(() => {
-            segundos++
-            $('#relogio').text(fnVisor(segundos))
-        }, 1000)
-    }
+        tempoInicio = new Date();
+
+        contadorTempo = setInterval(() => {
+            let tempoAtual = new Date();
+            let intervaloTempo = Math.floor((tempoAtual - tempoInicio) / 1000);
+
+            $('#relogio').text(fnVisor(intervaloTempo));
+        }, 1000);
+    };
 
     return {
         init: init,
         cadastrar: cadastrar,
-        fnContador: fnContador,
         getCadastrar: getCadastrar,
         getExcluir: getExcluir,
-        excluir: excluir
+        excluir: excluir,
+        fnContador: fnContador
     };
-})()
+})();
