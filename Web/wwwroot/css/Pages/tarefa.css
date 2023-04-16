@@ -1,11 +1,9 @@
-
-.visor .form-floating {}
 .visor {
     justify-content: space-between;
 }
 
 .cronometro {
-    font-size: 3.5rem;
+    font-size: 6rem;
 }
 
 @media (max-width: 992px) {
@@ -31,4 +29,29 @@ thead, tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
+}
+
+.container-visor {
+    width: 50%;
+    margin: auto;
+    height: 15rem;
+    display: flex;
+    justify-content: center;
+}
+
+.visor-cronometro {
+    display: flex;
+    flex-direction: column;
+}
+
+.botoes-relogio {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10%;
+}
+
+.ion-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: 1.6rem;
 }

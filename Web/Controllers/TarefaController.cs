@@ -23,13 +23,13 @@ namespace Web.Controllers
         [HttpGet("index")]
         public IActionResult Index()
         {
-            var jwtToken = HttpContext.Session.GetString("JwtToken");
+            var jwtToken = Request.Cookies["JwtToken"];
 
             if (jwtToken != null)
             {
-            var usuarioLogado = TokenService.UsuarioLogado(jwtToken);
-            var tarefas = _tarefaService.MostrarTarefas(usuarioLogado);
-            return View(tarefas);
+                var usuarioLogado = TokenService.UsuarioLogado(jwtToken);
+                var tarefas = _tarefaService.MostrarTarefas(usuarioLogado);
+                return View(tarefas);
             }
             else {
                 return RedirectToAction("Index", "Login");
@@ -39,39 +39,39 @@ namespace Web.Controllers
         [HttpGet("cadastrar")]
         public IActionResult Cadastrar()
         {
-            var jwtToken = HttpContext.Session.GetString("JwtToken");
+            var jwtToken = Request.Cookies["JwtToken"];
 
             if (jwtToken != null)
             {
-            return View();
+                return View();
             }
             else {
                 return RedirectToAction("Index", "Login");
             }
         }
-        
+
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Tarefa tarefa)
         {
-            await _tarefaService.CadastrarAsync(tarefa, TokenService.UsuarioLogado(HttpContext.Session.GetString("JwtToken")));
+            await _tarefaService.CadastrarAsync(tarefa, TokenService.UsuarioLogado(Request.Cookies["JwtToken"]));
         }
 
         [HttpGet("excluir")]
         public async Task<IActionResult> Excluir(int? id)
         {
-            var jwtToken = HttpContext.Session.GetString("JwtToken");
+            var jwtToken = Request.Cookies["JwtToken"];
 
             if (jwtToken != null)
             {
                 var obj = await _dbContext.Tarefas.FindAsync(id.Value);
-                
+
                 return View(obj);
             }
             else {
                 return RedirectToAction("Index", "Login");
             }
         }
-        
+
         [HttpPost("excluir")]
         public async Task<IActionResult> Excluir(int id)
         {

@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-
 namespace Web.Controllers
 {
     public class LoginController : Controller
@@ -19,6 +16,7 @@ namespace Web.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<ActionResult> Authenticate(Usuario model)
         {
@@ -28,16 +26,17 @@ namespace Web.Controllers
                 return NotFound("Usuário ou senha inválidos");
 
             var jwtToken = TokenService.GenerateToken(usuario, _appSettings.Chave.Segredo);
-            HttpContext.Session.SetString("JwtToken", jwtToken);
+
+            Response.Cookies.Append("JwtToken", jwtToken);
 
             return RedirectToAction("Index", "Home");
         }
-        
+
         [HttpGet("logout")]
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
-            
+            Response.Cookies.Delete("JwtToken");
+
             return RedirectToAction("Index", "Login");
         }
     }

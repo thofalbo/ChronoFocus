@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Http;
-
 namespace Core.Configurations
 {
     public class TokenService

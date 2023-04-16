@@ -15,7 +15,7 @@ namespace Web.Controllers
         [HttpGet("index")]
         public async Task<IActionResult> Index()
         {
-            var jwtToken = HttpContext.Session.GetString("JwtToken");
+            var jwtToken = Request.Cookies["JwtToken"];
             return jwtToken.IsNullOrEmpty()
                 ? RedirectToAction("Index", "Login")
                 : View(await _dbContext.Usuarios.ToListAsync());
@@ -31,7 +31,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Excluir(int? id)
         {
             var usuario = await _dbContext.Usuarios.FindAsync(id.Value);
-            var jwtToken = HttpContext.Session.GetString("JwtToken");
+            var jwtToken = Request.Cookies["JwtToken"];
             return jwtToken.IsNullOrEmpty()
                 ? RedirectToAction("Index", "Login")
                 : View(usuario);

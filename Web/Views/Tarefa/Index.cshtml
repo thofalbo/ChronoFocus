@@ -3,18 +3,37 @@
     <link rel="stylesheet" href="~/css/Pages/tarefa.css" asp-append-version="true" />
 </head>
 
-<section>
-    <div id="formCadastro">
+<section>        
+<section class="container-visor">
+    <form id="visorForm" action="submit" onsubmit="tarefa.cadastrar()">
+        <fieldset>
+            <div class="visor form-group d-flex">
+                <div class="visor-cronometro">
+                    <h1 id="relogio" class="cronometro">00.00.00</h1>
+                    <div class="botoes-relogio">
+                        @* <input type="button" value="iniciar" onclick="tarefa.fnContador()">
+                        <input type="button" value="pausar" onclick="tarefa.playPause()"> *@
+                        <a type="button" onclick="tarefa.fnContador()">Iniciar</a>
+                        <a type="button" onclick="tarefa.playPause()">Pausar</a>
+                        @* <input type="submit" value="finalizar"> *@
+                        <a type="submit" onclick="tarefa.cadastrar()">Finalizar</a>
+                    </div>
+                </div>
 
-    </div>
+
+            </div>
+        </fieldset>
+        <div id="formCadastro" style="display: none;"></div>
+    </form>
+</section>
     
-    <div class="table-responsive-sm">
+    <div id="tabelaTarefas" class="table-responsive-sm">
         <table class="table table-hover">
             <thead class="table-success">
                 <tr>
-                    <th scope="col" class="col-xs-1">
+                    @* <th scope="col" class="col-xs-1">
                         @Html.DisplayNameFor(Model => Model.Usuario.Login)
-                    </th>
+                    </th> *@
                     <th scope="col" class="col-xs-2">
                         @Html.DisplayNameFor(Model => Model.Atividade)
                     </th>
@@ -31,13 +50,7 @@
                         @Html.DisplayNameFor(Model => Model.DataCadastro)
                     </th>
                     <th scope="col" class="col-xs-1">
-                        Editar
-                    </th>
-                    <th scope="col" class="col-xs-1">
-                        Detalhes
-                    </th>
-                    <th scope="col" class="col-xs-1">
-                        Excluir
+                        <button onclick="tarefa.hideCadastrar()">Nova Tarefa</button>
                     </th>
                 </tr>
             </thead>
@@ -45,9 +58,9 @@
             @foreach (var item in Model)
             {
                 <tr class="tabela-usuario">
-                    <th scope="row" class="col-xs-1">
+                    @* <th scope="row" class="col-xs-1">
                         @item.Usuario?.Login
-                    </th>
+                    </th> *@
                     <td class="col-xs-2">
                         @item.Atividade
                     </td>
@@ -64,13 +77,9 @@
                         @item.DataCadastro.ToString("dd/MM/yyyy")
                     </td>
                     <td class="col-xs-1">
-                        <a asp-action="Editar" asp-route-id="@item.Id"><ion-icon style="color: blue;" name="pencil-outline"></ion-icon></a>
-                    </td>
-                    <td class="col-xs-1">
-                        <a asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon style="color: green;" name="document-text-outline"></ion-icon></a>
-                    </td>
-                    <td class="col-xs-1">
-                        <a asp-action="Excluir" asp-route-id="@item.Id"><ion-icon style="color: red;" name="trash-outline"></ion-icon></a>
+                        <a asp-action="Editar" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: blue;" name="pencil-outline"></ion-icon></a>
+                        <a asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: green;" name="document-text-outline"></ion-icon></a>
+                        <a asp-action="Excluir" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: red;" name="trash-outline"></ion-icon></a>
                     </td>
                 </tr>
             }

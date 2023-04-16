@@ -1,5 +1,4 @@
 var tarefa = (function () {
-    // Configs object
     var configs = {
         urls: {
             index: '',
@@ -22,6 +21,20 @@ var tarefa = (function () {
             $('#formCadastro').html(html);
         });
     };
+    // var hideCadastrar = function () {
+    //     $.get(configs.urls.cadastrar).done(() => {
+    //         $('#formCadastro').html('');
+    //     });
+    // };
+    var hideCadastrar = function () {
+        $('#formCadastro').toggle(); // Toggle the visibility of the formCadastro element
+        $('#tabelaTarefas').toggle();
+    };
+    // var hideCadastrar = function () {
+    //     $('#formCadastro').hide(); // Hide the formCadastro element
+    //     console.log("formCadastro hidden");
+    // };
+
 
     var getExcluir = function () {
         location.href = configs.urls.excluir;
@@ -83,6 +96,7 @@ var tarefa = (function () {
         getExcluir: getExcluir,
         excluir: excluir,
         fnContador: fnContador,
-        playPause: playPause
+        playPause: playPause,
+        hideCadastrar: hideCadastrar
     };
 })();
