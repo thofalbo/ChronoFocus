@@ -1,7 +1,7 @@
 namespace Web.Controllers
 {
     [Route("departamento")]
-    public class DepartamentoController : Controller
+    public class DepartamentoController : AuthenticatedController
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IDepartamentoService _departamentoService;

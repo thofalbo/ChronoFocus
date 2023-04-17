@@ -1,7 +1,7 @@
 namespace Web.Controllers
 {
     [Route("usuario")]
-    public class UsuarioController : Controller
+    public class UsuarioController : AuthenticatedController
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -15,10 +15,7 @@ namespace Web.Controllers
         [HttpGet("index")]
         public async Task<IActionResult> Index()
         {
-            var jwtToken = Request.Cookies["JwtToken"];
-            return jwtToken.IsNullOrEmpty()
-                ? RedirectToAction("Index", "Login")
-                : View(await _dbContext.Usuarios.ToListAsync());
+            return View(await _dbContext.Usuarios.ToListAsync());
         }
 
         [HttpGet("cadastrar")]
@@ -31,10 +28,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Excluir(int? id)
         {
             var usuario = await _dbContext.Usuarios.FindAsync(id.Value);
-            var jwtToken = Request.Cookies["JwtToken"];
-            return jwtToken.IsNullOrEmpty()
-                ? RedirectToAction("Index", "Login")
-                : View(usuario);
+            return View(usuario);
         }
 
         [HttpPost("excluir")]

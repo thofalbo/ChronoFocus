@@ -37,7 +37,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseSession();
+// app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
