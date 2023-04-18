@@ -1,6 +1,5 @@
 
 global using Core.Configurations;
-global using Core.Dto;
 global using Core.Interfaces.Repositories;
 global using Core.Interfaces.Services;
 global using Core.Models;
