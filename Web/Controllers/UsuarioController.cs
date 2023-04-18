@@ -13,23 +13,10 @@ namespace Web.Controllers
         }
 
         [HttpGet("index")]
-        public async Task<IActionResult> Index()
-        {
-            return View(await _dbContext.Usuarios.ToListAsync());
-        }
-
-        [HttpGet("cadastrar")]
-        public IActionResult Cadastrar() => View();
-
-        [HttpPost("cadastrar")]
-        public async Task Cadastrar(Usuario usuario) => await _usuarioRepository.CadastrarAsync(usuario);
+        public async Task<IActionResult> Index() => View(await _dbContext.Usuarios.ToListAsync());
 
         [HttpGet("excluir")]
-        public async Task<IActionResult> Excluir(int? id)
-        {
-            var usuario = await _dbContext.Usuarios.FindAsync(id.Value);
-            return View(usuario);
-        }
+        public async Task<IActionResult> Excluir(int? id) => View(await _dbContext.Usuarios.FindAsync(id.Value));
 
         [HttpPost("excluir")]
         public async Task<IActionResult> Excluir(int id)

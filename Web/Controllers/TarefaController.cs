@@ -6,45 +6,28 @@ namespace Web.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly ITarefaRepository _tarefaRepository;
         private readonly ITarefaService _tarefaService;
-        private readonly IUsuarioRepository _usuarioRepository;
         public TarefaController(
             ApplicationDbContext dbContext,
             ITarefaRepository tarefaRepository,
-            ITarefaService tarefaService,
-            IUsuarioRepository usuarioRepository
+            ITarefaService tarefaService
         )
         {
             _dbContext = dbContext;
             _tarefaRepository = tarefaRepository;
-            _usuarioRepository = usuarioRepository;
             _tarefaService = tarefaService;
         }
 
         [HttpGet("index")]
-        public IActionResult Index()
-        {
-            var tarefas = _tarefaService.MostrarTarefas(IdUsuarioLogado);
-            return View(tarefas);
-        }
+        public IActionResult Index() => View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
 
         [HttpGet("cadastrar")]
-        public IActionResult Cadastrar()
-        {
-            return View();
-        }
+        public IActionResult Cadastrar() => View();
 
         [HttpPost("cadastrar")]
-        public async Task Cadastrar(Tarefa tarefa)
-        {
-            await _tarefaService.CadastrarAsync(tarefa, TokenService.UsuarioLogado(Request.Cookies["JwtToken"]));
-        }
+        public async Task Cadastrar(Tarefa tarefa) => await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
 
         [HttpGet("excluir")]
-        public async Task<IActionResult> Excluir(int? id)
-        {
-            var tarefa = await _dbContext.Tarefas.FindAsync(id.Value);
-            return View(tarefa);
-        }
+        public async Task<IActionResult> Excluir(int? id) => View(await _dbContext.Tarefas.FindAsync(id.Value));
 
         [HttpPost("excluir")]
         public async Task<IActionResult> Excluir(int id)

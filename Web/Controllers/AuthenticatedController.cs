@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Filters;
-
 namespace Web.Controllers
 {
     public class AuthenticatedController : Controller
@@ -9,16 +7,11 @@ namespace Web.Controllers
         {
             base.OnActionExecuting(context);
 
-            var jwtToken = Request.Cookies["JwtToken"];
+            var jwtToken = Request.Cookies["ChronoFocusAuthenticationToken"];
 
             if (string.IsNullOrEmpty(jwtToken))
-            {
                 context.Result = new RedirectResult("/Login");
-            }
-            else
-            {
-                IdUsuarioLogado = TokenService.UsuarioLogado(jwtToken);
-            }
+                    else IdUsuarioLogado = TokenService.UsuarioLogado(jwtToken);
         }
     }
 }
