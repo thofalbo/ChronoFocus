@@ -1,4 +1,4 @@
-@model Core.Models.Usuario
+@model Usuario
 
 @{
     Layout = null;
@@ -44,7 +44,6 @@
             <hr />
             <div class="form-group">
                 <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                @* <a asp-action="Index" class="btn btn-secondary">Voltar</a> *@
                 <a class="btn btn-secondary" asp-area="" asp-controller="login" asp-action="index">Voltar</a>
             </div>
         </form>
@@ -57,8 +56,8 @@
 <script>
     usuario.init({
         urls: {
-            cadastrar: '@Url.Action("cadastrar", "usuario")',
-            index: '@Url.Action("index", "usuario")'
+            cadastrar: '@Url.Action("cadastrar", "login")',
+            index: '@Url.Action("cadastrado", "login")'
         }
     })
 </script>

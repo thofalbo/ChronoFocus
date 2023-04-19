@@ -79,7 +79,7 @@
                             @item.Plataforma
                         </td>
                         <td class="col-xs-2" ordenado="TempoTarefa">
-                            @item.TempoTarefa.ToString("HH:mm:ss")
+                            @item.TempoTarefa.Hours.ToString("D2"):@item.TempoTarefa.Minutes.ToString("D2"):@item.TempoTarefa.Seconds.ToString("D2")
                         </td>
                         <td class="col-xs-2" ordenado="DataCadastro">
                             @item.DataCadastro.ToString("dd/MM/yyyy")

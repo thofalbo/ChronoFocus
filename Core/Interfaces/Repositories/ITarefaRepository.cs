@@ -5,6 +5,6 @@ namespace Core.Interfaces.Repositories
         Task CadastrarAsync(Tarefa tarefa);
         IEnumerable<Tarefa> MostrarTarefas(int idUsuario);
         Task ExcluirAsync(int id);
-        // Task<Tarefa> BuscarTarefaUsuarioAsync(int idUsuario);
+        Task AtualizarAsync(Tarefa tarefa);
     }
 }

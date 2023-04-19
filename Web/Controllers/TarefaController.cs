@@ -1,76 +1,33 @@
 namespace Web.Controllers
 {
     [Route("tarefa")]
-    public class TarefaController : Controller
+    public class TarefaController : AuthenticatedController
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ITarefaRepository _tarefaRepository;
         private readonly ITarefaService _tarefaService;
-        private readonly IUsuarioRepository _usuarioRepository;
         public TarefaController(
             ApplicationDbContext dbContext,
             ITarefaRepository tarefaRepository,
-            ITarefaService tarefaService,
-            IUsuarioRepository usuarioRepository
+            ITarefaService tarefaService
         )
         {
             _dbContext = dbContext;
             _tarefaRepository = tarefaRepository;
-            _usuarioRepository = usuarioRepository;
             _tarefaService = tarefaService;
         }
 
         [HttpGet("index")]
-        public IActionResult Index()
-        {
-            var jwtToken = Request.Cookies["JwtToken"];
-
-            if (jwtToken != null)
-            {
-                var usuarioLogado = TokenService.UsuarioLogado(jwtToken);
-                var tarefas = _tarefaService.MostrarTarefas(usuarioLogado);
-                return View(tarefas);
-            }
-            else {
-                return RedirectToAction("Index", "Login");
-            }
-        }
+        public IActionResult Index() => View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
 
         [HttpGet("cadastrar")]
-        public IActionResult Cadastrar()
-        {
-            var jwtToken = Request.Cookies["JwtToken"];
-
-            if (jwtToken != null)
-            {
-                return View();
-            }
-            else {
-                return RedirectToAction("Index", "Login");
-            }
-        }
+        public IActionResult Cadastrar() => View();
 
         [HttpPost("cadastrar")]
-        public async Task Cadastrar(Tarefa tarefa)
-        {
-            await _tarefaService.CadastrarAsync(tarefa, TokenService.UsuarioLogado(Request.Cookies["JwtToken"]));
-        }
+        public async Task Cadastrar(Tarefa tarefa) => await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
 
         [HttpGet("excluir")]
-        public async Task<IActionResult> Excluir(int? id)
-        {
-            var jwtToken = Request.Cookies["JwtToken"];
-
-            if (jwtToken != null)
-            {
-                var obj = await _dbContext.Tarefas.FindAsync(id.Value);
-
-                return View(obj);
-            }
-            else {
-                return RedirectToAction("Index", "Login");
-            }
-        }
+        public async Task<IActionResult> Excluir(int? id) => View(await _dbContext.Tarefas.FindAsync(id.Value));
 
         [HttpPost("excluir")]
         public async Task<IActionResult> Excluir(int id)

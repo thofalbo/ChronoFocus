@@ -39,4 +39,4 @@ INSERT INTO tarefa (
 	tempo_tarefa,
 	data_cadastro
 ) VALUES
-	(1, 'Atividade1', null, null, '1987-07-28 00:00:00', now());
+	(1, 'Atividade1', null, null, '00:00:00', now());

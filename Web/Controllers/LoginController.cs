@@ -12,10 +12,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         [HttpPost]
         public async Task<ActionResult> Authenticate(Usuario model)
@@ -27,7 +24,7 @@ namespace Web.Controllers
 
             var jwtToken = TokenService.GenerateToken(usuario, _appSettings.Chave.Segredo);
 
-            Response.Cookies.Append("JwtToken", jwtToken);
+            Response.Cookies.Append("ChronoFocusAuthenticationToken", jwtToken);
 
             return RedirectToAction("Index", "Home");
         }
@@ -35,9 +32,18 @@ namespace Web.Controllers
         [HttpGet("logout")]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("JwtToken");
+            Response.Cookies.Delete("ChronoFocusAuthenticationToken");
 
             return RedirectToAction("Index", "Login");
         }
+        
+        [HttpGet("cadastrar")]
+        public IActionResult Cadastrar() => View();
+
+        [HttpPost("cadastrar")]
+        public async Task Cadastrar(Usuario usuario) => await _usuarioRepository.CadastrarAsync(usuario);
+
+        [HttpGet("cadastrado")]
+        public IActionResult Cadastrado() => View();
     }
 }
