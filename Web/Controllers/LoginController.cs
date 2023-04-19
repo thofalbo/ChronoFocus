@@ -1,5 +1,6 @@
 namespace Web.Controllers
 {
+    [Route("login")]
     public class LoginController : Controller
     {
         private readonly IUsuarioRepository _usuarioRepository;
