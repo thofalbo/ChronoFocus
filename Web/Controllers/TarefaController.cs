@@ -18,7 +18,11 @@ namespace Web.Controllers
         }
 
         [HttpGet("index")]
-        public IActionResult Index() => View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
+        public IActionResult Index()
+        {
+            ViewBag.IdUsuarioLogado = IdUsuarioLogado;
+            return View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
+        }
 
         [HttpGet("cadastrar")]
         public IActionResult Cadastrar() => View();
