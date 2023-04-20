@@ -18,15 +18,10 @@ namespace Web.Controllers
         }
 
         [HttpGet("index")]
-        public IActionResult Index()
-        {
-            return View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
-        }
+        public IActionResult Index() => View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
 
         [HttpGet("cadastrar")]
-        public IActionResult Cadastrar() {
-            return View("_cadastrar");
-        }
+        public IActionResult Cadastrar() => View("_cadastrar");
 
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Tarefa tarefa) => await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);

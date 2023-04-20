@@ -13,9 +13,10 @@ namespace Web.Controllers
 
             if (string.IsNullOrEmpty(jwtToken))
                 context.Result = new RedirectResult("/login");
-            else 
+            else {
                 IdUsuarioLogado = TokenService.UsuarioLogado(jwtToken);
                 ViewBag.IdUsuarioLogado = IdUsuarioLogado;
+            }
 
             if (context.HttpContext.Response.StatusCode == 200)
             {

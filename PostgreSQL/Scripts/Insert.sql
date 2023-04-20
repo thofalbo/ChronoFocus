@@ -40,3 +40,18 @@ INSERT INTO tarefa (
 	data_cadastro
 ) VALUES
 	(1, 'Atividade1', null, null, '00:00:00', now());
+
+	
+insert into opcao
+(rota)
+values
+('cadastrar'),
+('excluir'),
+('alterar'),
+('visualizar');
+
+insert into tela
+(rota)
+values
+('usuario'),
+('tarefa');

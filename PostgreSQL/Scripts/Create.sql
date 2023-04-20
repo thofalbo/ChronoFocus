@@ -38,3 +38,27 @@ CREATE TABLE tarefa (
     constraint fk_usuario_tarefa foreign key(id_usuario)
     references usuario(id)
 );
+
+CREATE TABLE opcao (
+	id int generated always as identity,
+	rota varchar(64) NOT NULL,
+	constraint pk_opcao primary key(id)
+);
+
+CREATE TABLE tela (
+	id int generated always as identity,
+	rota varchar(64) NOT NULL,
+	constraint pk_tela primary key(id)
+);
+
+CREATE TABLE opcao_tela_usuario (
+	id_opcao int NOT NULL,
+	id_tela int NOT NULL,
+	id_usuario int NOT NULL,
+    constraint fk_rota_opcao_tela_usuario foreign key(id_opcao)
+    references opcao(id),
+    constraint fk_tela_opcao_tela_usuario foreign key(id_tela)
+    references tela(id),
+    constraint fk_usuario_opcao_tela_usuario foreign key(id_usuario)
+    references usuario(id)
+);

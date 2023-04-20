@@ -12,10 +12,6 @@ var usuario = (function () {
         configs = $configs;
     };
 
-    var getCadastrar = function () {
-        location.href = (configs.urls.cadastrar)
-    };
-
     var cadastrar = function () {
         var model = $('#formCadastrarUsuario').serializeObject();
         $.post(configs.urls.cadastrar, model).done(() => {
@@ -41,7 +37,6 @@ var usuario = (function () {
         init: init,
         cadastrar: cadastrar,
         excluir: excluir,
-        editar: editar,
-        getCadastrar: getCadastrar
+        editar: editar
     };
 })()

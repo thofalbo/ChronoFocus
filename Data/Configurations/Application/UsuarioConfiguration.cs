@@ -15,6 +15,7 @@ namespace Data.Configurations.Application
             builder.Property(x => x.DataCadastro).HasColumnName("data_cadastro");
 
             builder.HasMany(x => x.Tarefas).WithOne(x => x.Usuario);
+            builder.HasMany(x => x.OpcoesTelaUsuario).WithOne(x => x.Usuario);
         }
     }
 }
