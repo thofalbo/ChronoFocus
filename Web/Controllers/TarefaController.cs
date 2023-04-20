@@ -20,21 +20,22 @@ namespace Web.Controllers
         [HttpGet("index")]
         public IActionResult Index()
         {
-            ViewBag.IdUsuarioLogado = IdUsuarioLogado;
             return View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
         }
 
         [HttpGet("cadastrar")]
-        public IActionResult Cadastrar() => View();
+        public IActionResult Cadastrar() {
+            return View("_cadastrar");
+        }
 
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Tarefa tarefa) => await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
 
         [HttpGet("excluir")]
-        public async Task<IActionResult> Excluir(int? id) => View(await _dbContext.Tarefas.FindAsync(id.Value));
+        public async Task<IActionResult> Excluir(int id) => View("_excluir", await _dbContext.Tarefas.FindAsync(id));
 
         [HttpPost("excluir")]
-        public async Task<IActionResult> Excluir(int id)
+        public async Task<IActionResult> ExcluirTarefa(int id)
         {
             await _tarefaService.ExcluirAsync(id);
             return RedirectToAction(nameof(Index));

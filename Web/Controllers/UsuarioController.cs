@@ -16,10 +16,10 @@ namespace Web.Controllers
         public async Task<IActionResult> Index() => View(await _dbContext.Usuarios.ToListAsync());
 
         [HttpGet("excluir")]
-        public async Task<IActionResult> Excluir(int? id) => View(await _dbContext.Usuarios.FindAsync(id.Value));
+        public async Task<IActionResult> Excluir(int id) => View("_excluir", await _dbContext.Usuarios.FindAsync(id));
 
         [HttpPost("excluir")]
-        public async Task<IActionResult> Excluir(int id)
+        public async Task<IActionResult> ExcluirUsuario(int id)
         {
             await _usuarioRepository.ExcluirAsync(id);
 

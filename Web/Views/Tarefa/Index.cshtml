@@ -1,6 +1,4 @@
-@model IEnumerable<Core.Models.Tarefa>
-@{
-}
+@model IEnumerable<Tarefa>
 <head>
     <link rel="stylesheet" href="~/css/Pages/tarefa.css" asp-append-version="true" />
 </head>
@@ -11,7 +9,7 @@
             <div class="visor-cronometro">
                 <h1 id="relogio" class="cronometro">00:00:00</h1>
                 <div id="botoesCadastrar" class="botoes-relogio">
-                    @if (ViewBag.IdUsuarioLogado != 1)
+                    @if (ViewBag.IdUsuarioLogado == 1)
                     {
                     <button class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.hideCadastrar()">
                         <p>+</p>
@@ -51,7 +49,7 @@
                         <span class="sort-icon"></span>
                     </th>
                     <th scope="col" class="col-xs-2" ordenar="TipoAtividade" onclick="tarefa.ordenarTabela('TipoAtividade')">
-                        <span class="header-text">TipoAtividade</span>
+                        <span class="header-text">Tipo da Atividade</span>
                         <span class="sort-icon"></span>
                     </th>
                     <th scope="col" class="col-xs-2" ordenar="Plataforma" onclick="tarefa.ordenarTabela('Plataforma')">
@@ -59,11 +57,11 @@
                         <span class="sort-icon"></span>
                     </th>
                     <th scope="col" class="col-xs-2" ordenar="TempoTarefa" onclick="tarefa.ordenarTabela('TempoTarefa')">
-                        <span class="header-text">TempoTarefa</span>
+                        <span class="header-text">Tempo</span>
                         <span class="sort-icon"></span>
                     </th>
                     <th scope="col" class="col-xs-2" ordenar="DataCadastro" onclick="tarefa.ordenarTabela('DataCadastro')">
-                        <span class="header-text">DataCadastro</span>
+                        <span class="header-text">Data da Atividade</span>
                         <span class="sort-icon"></span>
                     </th>
                     <th scope="col" class="col-xs-2">

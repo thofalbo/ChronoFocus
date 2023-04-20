@@ -35,16 +35,16 @@ namespace Web.Controllers
         {
             Response.Cookies.Delete("ChronoFocusAuthenticationToken");
 
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Index", "login");
         }
         
         [HttpGet("cadastrar")]
-        public IActionResult Cadastrar() => View();
+        public IActionResult Cadastrar() => View("_cadastrar");
 
         [HttpPost("cadastrar")]
         public async Task Cadastrar(Usuario usuario) => await _usuarioRepository.CadastrarAsync(usuario);
 
         [HttpGet("cadastrado")]
-        public IActionResult Cadastrado() => View();
+        public IActionResult Cadastrado() => View("_cadastrado");
     }
 }

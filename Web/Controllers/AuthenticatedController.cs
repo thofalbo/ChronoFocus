@@ -9,11 +9,13 @@ namespace Web.Controllers
             base.OnActionExecuting(context);
 
             var jwtToken = Request.Cookies["ChronoFocusAuthenticationToken"];
+            
 
             if (string.IsNullOrEmpty(jwtToken))
-                context.Result = new RedirectResult("/Login");
+                context.Result = new RedirectResult("/login");
             else 
                 IdUsuarioLogado = TokenService.UsuarioLogado(jwtToken);
+                ViewBag.IdUsuarioLogado = IdUsuarioLogado;
 
             if (context.HttpContext.Response.StatusCode == 200)
             {
