@@ -17,14 +17,14 @@ namespace Web.Controllers
             _tarefaService = tarefaService;
         }
 
-        [HttpGet("index")]
+        [HttpGet("inicio")]
         public IActionResult Index() => View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
 
         [HttpGet("cadastrar")]
         public IActionResult Cadastrar() => View("_cadastrar");
 
         [HttpPost("cadastrar")]
-        public async Task Cadastrar(Tarefa tarefa) => await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
+        public async Task CadastrarTarefa(Tarefa tarefa) => await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
 
         [HttpGet("excluir")]
         public async Task<IActionResult> Excluir(int id) => View("_excluir", await _dbContext.Tarefas.FindAsync(id));

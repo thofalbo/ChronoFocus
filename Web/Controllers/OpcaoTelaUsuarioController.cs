@@ -7,8 +7,7 @@ namespace Web.Controllers
         )
         {
         }
-
-        [HttpGet("index")]
+        [HttpGet("inicio")]
         public IActionResult Index() => View();
     }
 }

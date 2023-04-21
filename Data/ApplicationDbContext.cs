@@ -9,5 +9,6 @@ namespace Data
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Tarefa> Tarefas { get; set; }
+        public DbSet<OpcaoTelaUsuario> OpcoesTelaUsuario { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Web.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
-        [HttpGet("index")]
+        [HttpGet("inicio")]
         public async Task<IActionResult> Index() => View(await _dbContext.Usuarios.ToListAsync());
 
         [HttpGet("excluir")]

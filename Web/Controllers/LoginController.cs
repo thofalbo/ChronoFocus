@@ -12,11 +12,11 @@ namespace Web.Controllers
             _appSettings = appSettings;
         }
 
-        [HttpGet]
+        [HttpGet("inicio")]
         public IActionResult Index() => View();
 
-        [HttpPost]
-        public async Task<ActionResult> Authenticate(Usuario model)
+        [HttpPost("autenticar")]
+        public async Task<ActionResult> Autenticar(Usuario model)
         {
             var usuario = await _usuarioRepository.Get(model.Login, model.Senha);
 
