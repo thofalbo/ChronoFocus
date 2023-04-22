@@ -1,87 +1,57 @@
-@* @model OpcaoTelaUsuario *@
+@model IEnumerable<OpcaoTelaUsuario>
 
+<h1>OpcoesTelaUsuario</h1>
 
-@* @model OpcaoTelaUsuario *@
+<a asp-controller="opcao-tela-usuario" asp-action="cadastrar" class="btn btn-primary">Cadastrar Nova OpcaoTelaUsuario</a>
 
-  @* <form id="formOpcaoTelaUsuario" onsubmit="opcaoTelaUsuario.cadastrar()">
-  <fieldset>
-    <legend>Legend</legend>
-    <div class="form-group">
-      <label class="form-label mt-4">Floating labels</label>
-      <div class="form-floating mb-3">
-        <input name="idOpcao" type="number" class="form-control" placeholder="numero">
-        <label for="idOpcao">idOpcao</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input name="idTela" type="number" class="form-control" placeholder="numero">
-        <label for="idTela">idTela</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input name="idUsuario" type="number" class="form-control" placeholder="numero">
-        <label for="idUsuario">idUsuario</label>
-      </div>
-    </div>
-    <input type="submit" class="btn btn-primary" ></input>
-  </fieldset>
-</form> *@
-
-
-
-@* @using (Html.BeginForm("cadastrar", "opcao-tela-usuario", FormMethod.Post, new { id = "formCadastro" }))
+@if (!Model.Any())
 {
-    @Html.LabelFor(model => model.IdOpcao);
-    @Html.TextBoxFor(model => model.IdOpcao);
-
-    @Html.LabelFor(model => model.IdTela);
-    @Html.TextBoxFor(model => model.IdTela);
-
-    @Html.LabelFor(model => model.IdUsuario);
-    @Html.TextBoxFor(model => model.IdUsuario);
-
-    <button type="button" onclick="opcaoTelaUsuario.cadastrar()">Submit</button>
-} *@
-
-
-@model OpcaoTelaUsuarioViewModel
-
-<form method="post" action="@Url.Action("cadastrar", "opcao-tela-usuario")">
-    <div class="form-group">
-        <label for="opcao">Opcao</label>
-        <select class="form-control" id="opcao" name="IdOpcao">
-            @foreach (var opcao in ViewBag.Opcoes)
+    <p>Nenhuma opcaoTelaUsuario cadastrada.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdOpcao</th>
+                <th>IdTela</th>
+                <th>IdUsuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var opcaoTelaUsuario in Model)
             {
-                <option value="@opcao.Id">@opcao.Rota</option>
+                <tr>
+                    @if (opcaoTelaUsuario.Opcao != null)
+                    {
+                        <td>@opcaoTelaUsuario.Opcao.Rota</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (opcaoTelaUsuario.Tela != null)
+                    {
+                        <td>@opcaoTelaUsuario.Tela.Rota</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (opcaoTelaUsuario.Usuario != null)
+                    {
+                        <td>@opcaoTelaUsuario.Usuario.Login</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        <a asp-controller="opcao-tela-usuario" asp-action="editar" asp-route-id="@opcaoTelaUsuario" class="btn btn-primary">Editar</a>
+                        <a asp-controller="opcao-tela-usuario" asp-action="excluir" asp-route-id="@opcaoTelaUsuario" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
             }
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="tela">Tela</label>
-        <select class="form-control" id="tela" name="IdTela">
-            @foreach (var tela in ViewBag.Telas)
-            {
-                <option value="@tela.Id">@tela.Rota</option>
-            }
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="usuario">Usuario</label>
-        <select class="form-control" id="usuario" name="IdUsuario">
-            @foreach (var usuario in ViewBag.Usuarios)
-            {
-                <option value="@usuario.Id">@usuario.Login</option>
-            }
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Salvar</button>
-</form>
-
-<script src="~/js/Pages/opcaoTelaUsuario.js" asp-append-version="true"></script>
-<script>
-    opcaoTelaUsuario.init({
-        urls: {
-            cadastrar: '@Url.Action("cadastrar", "opcao-tela-usuario")'
-        }
-    });
-</script>
-
-
+        </tbody>
+    </table>
+}

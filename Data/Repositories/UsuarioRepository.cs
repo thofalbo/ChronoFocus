@@ -5,6 +5,9 @@ public class UsuarioRepository : IUsuarioRepository
 
     public UsuarioRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
+    public async Task<IEnumerable<Usuario>> ListarAsync() => await _dbContext.Usuarios.ToListAsync();
+    
+    public async Task<Usuario> ObterPorIdAsync(int id) => await _dbContext.Usuarios.FindAsync(id);
     public async Task<Usuario> Get(string login, string senha)
     {
         return await _dbContext.Usuarios

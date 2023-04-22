@@ -2,16 +2,25 @@ namespace Core.Services;
 public class OpcaoService : IOpcaoService
 {
     private readonly IOpcaoRepository _opcaoRepository;
+    private readonly ITelaRepository _telaRepository;
+    private readonly IUsuarioRepository _usuarioRepository;
 
-    public OpcaoService(IOpcaoRepository opcaoRepository) => _opcaoRepository = opcaoRepository;
-
+    public OpcaoService(
+        IOpcaoRepository opcaoRepository,
+        ITelaRepository telaRepository,
+        IUsuarioRepository usuarioRepository
+    )
+    {
+        _opcaoRepository = opcaoRepository;
+        _telaRepository = telaRepository;
+        _usuarioRepository = usuarioRepository;
+    }
     public async Task<IEnumerable<Opcao>> ListarAsync() => await _opcaoRepository.ListarAsync();
 
     public async Task<Opcao> ObterPorIdAsync(int id) => await _opcaoRepository.ObterPorIdAsync(id);
 
     public async Task CadastrarAsync(Opcao opcao) 
     {
-        // Example of additional business logic: ensure opcao.Nome is unique
         var opcaoExistente = await _opcaoRepository.ObterPorNomeAsync(opcao.Rota);
         if (opcaoExistente != null)
         {
@@ -23,7 +32,6 @@ public class OpcaoService : IOpcaoService
 
     public async Task AtualizarAsync(Opcao opcao)
     {
-        // Example of additional business logic: ensure opcao.Nome is unique
         var opcaoExistente = await _opcaoRepository.ObterPorNomeAsync(opcao.Rota);
         if (opcaoExistente != null && opcaoExistente.Id != opcao.Id)
         {

@@ -34,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IOpcaoRepository, OpcaoRepository>();
         services.AddScoped<ITelaRepository, TelaRepository>();
 
+        services.AddScoped<IOpcaoTelaUsuarioService, OpcaoTelaUsuarioService>();
         services.AddScoped<ITarefaService, TarefaService>();
         services.AddScoped<IOpcaoService, OpcaoService>();
         services.AddScoped<ITelaService, TelaService>();

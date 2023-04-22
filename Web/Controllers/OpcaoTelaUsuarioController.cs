@@ -1,70 +1,117 @@
-// namespace Web.Controllers;
-// [Route("opcao-tela-usuario")]
-// public class OpcaoTelaUsuarioController : AuthenticatedController
-// {
-//     private readonly IOpcaoTelaUsuarioRepository _opcaoTelaUsuarioRepository;
-//     public OpcaoTelaUsuarioController(
-//         IOpcaoTelaUsuarioRepository opcaoTelaUsuarioRepository
-//     )
-//     {
-//         _opcaoTelaUsuarioRepository = opcaoTelaUsuarioRepository;
-//     }
-//     [HttpGet("inicio")]
-//     public IActionResult Index() => View();
+namespace Web.Controllers;
+[Route("opcao-tela-usuario")]
+public class OpcaoTelaUsuarioController : AuthenticatedController
+{
+    private readonly IOpcaoTelaUsuarioService _opcaoTelaUsuarioService;
+    private readonly IOpcaoTelaUsuarioRepository _opcaoTelaUsuarioRepository;
+    private readonly IOpcaoRepository _opcaoRepository;
+    private readonly ITelaRepository _telaRepository;
+    private readonly IUsuarioRepository _usuarioRepository;
+    private readonly AppDbContext _dbContext;
 
-//     [HttpPost("cadastrar")]
-//     public async Task CadastrarOpcaoTelaUsuario(OpcaoTelaUsuario opcaoTelaUsuario) => await _opcaoTelaUsuarioRepository.CadastrarAsync(opcaoTelaUsuario);
-// }
+    public OpcaoTelaUsuarioController
+    (
+        IOpcaoTelaUsuarioService opcaoTelaUsuarioService,
+        IOpcaoTelaUsuarioRepository opcaoTelaUsuarioRepository,
+        AppDbContext dbContext
+    )
+    {
+        _opcaoTelaUsuarioService = opcaoTelaUsuarioService;
+        _opcaoTelaUsuarioRepository = opcaoTelaUsuarioRepository;
+        _dbContext = dbContext;
+    }
 
-// namespace Web.Controllers;
-// [Route("opcao-tela-usuario")]
-// public class OpcaoTelaUsuarioController : AuthenticatedController
-// {
-//     private readonly IOpcaoTelaUsuarioRepository _opcaoTelaUsuarioRepository;
-//     private readonly IOpcaoRepository _opcaoRepository;
-//     private readonly ITelaRepository _telaRepository;
-//     private readonly IUsuarioRepository _usuarioRepository;
-    
-//     public OpcaoTelaUsuarioController(
-//         IOpcaoTelaUsuarioRepository opcaoTelaUsuarioRepository,
-//         IOpcaoRepository opcaoRepository,
-//         ITelaRepository telaRepository,
-//         IUsuarioRepository usuarioRepository
-//     )
-//     {
-//         _opcaoTelaUsuarioRepository = opcaoTelaUsuarioRepository;
-//         _opcaoRepository = opcaoRepository;
-//         _telaRepository = telaRepository;
-//         _usuarioRepository = usuarioRepository;
-//     }
-    
-//     [HttpGet("inicio")]
-//     public async Task<IActionResult> Index()
-//     {
-//         var viewModel = new OpcaoTelaUsuarioViewModel
-//         {
-//             OpcoesTelaUsuario = await _opcaoTelaUsuarioRepository.ListarAsync(),
-//             Opcoes = await _opcaoRepository.ListarAsync(),
-//             Telas = await _telaRepository.ListarAsync(),
-//             Usuarios = await _usuarioRepository.ListarAsync()
-//         };
-        
-//         return View(viewModel);
-//     }
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        return View(await _opcaoTelaUsuarioRepository.ListarAsync());
+    }
 
-//     [HttpPost("cadastrar")]
-//     public async Task<IActionResult> CadastrarOpcaoTelaUsuario(OpcaoTelaUsuarioViewModel viewModel)
-//     {
-//         if (ModelState.IsValid)
-//         {
-//             await _opcaoTelaUsuarioRepository.CadastrarAsync(viewModel.OpcaoTelaUsuario);
-//             return RedirectToAction("Index");
-//         }
-        
-//         viewModel.Opcoes = await _opcaoRepository.ListarAsync();
-//         viewModel.Telas = await _telaRepository.ListarAsync();
-//         viewModel.Usuarios = await _usuarioRepository.ListarAsync();
-        
-//         return View("Index", viewModel);
-//     }
-// }
+    [HttpGet("cadastrar")]
+    public async Task<IActionResult> CadastrarGet() => View("_cadastrar", await _opcaoTelaUsuarioService.MostrarOpcaoTelaUsuarioDtoAsync());
+
+    [HttpPost("cadastrar")]
+    public async Task<IActionResult> CadastrarPost(OpcaoTelaUsuarioDto dto)
+    {
+        if (ModelState.IsValid)
+        {
+            var opcaoTelaUsuarioDto = new OpcaoTelaUsuario
+            {
+                IdOpcao = dto.OpcaoTelaUsuario.IdOpcao,
+                IdTela = dto.OpcaoTelaUsuario.IdTela,
+                IdUsuario = dto.OpcaoTelaUsuario.IdUsuario
+            };
+
+            var opcaoTelaUsuario = new OpcaoTelaUsuario {
+                IdOpcao = opcaoTelaUsuarioDto.IdOpcao,
+                IdTela = opcaoTelaUsuarioDto.IdTela,
+                IdUsuario = opcaoTelaUsuarioDto.IdUsuario
+            };
+
+            await _opcaoTelaUsuarioRepository.CadastrarAsync(opcaoTelaUsuario);
+            
+            return RedirectToAction("Index");
+    }
+
+    // If the model state is invalid, return the view with the original DTO to display validation errors
+    return View("_cadastrar", dto);
+    }
+
+    // [HttpGet("editar/{id:int}")]
+    // public async Task<IActionResult> EditarGet(int id)
+    // {
+    //     var opcaoTelaUsuario = await _opcaoTelaUsuarioService.ObterPorIdAsync(id);
+
+    //     if (opcaoTelaUsuario == null)
+    //         return NotFound();
+
+    //     var viewModel = new OpcaoTelaUsuarioViewModel { OpcaoTelaUsuario = opcaoTelaUsuario };
+
+    //     return View("_editar", viewModel);
+    // }
+
+    // [HttpPost("editar")]
+    // public async Task<IActionResult> EditarPost(OpcaoTelaUsuarioViewModel viewModel)
+    // {
+    //     if (!ModelState.IsValid)
+    //         return View("_editar", viewModel);
+
+    //     var opcaoTelaUsuarioExistente = await _opcaoTelaUsuarioService.ObterPorIdAsync(viewModel.OpcaoTelaUsuario);
+
+    //     if (opcaoTelaUsuarioExistente == null)
+    //         return NotFound();
+
+    //     await _opcaoTelaUsuarioService.AtualizarAsync(viewModel.OpcaoTelaUsuario);
+
+    //     return RedirectToAction(nameof(Index));
+    // }
+
+    // [HttpGet("excluir/{id:int}")]
+    // public async Task<IActionResult> ExcluirGet(int id)
+    // {
+    //     var opcaoTelaUsuario = await _opcaoTelaUsuarioService.ObterPorIdAsync(id);
+
+    //     if (opcaoTelaUsuario == null)
+    //         return NotFound();
+
+    //     var viewModel = new OpcaoTelaUsuarioViewModel { OpcaoTelaUsuario = opcaoTelaUsuario };
+
+    //     return View("_excluir", viewModel);
+    // }
+
+    // [HttpPost("excluir")]
+    // public async Task<IActionResult> ExcluirPost(OpcaoTelaUsuarioViewModel viewModel)
+    // {
+    //     if (!ModelState.IsValid)
+    //         return View("_excluir", viewModel);
+
+    //     var opcaoTelaUsuarioExistente = await _opcaoTelaUsuarioService.ObterPorIdAsync(viewModel.OpcaoTelaUsuario.Id);
+
+    //     if (opcaoTelaUsuarioExistente == null)
+    //         return NotFound();
+
+    //     await _opcaoTelaUsuarioRepository.ExcluirAsync(opcaoTelaUsuarioExistente);
+
+    //     return RedirectToAction(nameof(Index));
+    // }
+}

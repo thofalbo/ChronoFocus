@@ -1,10 +1,8 @@
-namespace Core.Interfaces.Services
+namespace Core.Interfaces.Services;
+public interface IOpcaoService
 {
-    public interface IOpcaoService
-    {
-        Task<IEnumerable<Opcao>> ListarAsync();
-        Task<Opcao> ObterPorIdAsync(int id);
-        Task CadastrarAsync(Opcao opcao);
-        Task AtualizarAsync(Opcao opcao);
-    }
+    Task<IEnumerable<Opcao>> ListarAsync();
+    Task<Opcao> ObterPorIdAsync(int id);
+    Task CadastrarAsync(Opcao opcao);
+    Task AtualizarAsync(Opcao opcao);
 }
