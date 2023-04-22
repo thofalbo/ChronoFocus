@@ -1,24 +1,24 @@
 @model Tarefa
 
-<h1>Editar Opção</h1>
+<h1>Editar Tarefa</h1>
 
-<form id="opcaoForm">
+<form id="tarefaForm">
     <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="Atividade" class="control-label"></label>
         <input asp-for="Atividade" class="form-control" />
     </div>
-    <button type="button" class="btn btn-primary" onclick="opcao.registrar('opcaoForm', 'editar')">Editar</button>
+    <button type="button" class="btn btn-primary" onclick="tarefa.registrar('tarefaForm', 'editar')">Editar</button>
 </form>
 
 @section scripts {
-    <script src="~/js/Pages/opcao.js" asp-append-version="true"></script>
+    <script src="~/js/Pages/tarefa.js" asp-append-version="true"></script>
     <script>
         $(function () {
-            opcao.init({
+            tarefa.init({
                 urls: {
-                    editar: '@Url.Action("editar", "opcoes")',
-                    index: '@Url.Action("Index", "Opcao")'
+                    editar: '@Url.Action("editar", "tarefa")',
+                    index: '@Url.Action("Index", "tarefa")'
                 }
             });
         });

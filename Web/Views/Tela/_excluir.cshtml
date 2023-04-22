@@ -1,0 +1,23 @@
+@model TelaViewModel
+
+<h1>Excluir Tela</h1>
+
+<form id="telaForm">
+    <input type="hidden" asp-for="Tela.Id" />
+    <p>Tem certeza que deseja excluir a opção @Model.Tela.Rota?</p>
+    <button type="button" class="btn btn-danger" onclick="tela.registrar('telaForm', 'excluir')">Excluir</button>
+</form>
+
+@section scripts {
+    <script src="~/js/Pages/tela.js" asp-append-version="true"></script>
+    <script>
+        $(function () {
+            tela.init({
+                urls: {
+                    excluir: '@Url.Action("excluir", "tela")',
+                    index: '@Url.Action("Index", "Tela")'
+                }
+            });
+        });
+    </script>
+}

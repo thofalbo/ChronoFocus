@@ -1,5 +1,5 @@
 namespace Web.Controllers;
-[Route("opcoes")]
+[Route("opcao")]
 public class OpcaoController : AuthenticatedController
 {
     private readonly IOpcaoService _opcaoService;

@@ -2,7 +2,7 @@
 
 <h1>Opções</h1>
 
-<a asp-controller="opcoes" asp-action="cadastrar" class="btn btn-primary">Cadastrar Nova Opção</a>
+<a asp-controller="opcao" asp-action="cadastrar" class="btn btn-primary">Cadastrar Nova Opção</a>
 
 @if (!Model.Any())
 {
@@ -25,8 +25,8 @@ else
                     <td>@opcao.Id</td>
                     <td>@opcao.Rota</td>
                     <td>
-                        <a asp-controller="opcoes" asp-action="editar" asp-route-id="@opcao.Id" class="btn btn-primary">Editar</a>
-                        <a asp-controller="opcoes" asp-action="excluir" asp-route-id="@opcao.Id" class="btn btn-danger">Excluir</a>
+                        <a asp-controller="opcao" asp-action="editar" asp-route-id="@opcao.Id" class="btn btn-primary">Editar</a>
+                        <a asp-controller="opcao" asp-action="excluir" asp-route-id="@opcao.Id" class="btn btn-danger">Excluir</a>
                     </td>
                 </tr>
             }
