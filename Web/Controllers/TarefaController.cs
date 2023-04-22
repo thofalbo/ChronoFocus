@@ -2,11 +2,11 @@ namespace Web.Controllers;
 [Route("tarefa")]
 public class TarefaController : AuthenticatedController
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
     private readonly ITarefaRepository _tarefaRepository;
     private readonly ITarefaService _tarefaService;
     public TarefaController(
-        ApplicationDbContext dbContext,
+        AppDbContext dbContext,
         ITarefaRepository tarefaRepository,
         ITarefaService tarefaService
     )
@@ -20,18 +20,45 @@ public class TarefaController : AuthenticatedController
     public IActionResult Index() => View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
 
     [HttpGet("cadastrar")]
-    public IActionResult Cadastrar() => View("_cadastrar");
+    public IActionResult CadastrarGet() => View("_cadastrar");
 
     [HttpPost("cadastrar")]
-    public async Task CadastrarTarefa(Tarefa tarefa) => await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
-
-    [HttpGet("excluir")]
-    public async Task<IActionResult> Excluir(int id) => View("_excluir", await _dbContext.Tarefas.FindAsync(id));
-
-    [HttpPost("excluir")]
-    public async Task<IActionResult> ExcluirTarefa(int id)
+    public async Task<IActionResult> CadastrarPost(Tarefa tarefa)
     {
-        await _tarefaService.ExcluirAsync(id);
+        if (!ModelState.IsValid)
+            return View("_cadastrar", tarefa);
+
+        await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet("excluir/{id}")]
+    public async Task<IActionResult> ExcluirGet(int id)
+    {
+        var tarefa = await _tarefaRepository.BuscarPorIdAsync(id);
+        if (tarefa == null)
+            return NotFound();
+
+        return View("_excluir", tarefa);
+    }
+
+    [HttpPost("excluir/{id:int}")]
+    public async Task<IActionResult> ExcluirPost(int id)
+    {
+        await _tarefaRepository.ExcluirAsync(id);
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet("editar/{id:int}")]
+    public async Task<IActionResult> EditarGet(int id)
+    {
+        var opcao = await _tarefaRepository.BuscarPorIdAsync(id);
+
+        if (opcao == null)
+            return NotFound();
+
+        return View("_editar");
+    }
 }
+
+//     View("_excluir", await _dbContext.Tarefas.FindAsync(id));

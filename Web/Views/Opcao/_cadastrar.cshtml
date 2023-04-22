@@ -1,0 +1,26 @@
+@model OpcaoViewModel
+
+<h1>Cadastro de Opção</h1>
+
+<form id="opcaoForm">
+    <div class="form-group">
+        <label asp-for="Opcao.Rota" class="control-label"></label>
+        <input asp-for="Opcao.Rota" class="form-control" />
+    </div>
+    <button type="button" class="btn btn-primary" onclick="opcao.registrar('opcaoForm', 'cadastrar')">Cadastrar</button>
+</form>
+
+@section scripts {
+    <script src="~/js/Pages/opcao.js" asp-append-version="true"></script>
+    <script>
+        $(function () {
+            opcao.init({
+                urls: {
+                    cadastrar: '@Url.Action("cadastrar", "opcoes")',
+                    index: '@Url.Action("Index", "Opcao")'
+                }
+            });
+        });
+    </script>
+}
+

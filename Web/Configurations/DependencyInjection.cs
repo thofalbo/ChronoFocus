@@ -26,12 +26,15 @@ public static class DependencyInjection
             };
         });
 
-        services.AddScoped<ApplicationDbContext>();
+        services.AddScoped<AppDbContext>();
 
         services.AddScoped<ITarefaRepository, TarefaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<IOpcaoTelaUsuarioRepository, OpcaoTelaUsuarioRepository>();
+        services.AddScoped<IOpcaoRepository, OpcaoRepository>();
+        // services.AddScoped<ITelaRepository, TelaRepository>();
 
         services.AddScoped<ITarefaService, TarefaService>();
+        services.AddScoped<IOpcaoService, OpcaoService>();
     }
 }

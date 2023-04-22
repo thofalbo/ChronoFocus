@@ -5,4 +5,5 @@ public interface ITarefaRepository
     IEnumerable<Tarefa> MostrarTarefas(int idUsuario);
     Task ExcluirAsync(int id);
     Task AtualizarAsync(Tarefa tarefa);
+    Task<Tarefa> BuscarPorIdAsync(int id);
 }

@@ -1,0 +1,23 @@
+@model OpcaoViewModel
+
+<h1>Excluir Opção</h1>
+
+<form id="opcaoForm">
+    <input type="hidden" asp-for="Opcao.Id" />
+    <p>Tem certeza que deseja excluir a opção @Model.Opcao.Rota?</p>
+    <button type="button" class="btn btn-danger" onclick="opcao.registrar('opcaoForm', 'excluir')">Excluir</button>
+</form>
+
+@section scripts {
+    <script src="~/js/Pages/opcao.js" asp-append-version="true"></script>
+    <script>
+        $(function () {
+            opcao.init({
+                urls: {
+                    excluir: '@Url.Action("excluir", "opcoes")',
+                    index: '@Url.Action("Index", "Opcao")'
+                }
+            });
+        });
+    </script>
+}

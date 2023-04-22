@@ -88,10 +88,9 @@
                             @item.DataCadastro.ToString("dd/MM/yyyy")
                         </td>
                         <td class="col-xs-2">
-                            <a class="botao-ion" asp-action="Editar" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: blue;" name="pencil-outline"></ion-icon></a>
-                            <a class="botao-ion" asp-action="Detalhes" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: green;" name="document-text-outline"></ion-icon></a>
-                            <a class="botao-ion" asp-action="Excluir" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: red;" name="trash-outline"></ion-icon></a>
-                        </td>
+                            <a class="botao-ion" asp-controller="tarefa" asp-action="editar" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: blue;" name="pencil-outline"></ion-icon></a>
+                            <a class="botao-ion" asp-controller="tarefa" asp-action="detalhes" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: green;" name="document-text-outline"></ion-icon></a>
+                            <a class="botao-ion" asp-controller="tarefa" asp-action="excluir" asp-route-id="@item.Id"><ion-icon class="ion-icon" style="color: red;" name="trash-outline"></ion-icon></a>                        </td>
                     </tr>
                 }
             </tbody>

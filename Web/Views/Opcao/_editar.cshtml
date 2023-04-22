@@ -1,0 +1,40 @@
+@* @model OpcaoViewModel
+
+<h1>Edição de Opção</h1>
+
+<form asp-action="Atualizar" method="post">
+    <input type="hidden" asp-for="Opcao.Id" />
+    <div class="form-group">
+        <label asp-for="Opcao.Nome" class="control-label"></label>
+        <input asp-for="Opcao.Nome" class="form-control" />
+        <span asp-validation-for="Opcao.Nome" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+</form> *@
+
+@model OpcaoViewModel
+
+<h1>Editar Opção</h1>
+
+<form id="opcaoForm">
+    <input type="hidden" asp-for="Opcao.Id" />
+    <div class="form-group">
+        <label asp-for="Opcao.Rota" class="control-label"></label>
+        <input asp-for="Opcao.Rota" class="form-control" />
+    </div>
+    <button type="button" class="btn btn-primary" onclick="opcao.registrar('opcaoForm', 'editar')">Editar</button>
+</form>
+
+@section scripts {
+    <script src="~/js/Pages/opcao.js" asp-append-version="true"></script>
+    <script>
+        $(function () {
+            opcao.init({
+                urls: {
+                    editar: '@Url.Action("editar", "opcoes")',
+                    index: '@Url.Action("Index", "Opcao")'
+                }
+            });
+        });
+    </script>
+}

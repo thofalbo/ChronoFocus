@@ -1,0 +1,35 @@
+@model IEnumerable<Opcao>
+
+<h1>Opções</h1>
+
+<a asp-controller="opcoes" asp-action="cadastrar" class="btn btn-primary">Cadastrar Nova Opção</a>
+
+@if (!Model.Any())
+{
+    <p>Nenhuma opção cadastrada.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var opcao in Model)
+            {
+                <tr>
+                    <td>@opcao.Id</td>
+                    <td>@opcao.Rota</td>
+                    <td>
+                        <a asp-controller="opcoes" asp-action="editar" asp-route-id="@opcao.Id" class="btn btn-primary">Editar</a>
+                        <a asp-controller="opcoes" asp-action="excluir" asp-route-id="@opcao.Id" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

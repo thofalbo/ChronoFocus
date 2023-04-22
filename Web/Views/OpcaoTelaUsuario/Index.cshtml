@@ -1,7 +1,7 @@
 @* @model OpcaoTelaUsuario *@
 
 
-@model OpcaoTelaUsuario
+@* @model OpcaoTelaUsuario *@
 
   @* <form id="formOpcaoTelaUsuario" onsubmit="opcaoTelaUsuario.cadastrar()">
   <fieldset>
@@ -27,7 +27,7 @@
 
 
 
-@using (Html.BeginForm("cadastrar", "opcao-tela-usuario", FormMethod.Post, new { id = "formCadastro" }))
+@* @using (Html.BeginForm("cadastrar", "opcao-tela-usuario", FormMethod.Post, new { id = "formCadastro" }))
 {
     @Html.LabelFor(model => model.IdOpcao);
     @Html.TextBoxFor(model => model.IdOpcao);
@@ -39,7 +39,41 @@
     @Html.TextBoxFor(model => model.IdUsuario);
 
     <button type="button" onclick="opcaoTelaUsuario.cadastrar()">Submit</button>
-}
+} *@
+
+
+@model OpcaoTelaUsuarioViewModel
+
+<form method="post" action="@Url.Action("cadastrar", "opcao-tela-usuario")">
+    <div class="form-group">
+        <label for="opcao">Opcao</label>
+        <select class="form-control" id="opcao" name="IdOpcao">
+            @foreach (var opcao in ViewBag.Opcoes)
+            {
+                <option value="@opcao.Id">@opcao.Rota</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="tela">Tela</label>
+        <select class="form-control" id="tela" name="IdTela">
+            @foreach (var tela in ViewBag.Telas)
+            {
+                <option value="@tela.Id">@tela.Rota</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="usuario">Usuario</label>
+        <select class="form-control" id="usuario" name="IdUsuario">
+            @foreach (var usuario in ViewBag.Usuarios)
+            {
+                <option value="@usuario.Id">@usuario.Login</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
 
 <script src="~/js/Pages/opcaoTelaUsuario.js" asp-append-version="true"></script>
 <script>

@@ -1,9 +1,9 @@
 namespace Data.Repositories;
 public class UsuarioRepository : IUsuarioRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public UsuarioRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
+    public UsuarioRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
     public async Task<Usuario> Get(string login, string senha)
     {

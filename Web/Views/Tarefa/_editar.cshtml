@@ -1,0 +1,26 @@
+@model Tarefa
+
+<h1>Editar Opção</h1>
+
+<form id="opcaoForm">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Atividade" class="control-label"></label>
+        <input asp-for="Atividade" class="form-control" />
+    </div>
+    <button type="button" class="btn btn-primary" onclick="opcao.registrar('opcaoForm', 'editar')">Editar</button>
+</form>
+
+@section scripts {
+    <script src="~/js/Pages/opcao.js" asp-append-version="true"></script>
+    <script>
+        $(function () {
+            opcao.init({
+                urls: {
+                    editar: '@Url.Action("editar", "opcoes")',
+                    index: '@Url.Action("Index", "Opcao")'
+                }
+            });
+        });
+    </script>
+}

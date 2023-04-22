@@ -2,10 +2,10 @@ namespace Web.Controllers;
 [Route("usuario")]
 public class UsuarioController : AuthenticatedController
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
     private readonly IUsuarioRepository _usuarioRepository;
 
-    public UsuarioController(ApplicationDbContext dbContext, IUsuarioRepository usuarioRepository)
+    public UsuarioController(AppDbContext dbContext, IUsuarioRepository usuarioRepository)
     {
         _dbContext = dbContext;
         _usuarioRepository = usuarioRepository;

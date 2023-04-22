@@ -51,6 +51,15 @@ CREATE TABLE tela (
 	constraint pk_tela primary key(id)
 );
 
+CREATE TABLE usuario (
+	id int generated always as identity,
+	login varchar(64) NOT NULL,
+	email varchar(256) NOT NULL,
+	senha varchar(8) NOT NULL,
+	data_cadastro timestamp NOT NULL,
+	constraint pk_usuario primary key(id)
+);
+
 CREATE TABLE opcao_tela_usuario (
 	id_opcao int NOT NULL,
 	id_tela int NOT NULL,

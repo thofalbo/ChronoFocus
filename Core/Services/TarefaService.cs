@@ -51,5 +51,4 @@ public class TarefaService : ITarefaService
             });
         }
     }
-    public async Task ExcluirAsync(int id) => await _tarefaRepository.ExcluirAsync(id);
 }
