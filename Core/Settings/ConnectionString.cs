@@ -1,7 +1,5 @@
-namespace Core.Settings
+namespace Core.Settings;
+public class ConnectionString
 {
-    public class ConnectionString
-    {
-        public string Default { get; set; }
-    }
+    public string Default { get; set; }
 }

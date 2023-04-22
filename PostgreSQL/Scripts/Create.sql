@@ -55,7 +55,7 @@ CREATE TABLE opcao_tela_usuario (
 	id_opcao int NOT NULL,
 	id_tela int NOT NULL,
 	id_usuario int NOT NULL,
-    constraint fk_rota_opcao_tela_usuario foreign key(id_opcao)
+    constraint fk_opcao_opcao_tela_usuario foreign key(id_opcao)
     references opcao(id),
     constraint fk_tela_opcao_tela_usuario foreign key(id_tela)
     references tela(id),
