@@ -23,14 +23,6 @@ INSERT INTO vendedor (
 	(6, 'Bob Brown', 'bob@yahoo.com', '1950-12-30 00:00:00'),
 	(7, 'Oliver Queen', 'oliver.queen@gmail.com.br', '1987-07-28 00:00:00');
 
-INSERT INTO usuario (
-	login,
-	email,
-	senha,
-	data_cadastro
-) VALUES
-	('Bakumito', 'baku@msn.com.br', 'Senha#12' , now());
-
 INSERT INTO tarefa (
 	id_usuario,
 	atividade,
@@ -105,3 +97,50 @@ VALUES
 	(4, 4, 10),
 	(5, 5, 11),
 	(5, 5, 12);
+
+
+
+
+	new insert:
+
+	-- Inserts for controlador table
+INSERT INTO controlador (nome)
+VALUES
+('acao'),
+('controlador'),
+('tarefa');
+
+
+-- Inserts for acao table
+INSERT INTO acao (nome, id_controlador)
+VALUES
+('cadastrar', 1),
+('buscar', 1),
+('excluir', 1),
+('cadastrar', 2),
+('buscar', 2),
+('excluir', 2),
+('cadastrar', 3),
+('buscar', 3),
+('excluir', 3);
+
+-- Inserts for usuario table
+INSERT INTO usuario (nome, email, apelido, senha, data_cadastro) 
+VALUES
+('Thomaz', 'thomazfalbo@outlook.com', 'bakumito', '123', now()),
+('Noaly', 'noalyfalbo@outlook.com', 'noaly', '12345678', now());
+
+
+-- Inserts for permissao table
+INSERT INTO permissao (id_usuario, id_controlador, id_acao, acesso) 
+SELECT u.id, c.id, a.id, false
+FROM usuario u, controlador c, acao a;
+
+
+-- Inserts for tarefa table
+INSERT INTO tarefa (id_usuario, atividade, tipo_atividade, plataforma, tempo_tarefa, data_cadastro) 
+VALUES
+(1, 'Atividade 1', 'tipo-1', 'plataforma-1', '02:30:00', now()),
+(1, 'Atividade 2', 'tipo-2', 'plataforma-2', '01:45:00', now()),
+(2, 'Atividade 3', 'tipo-1', 'plataforma-1', '03:15:00', now()),
+(2, 'Atividade 4', 'tipo-2', 'plataforma-2', '00:45:00', now());

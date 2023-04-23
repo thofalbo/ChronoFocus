@@ -11,10 +11,7 @@ public class PermissaoController : Controller
         _dbContext = dbContext;
         _permissaoRepository = permissaoRepository;
     }
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     [HttpGet("buscar")]
     public async Task<IActionResult> BuscarGet()
@@ -30,4 +27,3 @@ public class PermissaoController : Controller
         return View("_tabelaPermissao", permissoes);
     }
 }
-
