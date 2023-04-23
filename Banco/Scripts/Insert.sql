@@ -130,12 +130,28 @@ VALUES
 ('Thomaz', 'thomazfalbo@outlook.com', 'bakumito', '123', now()),
 ('Noaly', 'noalyfalbo@outlook.com', 'noaly', '12345678', now());
 
-
--- Inserts for permissao table
-INSERT INTO permissao (id_usuario, id_controlador, id_acao, acesso) 
-SELECT u.id, c.id, a.id, false
-FROM usuario u, controlador c, acao a;
-
+-- Insert into permissao table
+INSERT INTO permissao (id_usuario, id_controlador, id_acao)
+SELECT 
+	u.id AS id_usuario, 
+	c.id AS id_controlador, 
+	a.id AS id_acao
+FROM 
+	usuario u, controlador c, acao a
+WHERE 
+	NOT EXISTS (
+		SELECT 
+			1 
+		FROM 
+			permissao p 
+		WHERE 
+			p.id_usuario = u.id AND 
+			p.id_controlador = c.id AND 
+			p.id_acao = a.id
+	) AND 
+	a.id_controlador = c.id
+ORDER BY 
+	u.id, c.id, a.id;
 
 -- Inserts for tarefa table
 INSERT INTO tarefa (id_usuario, atividade, tipo_atividade, plataforma, tempo_tarefa, data_cadastro) 
