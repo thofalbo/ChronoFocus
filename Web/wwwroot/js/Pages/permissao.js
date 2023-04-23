@@ -23,10 +23,15 @@ var permissao = (() => {
         }
     };
 
-        
+    
+    function toggleAcoes() {
+        $(this).nextUntil(".controlador-row").toggle();
+    
+    }
 
     return {
         init: init,
         fnSubmit: fnSubmit,
+        toggleAcoes: toggleAcoes
     };
 })();

@@ -6,22 +6,36 @@
 
 <h1>Permissões</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Funcionário</th>
-            <th>Controlador</th>
-            <th>Ação</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var permissao in Model)
-        {
-            <tr>
-                <td>@permissao.Usuario.Nome</td>
-                <td>@permissao.Controlador.Nome</td>
-                <td>@permissao.Acao.Nome</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="accordion" id="permissionsAccordion">
+    @foreach (var controlador in Model.Select(p => p.Controlador).Distinct())
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="header_@controlador.Nome">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@controlador.Nome" aria-expanded="false" aria-controls="collapse_@controlador.Nome">
+                    @controlador.Nome
+                </button>
+            </h2>
+            <div id="collapse_@controlador.Nome" class="accordion-collapse collapse" aria-labelledby="header_@controlador.Nome" data-bs-parent="#permissionsAccordion">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ação</th>
+                                <th>Acesso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var permissao in Model.Where(p => p.Controlador == controlador))
+                            {
+                                <tr>
+                                    <td>@permissao.Acao.Nome</td>
+                                    <td><input type="checkbox" checked="@permissao.Acesso"></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
