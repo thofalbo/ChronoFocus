@@ -35,11 +35,7 @@
                 </div>
             </div>
         </div>
-
-        <div id="formCadastro" style="display: none;">
-            
-        </div>
-
+        <div id="formCadastro" style="display: none;"></div>
     </form>
 </section>
 
@@ -108,7 +104,7 @@
     tarefa.init({
         urls: {
             cadastrar: '@Url.Action("cadastrar", "tarefa")',
-            index: '@Url.Action("inicio", "tarefa")'
+            index: '@Url.Action("index", "tarefa")'
         }
     });
     tarefa.getCadastrar();

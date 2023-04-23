@@ -17,21 +17,29 @@ var permissao = (() => {
                 $("#tabelaPermissoes").html(html);
             });
         } else {
-            $.get(configs.urls.buscar).done((html) => {
+            $.get(configs.urls[url]).done((html) => {
                 $("#tabelaPermissoes").html(html);
             });
         }
     };
-
     
-    function toggleAcoes() {
-        $(this).nextUntil(".controlador-row").toggle();
-    
-    }
+    var fnSubmitar = (form, url) => {
+        var model = $(`#${form}`).serializeObject();
+        console.log(model);
+        // if (!model.isEmpty) {
+        //     $.post(configs.urls[url], model).done((html) => {
+        //         $("#tabelaPermissoes").html(html);
+        //     });
+        // } else {
+        //     $.get(configs.urls[url]).done((html) => {
+        //         $("#tabelaPermissoes").html(html);
+        //     });
+        // }
+    };
 
     return {
         init: init,
-        fnSubmit: fnSubmit,
-        toggleAcoes: toggleAcoes
+        fnSubmit: fnSubmit,        
+        fnSubmitar: fnSubmitar
     };
 })();

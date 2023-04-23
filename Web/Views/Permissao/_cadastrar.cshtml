@@ -1,10 +1,7 @@
-@{
-    Layout = null;
-}
 
 @model IEnumerable<Permissao>
 
-<form id="formEditarPermissoes">
+<form method="post" asp-action="BulkUpdate">
     <h1>Permissões</h1>
 
     <div class="accordion" id="permissionsAccordion">
@@ -18,25 +15,27 @@
                 </h2>
                 <div id="collapse_@controlador.Nome" class="accordion-collapse collapse" aria-labelledby="header_@controlador.Nome" data-bs-parent="#permissionsAccordion">
                     <div class="accordion-body">
+                        <ul class="acoes-list">
                             @foreach (var permissao in Model.Where(p => p.Controlador == controlador))
                             {
-                                <form id="formMudaPermissoes">
+                                <form method="post">
                                     <input type="hidden" asp-for="@permissao.IdUsuario" />
                                     <input type="hidden" asp-for="@permissao.IdControlador" />
                                     <input type="hidden" asp-for="@permissao.IdAcao" />
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" asp-for="@permissao.Acesso">
-                                        <label class="form-check-label ms-2" asp-for="@permissao.Acesso">
-                                            @permissao.Acao.Nome
-                                        </label>
-                                    </div>   
+                                    <li>
+                                        <div style="display: flex; align-items: center;">
+                                            <input class="form-check-input" type="checkbox" name="permissions" value="@permissao.IdAcao" @(permissao.Acesso ? "checked" : "") />
+                                            <label class="form-check-label ms-2" asp-for="@permissao.Acesso">@permissao.Acao.Nome</label>
+                                        </div>
+                                    </li>
                                 </form>
                             }
+                        </ul>
                     </div>
                 </div>
             </div>
         }
     </div>
 
-    <button type="submit" class="btn btn-primary" onclick="permissao.fnSubmitar('formMudaPermissoes', 'editar')">Salvar</button>
+    <button type="submit" class="btn btn-primary" onclick="permissao.fnSubmit('bulkUpdate', 'editar')">Salvar</button>
 </form>
