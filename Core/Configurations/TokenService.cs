@@ -11,7 +11,7 @@ public class TokenService
             {
                 new Claim("idUsuario", usuario.Id.ToString()),
                 new Claim("emailUsuario", usuario.Email),
-                new Claim(ClaimTypes.Name, usuario.Login)
+                new Claim(ClaimTypes.Name, usuario.Apelido)
             }),
 
             Expires = DateTime.UtcNow.AddHours(2),

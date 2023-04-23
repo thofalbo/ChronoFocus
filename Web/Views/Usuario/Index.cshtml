@@ -19,7 +19,10 @@
                 @Html.DisplayNameFor(Model => Model.Id)
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(Model => Model.Login)
+                @Html.DisplayNameFor(Model => Model.Nome)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(Model => Model.Apelido)
             </th>
             <th scope="col">
                 @Html.DisplayNameFor(Model => Model.Email)
@@ -46,7 +49,10 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </th>
                 <th scope="row">
-                    @Html.DisplayFor(modelItem => item.Login)
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </th>
+                <th scope="row">
+                    @Html.DisplayFor(modelItem => item.Apelido)
                 </th>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
@@ -73,7 +79,7 @@
 <script>
     usuario.init({
         urls: {
-            index: '@Url.Action("index", "usuario")',
+            index: '@Url.Action("inicio", "usuario")',
             cadastrar: '@Url.Action("cadastrar", "usuario")'
         }
     })

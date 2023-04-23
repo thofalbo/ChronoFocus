@@ -23,7 +23,7 @@ public class PermissaoController : Controller
     [HttpPost("buscar")]
     public async Task<IActionResult> BuscarPost(Permissao permissao)
     {
-        var permissoes = await _permissaoRepository.ListarPorFuncionarioAsync(permissao.Funcionario.Nome);
+        var permissoes = await _permissaoRepository.ListarPorFuncionarioAsync(permissao.Usuario.Nome);
         return View("_tabelaPermissao", permissoes);
     }
 }

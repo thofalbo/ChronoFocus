@@ -17,7 +17,7 @@ public class LoginController : Controller
     [HttpPost("autenticar")]
     public async Task<ActionResult> Autenticar(Usuario model)
     {
-        var usuario = await _usuarioRepository.Get(model.Login, model.Senha);
+        var usuario = await _usuarioRepository.Get(model.Apelido, model.Senha);
 
         if (usuario == null)
             return NotFound("Usuário ou senha inválidos");
@@ -34,7 +34,7 @@ public class LoginController : Controller
     {
         Response.Cookies.Delete("ChronoFocusAuthenticationToken");
 
-        return RedirectToAction("Index", "login");
+        return RedirectToAction("inicio", "login");
     }
 
     [HttpGet("cadastrar")]

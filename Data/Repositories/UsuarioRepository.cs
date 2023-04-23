@@ -8,11 +8,11 @@ public class UsuarioRepository : IUsuarioRepository
     public async Task<IEnumerable<Usuario>> ListarAsync() => await _dbContext.Usuarios.ToListAsync();
     
     public async Task<Usuario> ObterPorIdAsync(int id) => await _dbContext.Usuarios.FindAsync(id);
-    public async Task<Usuario> Get(string login, string senha)
+    public async Task<Usuario> Get(string apelido, string senha)
     {
         return await _dbContext.Usuarios
             .Where(
-                x => x.Login.ToLower() == login.ToLower()
+                x => x.Apelido.ToLower() == apelido.ToLower()
                 && x.Senha == senha
             ).FirstOrDefaultAsync();
     }
@@ -21,7 +21,8 @@ public class UsuarioRepository : IUsuarioRepository
     {
         await _dbContext.Usuarios.AddAsync(new Usuario
         {
-            Login = usuario.Login,
+            Nome = usuario.Nome,
+            Apelido = usuario.Apelido,
             Email = usuario.Email,
             Senha = usuario.Senha,
             DataCadastro = usuario.DataCadastro.ToUniversalTime()

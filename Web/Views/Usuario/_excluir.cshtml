@@ -4,14 +4,20 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<h4>Tem certeza que quer excluir esta tarefa?</h4>
+<h4>Tem certeza que quer excluir este usuario?</h4>
 <hr />
 <dl class="row">
   <dt class="col-sm-1">
-    @Html.DisplayNameFor(Model => Model.Login)
+    @Html.DisplayNameFor(Model => Model.Nome)
   </dt>
   <dd class="col-sm-11">
-    @Html.DisplayFor(Model => Model.Login)
+    @Html.DisplayFor(Model => Model.Nome)
+  </dd>
+  <dt class="col-sm-1">
+    @Html.DisplayNameFor(Model => Model.Apelido)
+  </dt>
+  <dd class="col-sm-11">
+    @Html.DisplayFor(Model => Model.Apelido)
   </dd>
   <dt class="col-sm-1">
     @Html.DisplayNameFor(Model => Model.Email)
@@ -36,7 +42,7 @@
     usuario.init({
         urls: {
             excluir: '@Url.Action("excluir", "usuario")',
-            index: '@Url.Action("index", "usuario")'
+            index: '@Url.Action("inicio", "usuario")'
         }
     })
 </script>

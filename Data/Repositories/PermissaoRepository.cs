@@ -11,7 +11,7 @@ public class PermissaoRepository : IPermissaoRepository
     public async Task<IEnumerable<Permissao>> ListarAsync()
     {
         return await _dbContext.Permissoes
-            .Include(p => p.Funcionario)
+            .Include(p => p.Usuario)
             .Include(p => p.Controlador)
             .Include(p => p.Acao)
             .ToListAsync();
@@ -19,10 +19,10 @@ public class PermissaoRepository : IPermissaoRepository
     public async Task<IEnumerable<Permissao>> ListarPorFuncionarioAsync(string nome)
     {
         return await _dbContext.Permissoes
-            .Include(p => p.Funcionario)
+            .Include(p => p.Usuario)
             .Include(p => p.Controlador)
             .Include(p => p.Acao)
-            .Where(p => p.Funcionario.Nome.Contains(nome))
+            .Where(p => p.Usuario.Nome.Contains(nome))
             .ToListAsync();
     }
 }
