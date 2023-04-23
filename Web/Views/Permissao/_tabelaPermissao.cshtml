@@ -4,38 +4,39 @@
 
 @model IEnumerable<Permissao>
 
-<h1>Permissões</h1>
+<form method="post">
+    <h1>Permissões</h1>
 
-<div class="accordion" id="permissionsAccordion">
-    @foreach (var controlador in Model.Select(p => p.Controlador).Distinct())
-    {
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="header_@controlador.Nome">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@controlador.Nome" aria-expanded="false" aria-controls="collapse_@controlador.Nome">
-                    @controlador.Nome
-                </button>
-            </h2>
-            <div id="collapse_@controlador.Nome" class="accordion-collapse collapse" aria-labelledby="header_@controlador.Nome" data-bs-parent="#permissionsAccordion">
-                <div class="accordion-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Ação</th>
-                                <th>Acesso</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+    <div class="accordion" id="permissionsAccordion">
+        @foreach (var controlador in Model.Select(p => p.Controlador).Distinct())
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="header_@controlador.Nome">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@controlador.Nome" aria-expanded="false" aria-controls="collapse_@controlador.Nome">
+                        @controlador.Nome
+                    </button>
+                </h2>
+                <div id="collapse_@controlador.Nome" class="accordion-collapse collapse" aria-labelledby="header_@controlador.Nome" data-bs-parent="#permissionsAccordion">
+                    <div class="accordion-body">
+                        <ul class="acoes-list">
                             @foreach (var permissao in Model.Where(p => p.Controlador == controlador))
                             {
-                                <tr>
-                                    <td>@permissao.Acao.Nome</td>
-                                    <td><input type="checkbox" checked="@permissao.Acesso"></td>
-                                </tr>
+                                <li>
+                                    <input type="hidden" asp-for="@permissao.IdUsuario" />
+                                    <input type="hidden" asp-for="@permissao.IdControlador" />
+                                    <input type="hidden" asp-for="@permissao.IdAcao" />
+                                    <div style="display: flex; align-items: center;">
+                                        <input class="form-check-input" type="checkbox" asp-for="@permissao.Acesso" />
+                                        <label class="form-check-label ms-2" asp-for="@permissao.Acesso">@permissao.Acao.Nome</label>
+                                    </div>
+                                </li>
                             }
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
