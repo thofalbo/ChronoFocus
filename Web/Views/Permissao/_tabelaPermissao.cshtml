@@ -1,0 +1,27 @@
+@{
+    Layout = null;
+}
+
+@model IEnumerable<Permissao>
+
+<h1>Permissões</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Funcionário</th>
+            <th>Controlador</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var permissao in Model)
+        {
+            <tr>
+                <td>@permissao.Funcionario.Nome</td>
+                <td>@permissao.Controlador.Nome</td>
+                <td>@permissao.Acao.Nome</td>
+            </tr>
+        }
+    </tbody>
+</table>

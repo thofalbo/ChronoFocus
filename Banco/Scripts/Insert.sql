@@ -55,3 +55,53 @@ insert into tela
 values
 ('usuario'),
 ('tarefa');
+
+-- tabela usuario
+INSERT INTO funcionario (nome, email, apelido, senha, data_cadastro)
+VALUES
+	('Alice', 'alice@example.com', 'alicerocks', 's3cr3t', NOW()),
+	('Bob', 'bob@example.com', 'bobbytables', 'p@ssw0rd', NOW()),
+	('Charlie', 'charlie@example.com', 'charlieworks', 'secretpass', NOW()),
+	('David', 'david@example.com', 'davetheboss', 'password', NOW()),
+	('Eve', 'eve@example.com', 'eveonline', '123456', NOW());
+
+-- tabela controlador
+INSERT INTO controlador (nome)
+VALUES
+	('user-management'),
+	('change-password'),
+	('reporting'),
+	('logging'),
+	('billing');
+
+-- tabela acao
+INSERT INTO acao (nome, id_controlador)
+VALUES
+	('create', 1),
+	('read', 1),
+	('update', 1),
+	('delete', 1),
+	('read', 2),
+	('update', 2),
+	('read', 3),
+	('write', 3),
+	('read', 4),
+	('write', 4),
+	('read', 5),
+	('write', 5);
+
+-- tabela permissao
+INSERT INTO permissao (id_funcionario, id_controlador, id_acao)
+VALUES
+	(1, 1, 1),
+	(1, 1, 2),
+	(1, 1, 3),
+	(1, 1, 4),
+	(2, 2, 5),
+	(2, 2, 6),
+	(3, 3, 7),
+	(3, 3, 8),
+	(4, 4, 9),
+	(4, 4, 10),
+	(5, 5, 11),
+	(5, 5, 12);

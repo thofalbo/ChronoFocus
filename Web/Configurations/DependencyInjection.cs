@@ -30,13 +30,8 @@ public static class DependencyInjection
 
         services.AddScoped<ITarefaRepository, TarefaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        services.AddScoped<IOpcaoTelaUsuarioRepository, OpcaoTelaUsuarioRepository>();
-        services.AddScoped<IOpcaoRepository, OpcaoRepository>();
-        services.AddScoped<ITelaRepository, TelaRepository>();
+        services.AddScoped<IPermissaoRepository, PermissaoRepository>();
 
-        services.AddScoped<IOpcaoTelaUsuarioService, OpcaoTelaUsuarioService>();
         services.AddScoped<ITarefaService, TarefaService>();
-        services.AddScoped<IOpcaoService, OpcaoService>();
-        services.AddScoped<ITelaService, TelaService>();
     }
 }

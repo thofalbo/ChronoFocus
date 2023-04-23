@@ -60,5 +60,3 @@ public class TarefaController : AuthenticatedController
         return View("_editar");
     }
 }
-
-//     View("_excluir", await _dbContext.Tarefas.FindAsync(id));

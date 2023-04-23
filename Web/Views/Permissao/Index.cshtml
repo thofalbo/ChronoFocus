@@ -1,0 +1,20 @@
+@model Permissao
+
+<form id="permissaoForm">
+    <label type="text" asp-for="Funcionario.Nome" >Busque o nome do Funcionário</label>
+    <input type="text" asp-for="Funcionario.Nome" />
+    <button type="button" class="btn btn-success" onclick="permissao.fnSubmit('permissaoForm', 'buscar')">Buscar</button>
+</form>
+
+<section id="tabelaPermissoes">
+
+</section>
+
+<script src="~/js/Pages/permissao.js" asp-append-version="true"></script>
+<script>
+    permissao.init({
+        urls: {
+            buscar: '@Url.Action("buscar", "permissao")'
+        }
+    });
+</script>
