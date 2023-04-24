@@ -1,4 +1,4 @@
-
+@* 
 @model IEnumerable<Permissao>
 
 <form method="post" asp-action="BulkUpdate">
@@ -24,7 +24,7 @@
                                     <input type="hidden" asp-for="@permissao.IdAcao" />
                                     <li>
                                         <div style="display: flex; align-items: center;">
-                                            <input class="form-check-input" type="checkbox" name="permissions" value="@permissao.IdAcao" @(permissao.Acesso ? "checked" : "") />
+                                            <input class="form-check-input" type="checkbox" asp-for="@permissao.Acesso" />
                                             <label class="form-check-label ms-2" asp-for="@permissao.Acesso">@permissao.Acao.Nome</label>
                                         </div>
                                     </li>
@@ -38,4 +38,4 @@
     </div>
 
     <button type="submit" class="btn btn-primary" onclick="permissao.fnSubmit('bulkUpdate', 'editar')">Salvar</button>
-</form>
+</form> *@

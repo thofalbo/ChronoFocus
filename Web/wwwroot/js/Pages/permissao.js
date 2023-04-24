@@ -9,6 +9,8 @@ var permissao = (() => {
         configs = $configs;
     };
 
+    var permitidos = [];
+
     var fnSubmit = (form, url) => {
         var model = $(`#${form}`).serializeObject();
         console.log(model);
@@ -24,12 +26,13 @@ var permissao = (() => {
     };
 
     var fnSubmitar = (form, url) => {
-        var model = $(`#${form}`).serializeObject();
-        console.log(model);
+        console.log(permitidos);
+        $.post(configs.urls[url], {
+            permitidos: permitidos
+        }).done(() => {
+            console.log('chegou até aqui.')
+        });
     };
-
-    var permitidos = [];
-    var proibidos = [];
 
     function addPermissao(id, idUsuario, idControlador, idAcao, isChecked) {
         var permissao = {
@@ -39,22 +42,12 @@ var permissao = (() => {
             IdAcao: idAcao,
             Acesso: isChecked,
         };
-        if (isChecked) {
-            permitidos.push(permissao);
-            var index = proibidos.findIndex((p) => p.Id == id);
-            if (index > -1) {
-                proibidos.splice(index, 1);
-            }
-        } else {
-            proibidos.push(permissao);
-            var index = permitidos.findIndex((p) => p.Id == id);
-            if (index > -1) {
-                permitidos.splice(index, 1);
-            }
+        var index = permitidos.findIndex((p) => p.Id == id);
+        if (index > -1) {
+            permitidos.splice(index, 1);
         }
-        console.log(permitidos);
-        console.log(proibidos);
-        
+        permitidos.push(permissao);
+
     }
 
     return {

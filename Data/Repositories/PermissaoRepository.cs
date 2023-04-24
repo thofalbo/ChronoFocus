@@ -25,4 +25,12 @@ public class PermissaoRepository : IPermissaoRepository
             .Where(p => p.Usuario.Nome.Contains(nome))
             .ToListAsync();
     }
+    public async Task EditarPermissoesAsync(IEnumerable<Permissao> permitidos)
+    {        
+        foreach (Permissao permissao in permitidos)
+        {
+            _dbContext.Permissoes.Update(permissao);
+        }
+        await _dbContext.SaveChangesAsync();
+    }
 }

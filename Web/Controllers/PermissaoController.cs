@@ -28,24 +28,17 @@ public class PermissaoController : Controller
     }
     
     [HttpGet("editar")]
-        public IActionResult EditPermissions()
+        public IActionResult EditarPermissoes()
     {
-        var permissions = _dbContext.Permissoes.Include(p => p.Controlador).Include(p => p.Acao).Include(p => p.Usuario).ToList();
-        return View("_cadastrar", permissions);
+        var permissoes = _dbContext.Permissoes.Include(p => p.Controlador).Include(p => p.Acao).Include(p => p.Usuario).ToList();
+        return View("_cadastrar", permissoes);
     }
 
     [HttpPost("editar")]
-    public IActionResult EditPermissions(IEnumerable<Permissao> permissions)
+    public async Task<IActionResult> EditarPermissoes(EditarPermissaoDto permitido)
     {
-        if (ModelState.IsValid)
-        {
-            foreach (var permission in permissions)
-            {
-                _dbContext.Permissoes.Update(permission);
-            }
-            _dbContext.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        return View("_cadastrar", permissions);
+        await _permissaoRepository.EditarPermissoesAsync(permitido.Permitidos);
+
+        return RedirectToAction("Index");
     }
 }
