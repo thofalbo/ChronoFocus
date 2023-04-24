@@ -18,18 +18,18 @@
                 </h2>
                 <div id="collapse_@controlador.Nome" class="accordion-collapse collapse" aria-labelledby="header_@controlador.Nome" data-bs-parent="#permissionsAccordion">
                     <div class="accordion-body">
+                            <input type="hidden" asp-for="@Model.FirstOrDefault().IdUsuario" />
+                            <input type="hidden" asp-for="@Model.FirstOrDefault().IdControlador" />
                             @foreach (var permissao in Model.Where(p => p.Controlador == controlador))
                             {
                                 <form id="formMudaPermissoes">
-                                    <input type="hidden" asp-for="@permissao.IdUsuario" />
-                                    <input type="hidden" asp-for="@permissao.IdControlador" />
-                                    <input type="hidden" asp-for="@permissao.IdAcao" />
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" asp-for="@permissao.Acesso">
-                                        <label class="form-check-label ms-2" asp-for="@permissao.Acesso">
-                                            @permissao.Acao.Nome
-                                        </label>
-                                    </div>   
+                                        <input type="hidden" asp-for="@permissao.Id" />
+                                        <input type="hidden" asp-for="@permissao.IdAcao" />
+                                        <input type="hidden" asp-for="@permissao.Acesso" />
+                                        <label class="form-check-label ms-2">@permissao.Acao.Nome</label>
+                                        <input class="form-check-input" type="checkbox" onclick="permissao.addPermissao('@permissao.Id', '@permissao.IdUsuario', '@permissao.IdControlador', '@permissao.IdAcao', this.checked)" />
+                                    </div>
                                 </form>
                             }
                     </div>

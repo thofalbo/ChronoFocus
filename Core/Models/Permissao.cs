@@ -1,6 +1,7 @@
 namespace Core.Models;
 public class Permissao
 {
+    public int Id { get; set; }
     public int IdUsuario { get; set; }
     public int IdControlador { get; set; }
     public int IdAcao { get; set; }

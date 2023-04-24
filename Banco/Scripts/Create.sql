@@ -59,12 +59,26 @@ CREATE TABLE acao (
 	CONSTRAINT fk_acao_controlador FOREIGN KEY (id_controlador) REFERENCES controlador(id)
 );
 -- tabela permissao
+-- tabela permissao
 CREATE TABLE permissao (
+	id int generated always as identity,
 	id_usuario int NOT NULL,
 	id_controlador int NOT NULL,
 	id_acao int NOT NULL,
 	acesso boolean NOT NULL DEFAULT FALSE,
-	CONSTRAINT pk_permissao PRIMARY KEY(id_usuario, id_controlador, id_acao),
+	CONSTRAINT pk_permissao PRIMARY KEY (id),
+	CONSTRAINT fk_permissao_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+	CONSTRAINT fk_permissao_controlador FOREIGN KEY (id_controlador) REFERENCES controlador(id),
+	CONSTRAINT fk_permissao_acao FOREIGN KEY (id_acao) REFERENCES acao(id)
+);
+-- tabela permissao
+CREATE TABLE permissao (
+	id int generated always as identity,
+	id_usuario int NOT NULL,
+	id_controlador int NOT NULL,
+	id_acao int NOT NULL,
+	acesso boolean NOT NULL DEFAULT FALSE,
+	CONSTRAINT pk_permissao PRIMARY KEY (id),
 	CONSTRAINT fk_permissao_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id),
 	CONSTRAINT fk_permissao_controlador FOREIGN KEY (id_controlador) REFERENCES controlador(id),
 	CONSTRAINT fk_permissao_acao FOREIGN KEY (id_acao) REFERENCES acao(id)
