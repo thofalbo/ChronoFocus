@@ -1,18 +1,18 @@
 -- CREATE TYPE sale_status_enum AS ENUM ('Pending', 'Billed', 'Cancelled');
-CREATE TABLE departamento (
-	id int generated always as identity,
-	nome varchar(64) NOT NULL,
-	constraint pk_departamento primary key(id)
-);
-CREATE TABLE vendedor (
-	id int generated always as identity,
-	id_departamento int NOT NULL,
-	nome varchar(64) NOT NULL,
-	email varchar(256) NOT NULL,
-	data_nascimento timestamp NOT NULL,
-	constraint pk_vendedor primary key(id),
-	constraint fk_departamento_vendedor foreign key(id_departamento) references departamento(id)
-);
+-- CREATE TABLE departamento (
+-- 	id int generated always as identity,
+-- 	nome varchar(64) NOT NULL,
+-- 	constraint pk_departamento primary key(id)
+-- );
+-- CREATE TABLE vendedor (
+-- 	id int generated always as identity,
+-- 	id_departamento int NOT NULL,
+-- 	nome varchar(64) NOT NULL,
+-- 	email varchar(256) NOT NULL,
+-- 	data_nascimento timestamp NOT NULL,
+-- 	constraint pk_vendedor primary key(id),
+-- 	constraint fk_departamento_vendedor foreign key(id_departamento) references departamento(id)
+-- );
 -- CREATE TABLE opcao (
 -- 	id int generated always as identity,
 -- 	rota varchar(64) NOT NULL,
@@ -57,19 +57,6 @@ CREATE TABLE acao (
 	id_controlador int NOT NULL,
 	CONSTRAINT pk_acao PRIMARY KEY (id),
 	CONSTRAINT fk_acao_controlador FOREIGN KEY (id_controlador) REFERENCES controlador(id)
-);
--- tabela permissao
--- tabela permissao
-CREATE TABLE permissao (
-	id int generated always as identity,
-	id_usuario int NOT NULL,
-	id_controlador int NOT NULL,
-	id_acao int NOT NULL,
-	acesso boolean NOT NULL DEFAULT FALSE,
-	CONSTRAINT pk_permissao PRIMARY KEY (id),
-	CONSTRAINT fk_permissao_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id),
-	CONSTRAINT fk_permissao_controlador FOREIGN KEY (id_controlador) REFERENCES controlador(id),
-	CONSTRAINT fk_permissao_acao FOREIGN KEY (id_acao) REFERENCES acao(id)
 );
 -- tabela permissao
 CREATE TABLE permissao (

@@ -17,6 +17,37 @@ public class UsuarioRepository : IUsuarioRepository
             ).FirstOrDefaultAsync();
     }
 
+    public async Task<Usuario> VerificaUsuario(string apelido, string senha)
+    {
+        var usuariologado =  await _dbContext.Usuarios
+            .AsSingleQuery()
+                .Where(
+                    x => x.Apelido.ToLower() == apelido.ToLower()
+                    && x.Senha == senha
+                )
+                .Include(x => x.Permissoes)
+                .Select(x => new Usuario
+                {
+                    Id = x.Id,
+                    Nome = x.Nome,
+                    Apelido = x.Apelido,
+                    Email = x.Email,
+                    Senha = x.Senha,
+                    DataCadastro = x.DataCadastro,
+                    Permissoes = x.Permissoes.Select(y => new Permissao
+                    {
+                        Id = y.Id,
+                        IdUsuario = y.IdUsuario,
+                        IdControlador = y.IdControlador,
+                        IdAcao = y.IdAcao,
+                        Acesso = y.Acesso
+                    }).ToArray()
+                })
+                .FirstOrDefaultAsync();
+                            
+        return usuariologado;
+    }
+
     public async Task CadastrarAsync(Usuario usuario)
     {
         await _dbContext.Usuarios.AddAsync(new Usuario

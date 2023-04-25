@@ -8,4 +8,5 @@ public interface IUsuarioRepository
     Task CadastrarAsync(Usuario usuario);
     Task<Usuario> Get(string login, string senha);
     Task ExcluirAsync(int id);
+    Task<Usuario> VerificaUsuario(string apelido, string senha);
 }

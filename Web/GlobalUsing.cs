@@ -10,6 +10,7 @@ global using Core.Services;
 global using Data;
 global using Data.Repositories;
 
+global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Filters;

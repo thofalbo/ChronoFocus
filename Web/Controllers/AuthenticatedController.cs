@@ -1,7 +1,8 @@
 namespace Web.Controllers;
 public class AuthenticatedController : Controller
 {
-    public int IdUsuarioLogado { get; set; }
+    protected int IdUsuarioLogado { get; set; }
+    protected string acoes { get; set; }
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
@@ -13,8 +14,11 @@ public class AuthenticatedController : Controller
             context.Result = new RedirectResult("/login/inicio");
         else
         {
-            IdUsuarioLogado = TokenService.UsuarioLogado(jwtToken);
+            IdUsuarioLogado = TokenService.IdUsuarioLogado(jwtToken);
+            acoes = TokenService.BuscaAcoes(jwtToken);
+
             ViewBag.IdUsuarioLogado = IdUsuarioLogado;
+            ViewBag.Acoes = acoes;
         }
 
         if (context.HttpContext.Response.StatusCode == 200)
