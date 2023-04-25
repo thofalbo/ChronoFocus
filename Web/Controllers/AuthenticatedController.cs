@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Web.Controllers;
 public class AuthenticatedController : Controller
 {
@@ -23,18 +25,18 @@ public class AuthenticatedController : Controller
             IdUsuarioLogado = TokenService.IdUsuarioLogado(jwtToken);
             acoes = TokenService.BuscaAcoes(jwtToken);
 
-            // ViewBag.IdUsuarioLogado = IdUsuarioLogado;
-            // ViewBag.Acoes = acoes;
-            // ViewBag.Controladores = controladores;
-            // ViewBag.usuarios = usuarios;
-            ViewBag.controller = RouteData.Values["action"].ToString();
+            // ViewBag.controller = RouteData.Values["action"].ToString().Contains();
+            // ViewBag.controller = RouteData.Values["action"].ToString();
+
+            var path = Request.Path.Value;
+            ViewBag.Path = path.Split("/");
         }
 
-        if (context.HttpContext.Response.StatusCode == 200)
-        {
-            context.HttpContext.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
-            context.HttpContext.Response.Headers["Pragma"] = "no-cache";
-            context.HttpContext.Response.Headers["Expires"] = "0";
-        }
+        // if (context.HttpContext.Response.StatusCode == 200)
+        // {
+        //     context.HttpContext.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+        //     context.HttpContext.Response.Headers["Pragma"] = "no-cache";
+        //     context.HttpContext.Response.Headers["Expires"] = "0";
+        // }
     }
 }
