@@ -6,7 +6,7 @@ public class UsuarioRepository : IUsuarioRepository
     public UsuarioRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
     public async Task<IEnumerable<Usuario>> ListarAsync() => await _dbContext.Usuarios.ToListAsync();
-    
+
     public async Task<Usuario> ObterPorIdAsync(int id) => await _dbContext.Usuarios.FindAsync(id);
     public async Task<Usuario> Get(string apelido, string senha)
     {
@@ -19,13 +19,16 @@ public class UsuarioRepository : IUsuarioRepository
 
     public async Task<Usuario> VerificaUsuario(string apelido, string senha)
     {
-        var usuariologado =  await _dbContext.Usuarios
+        var usuariologado = await _dbContext.Usuarios
             .AsSingleQuery()
                 .Where(
                     x => x.Apelido.ToLower() == apelido.ToLower()
                     && x.Senha == senha
                 )
-                .Include(x => x.Permissoes)
+                .Include(p => p.Permissoes)
+                    .ThenInclude(a => a.Controlador)
+                .Include(p => p.Permissoes)
+                    .ThenInclude(c => c.Acao)
                 .Select(x => new Usuario
                 {
                     Id = x.Id,
@@ -38,13 +41,21 @@ public class UsuarioRepository : IUsuarioRepository
                     {
                         Id = y.Id,
                         IdUsuario = y.IdUsuario,
+                        Controlador = new Controlador
+                        {
+                            Nome = y.Controlador.Nome
+                        },
+                        Acao = new Acao
+                        {
+                            Nome = y.Acao.Nome
+                        },
                         IdControlador = y.IdControlador,
                         IdAcao = y.IdAcao,
                         Acesso = y.Acesso
                     }).ToArray()
                 })
                 .FirstOrDefaultAsync();
-                            
+
         return usuariologado;
     }
 

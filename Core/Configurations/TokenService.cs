@@ -6,16 +6,14 @@ public class TokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(chave);
 
-        var acoes = string.Join(",", usuario.Permissoes.Select(x => new Permissao{
-            Id = x.Id,
-            IdUsuario = x.IdUsuario,
-            IdAcao = x.IdAcao,
-            IdControlador = x.IdControlador,
-            Acesso = x.Acesso
-        }));
+        foreach (var permissao in usuario.Permissoes){}
 
-        // var controladores = string.Join(",", usuario.Permissoes.Select(x => x.Controlador.Nome));
-        // var acoes = string.Join(",", usuario.Permissoes.Select(x => x.Acao.Nome));
+        var usuarios = string.Join(",", usuario.Permissoes.Select(x => x.IdUsuario));
+        var controladores = string.Join(",", usuario.Permissoes.Select(x => x.IdControlador));
+        var acoes = string.Join(",", usuario.Permissoes.Select(x => x.IdAcao));
+        var acessos = string.Join(",", usuario.Permissoes.Select(x => x.Acesso));
+        var rotas = string.Join(",", usuario.Permissoes.Select(x => x.Controlador.Nome));
+        var rotasAcao = string.Join(",", usuario.Permissoes.Select(x => x.Acao.Nome));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -24,7 +22,12 @@ public class TokenService
                 new Claim("idUsuario", usuario.Id.ToString()),
                 new Claim("emailUsuario", usuario.Email),
                 new Claim("apelidoUsuario", usuario.Apelido),
-                new Claim("acoes", acoes)
+                new Claim("usuarios", usuarios),
+                new Claim("controladores", controladores),
+                new Claim("acoes", acoes),
+                new Claim("acessos", acessos),
+                new Claim("rotas", rotas),
+                new Claim("rotasAcao", rotasAcao)
             }),
 
             Expires = DateTime.UtcNow.AddHours(2),
@@ -57,6 +60,6 @@ public class TokenService
     {
         var token = handler(jwtToken);
 
-        return token.Claims.ToList()[3].Value;
+        return token.Claims.ToList()[7].Value;
     }
 }
