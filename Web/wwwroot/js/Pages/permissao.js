@@ -30,7 +30,7 @@ var permissao = (() => {
         $.post(configs.urls[url], {
             permitidos: permitidos
         }).done(() => {
-            console.log('chegou até aqui.')
+            location.href = '/permissao/inicio'
         });
     };
 

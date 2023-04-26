@@ -11,8 +11,7 @@ public class TokenService
         var usuarios = string.Join(",", usuario.Permissoes.Select(x => x.IdUsuario));
         var controladores = string.Join(",", usuario.Permissoes.Select(x => x.IdControlador));
         var acoes = string.Join(",", usuario.Permissoes.Select(x => x.IdAcao));
-        var acessos = string.Join(",", usuario.Permissoes.Select(x => x.Acesso));
-        var rotas = string.Join(",", usuario.Permissoes.Select(x => x.Controlador.Nome));
+        var rotasControladores = string.Join(",", usuario.Permissoes.Select(x => x.Controlador.Nome));
         var rotasAcao = string.Join(",", usuario.Permissoes.Select(x => x.Acao.Nome));
 
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -20,12 +19,10 @@ public class TokenService
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("idUsuario", usuario.Id.ToString()),
-                new Claim("rotas", rotas),
+                new Claim("rotasControladores", rotasControladores),
                 new Claim("rotasAcao", rotasAcao),
                 new Claim("usuarios", usuarios),
-                new Claim("emailUsuario", usuario.Email),
-                new Claim("apelidoUsuario", usuario.Apelido),
-                new Claim("acessos", acessos)
+                new Claim("apelidoUsuario", usuario.Apelido)
             }),
 
             Expires = DateTime.UtcNow.AddHours(2),
@@ -54,7 +51,7 @@ public class TokenService
         return idUsuarioLogado;
     }
 
-    public static string BuscaAcoes(string jwtToken, int claim)
+    public static string BuscaPermissoes(string jwtToken, int claim)
     {
         var token = handler(jwtToken);
 

@@ -4,8 +4,8 @@ public class AuthenticatedController : Controller
     protected int IdUsuarioLogado { get; set; }
     protected string Controladores { get; set; }
     protected string Acoes { get; set; }
-    protected string Isuarios { get; set; }
-
+    protected string[] Path { get; set; }
+    protected bool AcoesProibidas { get; set; }
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         base.OnActionExecuting(context);
@@ -17,15 +17,18 @@ public class AuthenticatedController : Controller
         else
         {
             IdUsuarioLogado = TokenService.IdUsuarioLogado(jwtToken);
-            Controladores = TokenService.BuscaAcoes(jwtToken, 1);
-            Acoes = TokenService.BuscaAcoes(jwtToken, 2);
+            Controladores = TokenService.BuscaPermissoes(jwtToken, 1);
+            Acoes = TokenService.BuscaPermissoes(jwtToken, 2);
 
-            var path = Request.Path.Value.Split("/");
+            Path = Request.Path.Value.Split("/");
+            AcoesProibidas = !Path[2].IsNullOrEmpty() && !Acoes.Contains(Path[2]);
 
-            if (!path[1].IsNullOrEmpty() && Controladores.Contains(path[1]))
+            if (!Path[1].IsNullOrEmpty() && !Controladores.Contains(Path[1]))
                 context.Result = new RedirectResult("/");
-            // else if (!path[2].IsNullOrEmpty() && !Acoes.Contains(path[2]))
-            //     context.Result = new RedirectResult("/");
+                
+            if (!AcoesProibidas)
+                context.Result = RedirectToAction("");
+
         }
 
         if (context.HttpContext.Response.StatusCode == 200)
