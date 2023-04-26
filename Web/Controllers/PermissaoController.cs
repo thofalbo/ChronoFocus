@@ -1,7 +1,7 @@
 namespace Web.Controllers;
 
 [Route("permissao")]
-public class PermissaoController : Controller
+public class PermissaoController : AuthenticatedController
 {
     private readonly AppDbContext _dbContext;
     private readonly IPermissaoRepository _permissaoRepository;
@@ -11,6 +11,8 @@ public class PermissaoController : Controller
         _dbContext = dbContext;
         _permissaoRepository = permissaoRepository;
     }
+
+    [HttpGet("inicio")]
     public IActionResult Index() => View();
 
     [HttpGet("buscar")]

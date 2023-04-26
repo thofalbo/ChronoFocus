@@ -1,11 +1,12 @@
 @model Permissao
 
-@ViewBag.Path
+@ViewBag.Path 
 <form id="permissaoForm">
     <label type="text" asp-for="Usuario.Nome" >Busque o nome do Funcionário</label>
     <input type="text" asp-for="Usuario.Nome" />
     <button type="button" class="btn btn-success" onclick="permissao.fnSubmit('permissaoForm', 'buscar')">Buscar</button>
 </form>
+
 
 <section id="tabelaPermissoes">
 

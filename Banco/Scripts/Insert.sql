@@ -166,3 +166,28 @@ WHERE
 	a.id_controlador = c.id
 ORDER BY 
 	u.id, c.id, a.id;
+
+
+CREATE OR REPLACE FUNCTION insert_permissao() RETURNS trigger AS $$
+BEGIN
+    -- Check if the associated Usuario and Controlador already exist
+    IF NOT EXISTS (SELECT 1 FROM usuario WHERE id = NEW.id_usuario) THEN
+        RAISE EXCEPTION 'Cannot insert into permissao: Usuario does not exist';
+    END IF;
+    
+    IF NOT EXISTS (SELECT 1 FROM controlador WHERE id = NEW.id_controlador) THEN
+        RAISE EXCEPTION 'Cannot insert into permissao: Controlador does not exist';
+    END IF;
+    
+    -- Insert the Permissao record
+    INSERT INTO permissao (id_usuario, id_controlador, id_acao)
+    VALUES (NEW.id_usuario, NEW.id_controlador, NEW.id);
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_into_permissao
+AFTER INSERT ON acao
+FOR EACH ROW
+EXECUTE FUNCTION insert_permissao();

@@ -12,7 +12,7 @@ var login = (function () {
     var login = function () {
         var model = $('#form-login').serializeObject();
         $.post(configs.urls.logar, model).done(function() {
-            location.href = "/home";
+            location.href = "/Home";
         });
     };
 

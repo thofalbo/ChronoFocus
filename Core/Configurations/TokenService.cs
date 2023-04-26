@@ -20,14 +20,12 @@ public class TokenService
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("idUsuario", usuario.Id.ToString()),
+                new Claim("rotas", rotas),
+                new Claim("rotasAcao", rotasAcao),
+                new Claim("usuarios", usuarios),
                 new Claim("emailUsuario", usuario.Email),
                 new Claim("apelidoUsuario", usuario.Apelido),
-                new Claim("usuarios", usuarios),
-                new Claim("controladores", controladores),
-                new Claim("acoes", acoes),
-                new Claim("acessos", acessos),
-                new Claim("rotas", rotas),
-                new Claim("rotasAcao", rotasAcao)
+                new Claim("acessos", acessos)
             }),
 
             Expires = DateTime.UtcNow.AddHours(2),
@@ -56,10 +54,10 @@ public class TokenService
         return idUsuarioLogado;
     }
 
-    public static string BuscaAcoes(string jwtToken)
+    public static string BuscaAcoes(string jwtToken, int claim)
     {
         var token = handler(jwtToken);
 
-        return token.Claims.ToList()[7].Value;
+        return token.Claims.ToList()[claim].Value;
     }
 }

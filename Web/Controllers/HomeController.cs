@@ -1,6 +1,6 @@
 ﻿namespace Web.Controllers;
 
-public class HomeController : AuthenticatedController
+public class HomeController : Controller
 {
     public IActionResult Index() => View();
 }
