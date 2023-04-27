@@ -8,10 +8,12 @@ public class AcaoConfiguration : IEntityTypeConfiguration<Acao>
         builder.HasKey(x => x.Id).HasName("pk_acao");
 
         builder.Property(x => x.Id).ValueGeneratedOnAdd().HasColumnName("id");
-        builder.Property(x => x.Nome).HasColumnName("nome");
-        builder.Property(x => x.IdControlador).HasColumnName("id_controlador");
+        builder.Property(x => x.Controlador).HasColumnName("controlador");
+        builder.Property(x => x.Rota).HasColumnName("rota");
+        builder.Property(x => x.Descricao).HasColumnName("descricao");
+        builder.Property(x => x.UsuarioCadastro).HasColumnName("usuario_cadastro");
+        builder.Property(x => x.DataCadastro).HasColumnName("data_cadastro");
 
-        builder.HasOne(x => x.Controlador).WithMany(x => x.Acoes).HasForeignKey(x => x.IdControlador).HasConstraintName("fk_acao_controlador");;
-        builder.HasMany(x => x.Permissoes).WithOne(x => x.Acao);
+        builder.HasMany(x => x.AcaoUsuarios).WithOne(x => x.Acao);
     }
 }

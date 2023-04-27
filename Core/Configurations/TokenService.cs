@@ -6,23 +6,23 @@ public class TokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(chave);
 
-        foreach (var permissao in usuario.Permissoes){}
+        // foreach (var permissao in usuario.Permissoes){}
 
-        var usuarios = string.Join(",", usuario.Permissoes.Select(x => x.IdUsuario));
-        var controladores = string.Join(",", usuario.Permissoes.Select(x => x.IdControlador));
-        var acoes = string.Join(",", usuario.Permissoes.Select(x => x.IdAcao));
-        var rotasControladores = string.Join(",", usuario.Permissoes.Select(x => x.Controlador.Nome));
-        var rotasAcao = string.Join(",", usuario.Permissoes.Select(x => x.Acao.Nome));
+        // var usuarios = string.Join(",", usuario.Permissoes.Select(x => x.IdUsuario));
+        // var controladores = string.Join(",", usuario.Permissoes.Select(x => x.IdControlador));
+        // var acoes = string.Join(",", usuario.Permissoes.Select(x => x.IdAcao));
+        // var rotasControladores = string.Join(",", usuario.Permissoes.Select(x => x.Controlador.Nome));
+        // var rotasAcao = string.Join(",", usuario.Permissoes.Select(x => x.Acao.Nome));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("idUsuario", usuario.Id.ToString()),
-                new Claim("rotasControladores", rotasControladores),
-                new Claim("rotasAcao", rotasAcao),
-                new Claim("usuarios", usuarios),
                 new Claim("apelidoUsuario", usuario.Apelido)
+                // new Claim("rotasControladores", rotasControladores),
+                // new Claim("rotasAcao", rotasAcao),
+                // new Claim("usuarios", usuarios),
             }),
 
             Expires = DateTime.UtcNow.AddHours(2),

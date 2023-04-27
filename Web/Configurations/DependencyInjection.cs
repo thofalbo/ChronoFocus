@@ -30,7 +30,7 @@ public static class DependencyInjection
 
         services.AddScoped<ITarefaRepository, TarefaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        services.AddScoped<IPermissaoRepository, PermissaoRepository>();
+        // services.AddScoped<IAcaoUsuarioRepository, AcaoUsuarioRepository>();
 
         services.AddScoped<ITarefaService, TarefaService>();
     }

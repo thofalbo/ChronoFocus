@@ -25,35 +25,6 @@ public class UsuarioRepository : IUsuarioRepository
                     x => x.Apelido.ToLower() == apelido.ToLower()
                     && x.Senha == senha
                 )
-                .Include(p => p.Permissoes)
-                    .ThenInclude(a => a.Controlador)
-                .Include(p => p.Permissoes)
-                    .ThenInclude(c => c.Acao)
-                .Select(x => new Usuario
-                {
-                    Id = x.Id,
-                    Nome = x.Nome,
-                    Apelido = x.Apelido,
-                    Email = x.Email,
-                    Senha = x.Senha,
-                    DataCadastro = x.DataCadastro,
-                    Permissoes = x.Permissoes.Select(y => new Permissao
-                    {
-                        Id = y.Id,
-                        IdUsuario = y.IdUsuario,
-                        Controlador = new Controlador
-                        {
-                            Nome = y.Controlador.Nome
-                        },
-                        Acao = new Acao
-                        {
-                            Nome = y.Acao.Nome
-                        },
-                        IdControlador = y.IdControlador,
-                        IdAcao = y.IdAcao,
-                        Acesso = y.Acesso
-                    }).ToArray()
-                })
                 .FirstOrDefaultAsync();
 
         return usuariologado;
