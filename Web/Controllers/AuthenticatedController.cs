@@ -24,10 +24,10 @@ public class AuthenticatedController : Controller
             AcoesProibidas = !Path[2].IsNullOrEmpty() && !Acoes.Contains(Path[2]);
 
             if (!Path[1].IsNullOrEmpty() && !Controladores.Contains(Path[1]))
-                context.Result = new RedirectResult("/");
+                context.Result = new RedirectResult("/Home/Index");
                 
-            if (!AcoesProibidas)
-                context.Result = RedirectToAction("");
+            if (AcoesProibidas)
+                context.Result = RedirectToAction("Index", "Home");
 
         }
 

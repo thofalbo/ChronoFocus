@@ -16,12 +16,9 @@
             <div class="visor-cronometro">
                 <h1 id="relogio" class="cronometro">00:00:00</h1>
                 <div id="botoesCadastrar" class="botoes-relogio">
-                    @* @if (ViewBag.IdUsuarioLogado == 1)
-                    { *@
-                    <button class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.hideCadastrar()">
+                    <button class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.getCadastrar()">
                         <p>+</p>
                     </button>
-                    @* } *@
                     <button style="display: none;" class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.fnCadastrarAtividade()">
                         <p>x</p>
                     </button>
@@ -111,8 +108,7 @@
     tarefa.init({
         urls: {
             cadastrar: '@Url.Action("cadastrar", "tarefa")',
-            index: '@Url.Action("index", "tarefa")'
+            index: '@Url.Action("inicio", "tarefa")'
         }
     });
-    tarefa.getCadastrar();
 </script>
