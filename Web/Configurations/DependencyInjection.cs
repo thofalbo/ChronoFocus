@@ -28,10 +28,12 @@ public static class DependencyInjection
 
         services.AddScoped<AppDbContext>();
 
+        services.AddScoped<IAcaoRepository, AcaoRepository>();
+        services.AddScoped<IAcaoUsuarioRepository, AcaoUsuarioRepository>();
         services.AddScoped<ITarefaRepository, TarefaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        // services.AddScoped<IAcaoUsuarioRepository, AcaoUsuarioRepository>();
 
         services.AddScoped<ITarefaService, TarefaService>();
+        // services.AddScoped<IAcaoUsuarioRepository, AcaoUsuarioRepository>();
     }
 }

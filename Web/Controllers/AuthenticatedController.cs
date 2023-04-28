@@ -23,11 +23,11 @@ public class AuthenticatedController : Controller
             Path = Request.Path.Value.Split("/");
             AcoesProibidas = !Path[2].IsNullOrEmpty() && !Acoes.Contains(Path[2]);
 
-            if (!Path[1].IsNullOrEmpty() && !Controladores.Contains(Path[1]))
-                context.Result = new RedirectResult("/");
+            // if (!Path[1].IsNullOrEmpty() && !Controladores.Contains(Path[1]))
+            //     context.Result = new RedirectResult("/");
                 
-            if (!AcoesProibidas)
-                context.Result = RedirectToAction("");
+            // if (!AcoesProibidas)
+            //     context.Result = RedirectToAction("");
 
         }
 

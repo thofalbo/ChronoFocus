@@ -1,0 +1,29 @@
+@model Acao
+
+<form asp-controller="Acao" asp-action="Search" method="get">
+    <div class="form-group">
+        <label asp-for="Controlador"></label>
+        <input asp-for="Controlador" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Rota"></label>
+        <input asp-for="Rota" class="form-control" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" onclick="acao.fnSubmit('mostrarAcao', 'cadastrar')">Search</button>
+    </div>
+</form>
+
+<div id="mostrarAcao">
+
+</div>
+
+<script src="~/js/Pages/acao.js" asp-append-version="true"></script>
+<script>
+    acao.init({
+        urls: {
+            index: '@Url.Action("inicio", "acao")',
+            cadastrar: '@Url.Action("cadastrar", "acao")'
+        }
+    });
+</script>

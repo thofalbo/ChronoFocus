@@ -1,0 +1,24 @@
+@model IEnumerable<Acao>
+
+<div class="accordion" id="acaoAccordion">
+  @foreach (var acao in Model)
+  {
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading-@acao.Controlador">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@acao.Controlador" aria-expanded="true" aria-controls="collapse-@acao.Controlador">
+          @acao.Controlador
+        </button>
+      </h2>
+      <div id="collapse-@acao.Controlador" class="accordion-collapse collapse" aria-labelledby="heading-@acao.Controlador" data-bs-parent="#acaoAccordion">
+        <div class="accordion-body">
+          <ul>
+            @foreach (var acaoUsuario in acao.AcaoUsuarios)
+            {
+              <li>@acaoUsuario.Usuario.Nome</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  }
+</div>
