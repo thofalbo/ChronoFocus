@@ -2,19 +2,13 @@ namespace Core.Services
 {
     public class AcaoUsuarioService : IAcaoUsuarioService
     {
-        private readonly IAcaoRepository _acaoRepository;
         private readonly IUsuarioRepository _usuarioRepository;
-        private readonly IAcaoUsuarioRepository _acaousuarioRepository;
+        private readonly IAcaoUsuarioRepository _acaoUsuarioRepository;
 
-        public AcaoUsuarioService(
-            IAcaoRepository acaoRepository,
-            IUsuarioRepository usuarioRepository,
-            IAcaoUsuarioRepository acaoUsuarioRepository
-        )
+        public AcaoUsuarioService (IUsuarioRepository usuarioRepository, IAcaoUsuarioRepository acaoUsuarioRepository)
         {
-            _acaoRepository = acaoRepository;
             _usuarioRepository = usuarioRepository;
-            _acaousuarioRepository = acaoUsuarioRepository;
+            _acaoUsuarioRepository = acaoUsuarioRepository;
         }
 
         public async Task EditarPermissoesAsync(PermissoesDto permissoes)
@@ -34,10 +28,12 @@ namespace Core.Services
                     IdUsuario = acaoDto.IdUsuario
                 };
 
-                if (acaoDto.TemPermissao == false)
-                    await _acaousuarioRepository.ExcluirPermissaoAsync(acaoUsuario);
-                else
-                    await _acaousuarioRepository.AdicionarPermissaoAsync(acaoUsuario);
+                var acaoUsuarios = await _acaoUsuarioRepository.ListarAcoesUsuariosAsync(acaoDto.IdAcao, acaoDto.IdUsuario);
+
+                if (!acaoDto.TemPermissao && acaoUsuarios)
+                    await _acaoUsuarioRepository.ExcluirPermissaoAsync(acaoUsuario);
+                else if (acaoDto.TemPermissao && !acaoUsuarios)
+                    await _acaoUsuarioRepository.AdicionarPermissaoAsync(acaoUsuario);
             };
         }
     }
