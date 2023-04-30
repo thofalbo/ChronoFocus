@@ -4,17 +4,20 @@ namespace Web.Controllers;
 public class AcaoController : AuthenticatedController
 {
     private readonly AppDbContext _dbContext;
-    // private readonly IAcaoService _acaoService;
+    private readonly IAcaoUsuarioService _acaoUsuarioService;
     private readonly IAcaoRepository _acaoRepository;
+    private readonly IAcaoUsuarioRepository _acaousuarioRepository;
     public AcaoController(
         AppDbContext dbContext,
         // IAcaoService acaoService,
+        IAcaoUsuarioRepository acaousuarioRepository,
         IAcaoRepository acaoRepository
     )
     {
         _dbContext = dbContext;
         // _acaoService = acaoService;
         _acaoRepository = acaoRepository;
+        _acaousuarioRepository = acaousuarioRepository;
     }
 
     [HttpGet("inicio")]
@@ -28,56 +31,30 @@ public class AcaoController : AuthenticatedController
     }
 
     [HttpPost("cadastrar")]
-    public async Task<IActionResult> CadastrarPost(IEnumerable<AcaoUsuarioDto> model)
+    public async Task CadastrarPost(PermissoesDto model)
     {
-        var modelo = model;
-        foreach (var modelito in modelo)
+        // await _acaoUsuarioService.EditarPermissoesAsync(model);
+        
+        foreach (var permitido in model.Permitidos)
         {
-            var acoes = new AcaoUsuario
+            var acaoDto = new PermitidoDto
             {
-                IdAcao = modelito.Acao.Id,
-                IdUsuario = 1
+                IdAcao = permitido.IdAcao,
+                IdUsuario = permitido.IdUsuario,
+                TemPermissao = permitido.TemPermissao
             };
-        };
 
-        Console.WriteLine(modelo);
-        return RedirectToAction(nameof(Index));
+            var acaoUsuario = new AcaoUsuario
+            {
+                IdAcao = acaoDto.IdAcao,
+                IdUsuario = acaoDto.IdUsuario
+            };
+            
+            if (acaoDto.TemPermissao == false && _acaousuarioRepository.ListarPorFuncionarioAsync("Thomaz").ToString().Contains(acaoUsuario.ToString()))
+                await _acaousuarioRepository.ExcluirPermissaoAsync(acaoUsuario);
+            else if (acaoDto.TemPermissao == true && !_acaousuarioRepository.ListarPorFuncionarioAsync("Thomaz").ToString().Contains(acaoUsuario.ToString()))
+                await _acaousuarioRepository.AdicionarPermissaoAsync(acaoUsuario);
+        };
     }
 
-    // [HttpGet("excluir/{id}")]
-    // public async Task<IActionResult> ExcluirGet(int id)
-    // {
-    //     // if (AcoesProibidas)
-    //     //     return RedirectToAction("/");
-
-    //     var tarefa = await _tarefaRepository.BuscarPorIdAsync(id);
-    //     if (tarefa == null)
-    //         return NotFound();
-
-    //     return View("_excluir", tarefa);
-    // }
-
-    // [HttpPost("excluir/{id:int}")]
-    // public async Task<IActionResult> ExcluirPost(int id)
-    // {
-    //     // if (AcoesProibidas)
-    //     //     return RedirectToAction("/");
-
-    //     await _tarefaRepository.ExcluirAsync(id);
-    //     return RedirectToAction(nameof(Index));
-    // }
-
-    // [HttpGet("editar/{id:int}")]
-    // public async Task<IActionResult> EditarGet(int id)
-    // {
-    //     // if (AcoesProibidas)
-    //     //     return RedirectToAction("/");
-
-    //     var opcao = await _tarefaRepository.BuscarPorIdAsync(id);
-
-    //     if (opcao == null)
-    //         return NotFound();
-
-    //     return View("_editar");
-    // }
 }

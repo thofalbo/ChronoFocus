@@ -34,6 +34,6 @@ public static class DependencyInjection
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
         services.AddScoped<ITarefaService, TarefaService>();
-        // services.AddScoped<IAcaoUsuarioRepository, AcaoUsuarioRepository>();
+        services.AddScoped<IAcaoUsuarioService, AcaoUsuarioService>();
     }
 }

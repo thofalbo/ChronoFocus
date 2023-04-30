@@ -10,8 +10,6 @@ var acao = (() => {
         configs = $configs;
     };
 
-    // var permitidos = [];
-
     var fnSubmit = (form, url) => {
         // var model = $(`#${form}`).serializeObject();
         // console.log(model);
@@ -26,33 +24,41 @@ var acao = (() => {
         // }
     };
 
+    // var fnSubmitar = (form, url) => {
+    //     var model = $(`#${form}`).serializeObject();
+    //     console.log(model);
+    //         $.post(configs.urls[url], model).done(() => {
+    //         });
+    // };
+    
     var fnSubmitar = (form, url) => {
-        var model = $(`#${form}`).serializeObject();
-        console.log(model);
-            $.post(configs.urls[url], model).done(() => {
-            });
+        $.post(configs.urls[url], {
+            permitidos: permitidos
+        }).done(() => {
+            location.href = configs.urls.index;
+        });
     };
 
-    // function addPermissao(id, idUsuario, idControlador, idAcao, isChecked) {
-    //     var permissao = {
-    //         Id: id,
-    //         IdUsuario: idUsuario,
-    //         IdControlador: idControlador,
-    //         IdAcao: idAcao,
-    //         Acesso: isChecked,
-    //     };
-    //     var index = permitidos.findIndex((p) => p.Id == id);
-    //     if (index > -1) {
-    //         permitidos.splice(index, 1);
-    //     }
-    //     permitidos.push(permissao);
+    var permitidos = [];
 
-    // }
+    function addPermissao(idAcao, idUsuario, isChecked) {
+        var permissao = {
+            IdAcao: idAcao,
+            IdUsuario: idUsuario,
+            TemPermissao: isChecked,
+        };
+        var index = permitidos.findIndex((p) => p.Id == idAcao);
+        if (index > -1) {
+            permitidos.splice(index, 1);
+        }
+        permitidos.push(permissao);
+        console.log(permitidos)
+    }
 
     return {
         init: init,
         fnSubmit: fnSubmit,
         fnSubmitar: fnSubmitar,
-        // addPermissao: addPermissao
+        addPermissao: addPermissao
     };
 })();
