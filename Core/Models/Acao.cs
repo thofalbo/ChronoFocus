@@ -7,6 +7,6 @@ public class Acao
     public string Descricao { get; set; }
     public int UsuarioCadastro { get; set; }
     public DateTime DataCadastro { get; set; }
-    public IEnumerable<AcaoUsuario> AcaoUsuarios { get; set; }
+    public IEnumerable<PermissaoUsuario> AcaoUsuarios { get; set; }
 
 }

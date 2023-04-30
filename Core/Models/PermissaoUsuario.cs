@@ -1,7 +1,7 @@
 namespace Core.Models;
-public class AcaoUsuario
+public class PermissaoUsuario
 {
-    public int IdAcao { get; set; }
+    public int IdPermissao { get; set; }
     public int IdUsuario { get; set; }
 
     public Acao Acao { get; set; }

@@ -8,36 +8,20 @@ public class AcaoRepository : IAcaoRepository
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<AcaoDto>> ListarAsync(int id)
+    public async Task<IEnumerable<PermissaoDto>> ListarAsync(int id)
     {
-        var acoes2 = await _dbContext.Acoes
+        var permissaoDto = await _dbContext.Acoes
             .Include(ac => ac.AcaoUsuarios)
-            .Select(ac => new AcaoUsuarioDto
+            .Select(ac => new PermissaoDto
             {
-                Acao = ac,
-                TemPermissao = ac.AcaoUsuarios.FirstOrDefault(au => au.IdUsuario == id && au.IdAcao == ac.Id) != null
-            })
-            .ToListAsync();
-
-        var acoesDto = await _dbContext.Acoes
-            .Include(ac => ac.AcaoUsuarios)
-            .Select(ac => new AcaoDto
-            {
-                Id = ac.Id,
+                IdPermissao = ac.Id,
+                IdUsuario = id,
                 Controlador = ac.Controlador,
-                Rota = ac.Rota,
                 Descricao = ac.Descricao,
-                UsuarioCadastro = ac.UsuarioCadastro,
-                TemPermissao = ac.AcaoUsuarios.FirstOrDefault(au => au.IdUsuario == id && au.IdAcao == ac.Id) != null,
-                IdUsuario = id
+                TemPermissao = ac.AcaoUsuarios.FirstOrDefault(au => au.IdUsuario == id && au.IdPermissao == ac.Id) != null
             })
             .ToListAsync();
 
-        return acoesDto;
+        return permissaoDto;
     }
 }
-// var acoesUsuario = await _dbContext.AcaoUsuarios
-//      .Include(a => a.Acao)
-//      .Include(u => u.Usuario)
-//      .Where(u => u.Usuario.Nome == nome)
-//      .ToListAsync();

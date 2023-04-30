@@ -9,5 +9,5 @@ public class Usuario
     public DateTime DataCadastro { get; set; }
 
     public IEnumerable<Tarefa> Tarefas { get; set; }
-    public IEnumerable<AcaoUsuario> AcaoUsuarios { get; set; }
+    public IEnumerable<PermissaoUsuario> AcaoUsuarios { get; set; }
 }

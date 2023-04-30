@@ -1,6 +1,6 @@
 namespace Core.Interfaces.Services
 {
-    public interface IAcaoUsuarioService
+    public interface IPermissaoUsuarioService
     {
         Task EditarPermissoesAsync(PermissoesDto permissoes);
     }
