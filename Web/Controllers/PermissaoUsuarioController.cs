@@ -15,9 +15,9 @@ namespace Web.Controllers
         public IActionResult Index() => View();
 
         [HttpGet("cadastrar")]
-        public async Task<IActionResult> CadastrarGet()
+        public async Task<IActionResult> CadastrarGet(int idUsuario)
         {
-            var acoes = await _permissaoRepository.ListarAsync(1);
+            var acoes = await _permissaoRepository.ListarAsync(idUsuario);
             return View("_cadastrar", acoes);
         }
 
