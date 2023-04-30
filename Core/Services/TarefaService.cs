@@ -1,62 +1,54 @@
-namespace Core.Services
+namespace Core.Services;
+public class TarefaService : ITarefaService
 {
-    public class TarefaService : ITarefaService
+    private readonly ITarefaRepository _tarefaRepository;
+    private readonly IUsuarioRepository _usuarioRepository;
+
+    public TarefaService(
+        ITarefaRepository tarefaRepository,
+        IUsuarioRepository usuarioRepository
+    )
     {
-        private readonly ITarefaRepository _tarefaRepository;
-        private readonly IUsuarioRepository _usuarioRepository;
+        _tarefaRepository = tarefaRepository;
+        _usuarioRepository = usuarioRepository;
+    }
 
-        public TarefaService(
-            ITarefaRepository tarefaRepository,
-            IUsuarioRepository usuarioRepository
-        )
+    public IEnumerable<Tarefa> MostrarTarefas(int idUsuario)
+    {
+        var tarefas = _tarefaRepository.MostrarTarefas(idUsuario);
+
+        return tarefas;
+    }
+
+    public async Task CadastrarAsync(Tarefa tarefa, int usuarioLogado)
+    {
+        if (tarefa.TempoTarefa == default)
+            return;
+
+        var tarefas = _tarefaRepository.MostrarTarefas(usuarioLogado);
+
+        var tarefaRepetida = tarefas.FirstOrDefault(x =>
+            x.Atividade?.ToLower() == tarefa.Atividade?.ToLower() &&
+            x.TipoAtividade?.ToLower() == tarefa.TipoAtividade?.ToLower() &&
+            x.Plataforma?.ToLower() == tarefa.Plataforma?.ToLower()
+        );
+
+        if (tarefaRepetida != null)
         {
-            _tarefaRepository = tarefaRepository;
-            _usuarioRepository = usuarioRepository;
+            tarefaRepetida.TempoTarefa = tarefaRepetida.TempoTarefa.Add(tarefa.TempoTarefa);
+            await _tarefaRepository.AtualizarAsync(tarefaRepetida);
         }
-        
-        public IEnumerable<Tarefa> MostrarTarefas(int idUsuario)
+        else
         {
-            var tarefas = _tarefaRepository.MostrarTarefas(idUsuario);
-            
-            return tarefas;
+            await _tarefaRepository.CadastrarAsync(new Tarefa
+            {
+                IdUsuario = usuarioLogado,
+                Atividade = tarefa.Atividade,
+                TipoAtividade = tarefa.TipoAtividade,
+                Plataforma = tarefa.Plataforma,
+                TempoTarefa = tarefa.TempoTarefa,
+                DataCadastro = tarefa.DataCadastro.ToUniversalTime()
+            });
         }
-        
-        public async Task CadastrarAsync(Tarefa tarefa, int usuarioLogado)
-        {
-            if (tarefa.TempoTarefa == default)
-            {
-                return;
-            }
-
-            var tarefas = _tarefaRepository.MostrarTarefas(usuarioLogado);
-
-            var tarefaRepetida = tarefas.FirstOrDefault(x =>
-                x.Atividade?.ToLower() == tarefa.Atividade?.ToLower() &&
-                x.TipoAtividade?.ToLower() == tarefa.TipoAtividade?.ToLower() &&
-                x.Plataforma?.ToLower() == tarefa.Plataforma?.ToLower()
-            );
-
-            if (tarefaRepetida != null)
-            {
-                tarefaRepetida.TempoTarefa = tarefaRepetida.TempoTarefa.Add(tarefa.TempoTarefa);
-                await _tarefaRepository.AtualizarAsync(tarefaRepetida);
-            }
-            else
-            {
-                await _tarefaRepository.CadastrarAsync(new Tarefa
-                {
-                    IdUsuario = usuarioLogado,
-                    Atividade = tarefa.Atividade,
-                    TipoAtividade = tarefa.TipoAtividade,
-                    Plataforma = tarefa.Plataforma,
-                    TempoTarefa = tarefa.TempoTarefa,
-                    DataCadastro = tarefa.DataCadastro.ToUniversalTime()
-                });
-            }
-        }
-        public async Task ExcluirAsync(int id)
-        {
-                await _tarefaRepository.ExcluirAsync(id);
-        }        
     }
 }

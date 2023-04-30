@@ -1,21 +1,25 @@
-@model Core.Models.Tarefa
+@model Tarefa
 @{
     Layout = null;
 }
 
+@ViewBag.Path
 <label class="form-label mt-4"></label>
 <div class="form-floating mb-3">
     <input id="cadastroAtividade" asp-for="Atividade"  type="text" class="form-control" placeholder="Atividade">
     <label asp-for="Atividade"></label>
 </div>
 <div class="form-floating mb-3">
-    <input asp-for="TipoAtividade"  type="text" class="form-control" placeholder="Senha">
+    <input asp-for="TipoAtividade"  type="text" class="form-control" placeholder="Tipo de Atividade">
     <label asp-for="TipoAtividade"></label>
 </div>
+@if (ViewBag.IdUsuarioLogado == 1)
+{
 <div class="form-floating mb-3">
     <input asp-for="Plataforma"  type="text" class="form-control" placeholder="Plataforma">
     <label asp-for="Plataforma"></label>
 </div>
+}
 <div class="form-group">
     <input id="tempoTarefa" type="hidden" asp-for="TempoTarefa" />
 </div>

@@ -4,6 +4,8 @@
     Layout = null;
     ViewData["Title"] = "Cadastro de Usuario";
 }
+
+@ViewBag.Path
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -44,7 +46,7 @@
             <hr />
             <div class="form-group">
                 <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                <a class="btn btn-secondary" asp-area="" asp-controller="login" asp-action="index">Voltar</a>
+                <a class="btn btn-secondary" onclick="location.href = '/tarefa/inicio'">Volta</a>
             </div>
         </form>
     </div>

@@ -12,13 +12,23 @@ IConfiguration configurations = builder.Configuration;
 var appSettings = configurations.Get<AppSettings>();
 
 builder.Services.AddDependencies(appSettings);
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "ChronoFocusAuthenticationToken";
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromHours(2);
+        options.SlidingExpiration = true;
+        options.LoginPath = "/login";
+        options.LogoutPath = "/logout";
+    });
 
 builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-    options.IdleTimeout = TimeSpan.FromMinutes(480);
+    options.IdleTimeout = TimeSpan.FromHours(2);
 });
 
 var app = builder.Build();
@@ -36,6 +46,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

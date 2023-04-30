@@ -19,6 +19,7 @@ var tarefa = (() => {
     var getCadastrar = () => {
         $.get(configs.urls.cadastrar).done((html) => {
             $('#formCadastro').html(html);
+            hideCadastrar();
         });
     };
     

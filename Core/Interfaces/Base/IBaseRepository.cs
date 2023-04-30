@@ -1,8 +1,6 @@
-namespace Core.Interfaces.Base
+namespace Core.Interfaces.Base;
+public interface IBaseRepository
 {
-    public interface IBaseRepository
-    {
-        Task<IDbTransaction> BeginTransactionAsync();
-        IDbTransaction BeginTransaction();
-    }
+    Task<IDbTransaction> BeginTransactionAsync();
+    IDbTransaction BeginTransaction();
 }

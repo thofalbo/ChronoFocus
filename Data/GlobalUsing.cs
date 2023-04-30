@@ -3,6 +3,7 @@ global using Core.Interfaces;
 global using Core.Interfaces.Base;
 global using Core.Interfaces.Repositories;
 
+global using Core.Dto;
 global using Core.Models;
 global using Core.Settings;
 

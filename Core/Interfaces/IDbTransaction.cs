@@ -1,11 +1,9 @@
-namespace Core.Interfaces
+namespace Core.Interfaces;
+public interface IDbTransaction
 {
-    public interface IDbTransaction
-    {
-        Task CommitAsync();
-        void Commit();
+    Task CommitAsync();
+    void Commit();
 
-        Task RollbackAsync();
-        void Rollback();
-    }
+    Task RollbackAsync();
+    void Rollback();
 }

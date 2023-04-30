@@ -1,9 +1,7 @@
 var login = (function () {
     var configs = {
         urls: {
-            index: '',
-            log: '',
-            home: ''
+            logar: ''
         }
     };
 
@@ -13,8 +11,8 @@ var login = (function () {
     
     var login = function () {
         var model = $('#form-login').serializeObject();
-        $.post(configs.urls.log, model).done(function() {
-            location.href = configs.urls.home;
+        $.post(configs.urls.logar, model).done(function() {
+            location.href = "/Home";
         });
     };
 

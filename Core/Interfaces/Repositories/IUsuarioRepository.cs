@@ -1,9 +1,12 @@
-namespace Core.Interfaces.Repositories
+namespace Core.Interfaces.Repositories;
+public interface IUsuarioRepository
 {
-    public interface IUsuarioRepository
-    {
-        Task CadastrarAsync(Usuario usuario);
-        Task<Usuario> Get(string login, string senha);
-        Task ExcluirAsync(int id);
-    }
+    
+    Task<IEnumerable<Usuario>> ListarAsync();
+    
+    Task<Usuario> ObterPorIdAsync(int id);
+    Task CadastrarAsync(Usuario usuario);
+    Task<Usuario> Get(string login, string senha);
+    Task ExcluirAsync(int id);
+    Task<Usuario> VerificaUsuario(string login, string senha);
 }
