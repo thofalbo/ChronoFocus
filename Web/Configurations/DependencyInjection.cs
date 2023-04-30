@@ -28,10 +28,12 @@ public static class DependencyInjection
 
         services.AddScoped<AppDbContext>();
 
+        services.AddScoped<IPermissaoRepository, PermissaoRepository>();
+        services.AddScoped<IPermissaoUsuarioRepository, PermissaoUsuarioRepository>();
         services.AddScoped<ITarefaRepository, TarefaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        services.AddScoped<IPermissaoRepository, PermissaoRepository>();
 
         services.AddScoped<ITarefaService, TarefaService>();
+        services.AddScoped<IPermissaoUsuarioService, PermissaoUsuarioService>();
     }
 }

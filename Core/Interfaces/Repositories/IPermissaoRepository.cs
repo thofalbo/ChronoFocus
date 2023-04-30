@@ -1,8 +1,7 @@
-namespace Core.Interfaces.Repositories;
-public interface IPermissaoRepository
+namespace Core.Interfaces.Repositories
 {
-     Task<IEnumerable<Permissao>> ListarAsync();
-     Task<IEnumerable<Permissao>> ListarPorFuncionarioAsync(string nomeFuncionario);
-     Task EditarPermissoesAsync(IEnumerable<Permissao> permitidos);
-
+    public interface IPermissaoRepository
+    {
+        Task<IEnumerable<PermissaoDto>> ListarAsync(int id);
+    }
 }

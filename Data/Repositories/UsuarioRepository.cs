@@ -8,52 +8,25 @@ public class UsuarioRepository : IUsuarioRepository
     public async Task<IEnumerable<Usuario>> ListarAsync() => await _dbContext.Usuarios.ToListAsync();
 
     public async Task<Usuario> ObterPorIdAsync(int id) => await _dbContext.Usuarios.FindAsync(id);
-    public async Task<Usuario> Get(string apelido, string senha)
+    public async Task<Usuario> Get(string login, string senha)
     {
         return await _dbContext.Usuarios
             .Where(
-                x => x.Apelido.ToLower() == apelido.ToLower()
+                x => x.Login.ToLower() == login.ToLower()
                 && x.Senha == senha
             ).FirstOrDefaultAsync();
     }
 
-    public async Task<Usuario> VerificaUsuario(string apelido, string senha)
+    public async Task<Usuario> VerificaUsuario(string login, string senha)
     {
         var usuariologado = await _dbContext.Usuarios
             .AsSingleQuery()
+                .Include(x => x.PermissoesUsuarios)
+                .ThenInclude(p => p.Permissao)
                 .Where(
-                    x => x.Apelido.ToLower() == apelido.ToLower()
+                    x => x.Login.ToLower() == login.ToLower()
                     && x.Senha == senha
                 )
-                .Include(p => p.Permissoes)
-                    .ThenInclude(a => a.Controlador)
-                .Include(p => p.Permissoes)
-                    .ThenInclude(c => c.Acao)
-                .Select(x => new Usuario
-                {
-                    Id = x.Id,
-                    Nome = x.Nome,
-                    Apelido = x.Apelido,
-                    Email = x.Email,
-                    Senha = x.Senha,
-                    DataCadastro = x.DataCadastro,
-                    Permissoes = x.Permissoes.Select(y => new Permissao
-                    {
-                        Id = y.Id,
-                        IdUsuario = y.IdUsuario,
-                        Controlador = new Controlador
-                        {
-                            Nome = y.Controlador.Nome
-                        },
-                        Acao = new Acao
-                        {
-                            Nome = y.Acao.Nome
-                        },
-                        IdControlador = y.IdControlador,
-                        IdAcao = y.IdAcao,
-                        Acesso = y.Acesso
-                    }).ToArray()
-                })
                 .FirstOrDefaultAsync();
 
         return usuariologado;
@@ -64,7 +37,7 @@ public class UsuarioRepository : IUsuarioRepository
         await _dbContext.Usuarios.AddAsync(new Usuario
         {
             Nome = usuario.Nome,
-            Apelido = usuario.Apelido,
+            Login = usuario.Login,
             Email = usuario.Email,
             Senha = usuario.Senha,
             DataCadastro = usuario.DataCadastro.ToUniversalTime()

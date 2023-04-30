@@ -1,8 +1,8 @@
 
 global using Core.Configurations;
+global using Core.Dto;
 global using Core.Interfaces.Repositories;
 global using Core.Interfaces.Services;
-global using Core.Dto;
 global using Core.Models;
 global using Core.Settings;
 global using Core.Services;
@@ -22,6 +22,5 @@ global using System.Globalization;
 global using System.Text;
 
 global using Web.Configurations;
-global using Web.ViewModels;
 
 global using Microsoft.Extensions.DependencyInjection;

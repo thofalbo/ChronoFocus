@@ -15,7 +15,7 @@ public class TarefaConfiguration : IEntityTypeConfiguration<Tarefa>
         builder.Property(x => x.TempoTarefa).HasColumnName("tempo_tarefa");
         builder.Property(x => x.DataCadastro).HasColumnName("data_cadastro");
 
-        builder.HasOne(x => x.Usuario).WithMany(x => x.Tarefas).HasForeignKey(x => x.IdUsuario);
+        builder.HasOne(x => x.Usuario).WithMany(x => x.Tarefas).HasForeignKey(x => x.IdUsuario).HasConstraintName("fk_usuario_tarefa");;
     }
 
 

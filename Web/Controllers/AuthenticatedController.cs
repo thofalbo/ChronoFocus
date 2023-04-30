@@ -2,9 +2,9 @@ namespace Web.Controllers;
 public class AuthenticatedController : Controller
 {
     protected int IdUsuarioLogado { get; set; }
-    protected string Controladores { get; set; }
-    protected string Acoes { get; set; }
+    protected string Rotas { get; set; }
     protected string[] Path { get; set; }
+    protected string Rota { get; set; }
     protected bool AcoesProibidas { get; set; }
     public override void OnActionExecuting(ActionExecutingContext context)
     {
@@ -17,17 +17,22 @@ public class AuthenticatedController : Controller
         else
         {
             IdUsuarioLogado = TokenService.IdUsuarioLogado(jwtToken);
-            Controladores = TokenService.BuscaPermissoes(jwtToken, 1);
-            Acoes = TokenService.BuscaPermissoes(jwtToken, 2);
+            Rotas = TokenService.BuscaPermissoes(jwtToken, 2);
 
-            Path = Request.Path.Value.Split("/");
-            AcoesProibidas = !Path[2].IsNullOrEmpty() && !Acoes.Contains(Path[2]);
+            // var Controladores = Rotas.Split("/");
 
-            if (!Path[1].IsNullOrEmpty() && !Controladores.Contains(Path[1]))
-                context.Result = new RedirectResult("/Home/Index");
-                
+            // Path = Request.Path.Value.Split("/");
+            Rota = Request.Path.Value;
+            // AcoesProibidas = !Path[2].IsNullOrEmpty() && !Rotas.Contains(Path[2]);
+            AcoesProibidas = !Rotas.Contains(Rota);
+
+            // if (!Path[1].IsNullOrEmpty() && !Rotas.Contains(Path[1]))
+            //     context.Result = new RedirectResult("/");
             if (AcoesProibidas)
-                context.Result = RedirectToAction("Index", "Home");
+                context.Result = new RedirectResult("/");
+                
+            // if (!AcoesProibidas)
+            //     context.Result = RedirectToAction("");
 
         }
 
