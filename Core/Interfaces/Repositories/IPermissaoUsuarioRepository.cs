@@ -6,6 +6,6 @@ namespace Core.Interfaces.Repositories
         Task<IEnumerable<PermissaoUsuario>> ListarPorFuncionarioAsync(string nome);
         Task ExcluirPermissaoAsync(PermissaoUsuario permissao);
         Task AdicionarPermissaoAsync(PermissaoUsuario permissao);
-        Task<bool> ListarAcoesUsuariosAsync(int idAcao, int idUsuario);
+        Task<bool> ListarAcoesUsuariosAsync(int idPermissao, int idUsuario);
     }
 }

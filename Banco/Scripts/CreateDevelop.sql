@@ -11,23 +11,23 @@ CREATE TABLE usuario (
 	CONSTRAINT uq_usuario_email UNIQUE (email),
 	CONSTRAINT uq_usuario_login UNIQUE (login)
 );
--- tabela acao
-CREATE TABLE acao (
+-- tabela permissao
+CREATE TABLE permissao (
 	id int generated always as identity,
 	controlador varchar(128) NOT NULL,
 	rota varchar(128) NOT NULL,
 	descricao varchar(128) NOT NULL,
 	usuario_cadastro int NOT NULL,
 	data_cadastro timestamp NOT NULL,
-	CONSTRAINT pk_acao PRIMARY KEY (id)
+	CONSTRAINT pk_permissao PRIMARY KEY (id)
 );
--- tabela acao_usuario
-CREATE TABLE acao_usuario (
-	id_acao int NOT NULL,
+-- tabela permissao_usuario
+CREATE TABLE permissao_usuario (
+	id_permissao int NOT NULL,
 	id_usuario int NOT NULL,
-	CONSTRAINT pk_acao_usuario PRIMARY KEY (id_acao, id_usuario),
-	CONSTRAINT fk_acao_usuario_acao FOREIGN KEY (id_acao) REFERENCES acao(id),
-	CONSTRAINT fk_acao_usuario_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+	CONSTRAINT pk_permissao_usuario PRIMARY KEY (id_permissao, id_usuario),
+	CONSTRAINT fk_permissao_usuario_permissao FOREIGN KEY (id_permissao) REFERENCES permissao(id),
+	CONSTRAINT fk_permissao_usuario_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 -- tabela tarefa
 CREATE TABLE tarefa (

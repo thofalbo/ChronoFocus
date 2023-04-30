@@ -28,7 +28,7 @@ public static class DependencyInjection
 
         services.AddScoped<AppDbContext>();
 
-        services.AddScoped<IAcaoRepository, AcaoRepository>();
+        services.AddScoped<IPermissaoRepository, PermissaoRepository>();
         services.AddScoped<IPermissaoUsuarioRepository, PermissaoUsuarioRepository>();
         services.AddScoped<ITarefaRepository, TarefaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();

@@ -13,21 +13,21 @@ namespace Data.Repositories
         {
             return await _dbContext.PermissoesUsuarios
                 .Include(p => p.Usuario)
-                .Include(p => p.Acao)
+                .Include(p => p.Permissao)
                 .ToListAsync();
         }
         public async Task<IEnumerable<PermissaoUsuario>> ListarPorFuncionarioAsync(string nome)
         {
             return await _dbContext.PermissoesUsuarios
                 .Include(p => p.Usuario)
-                .Include(p => p.Acao)
+                .Include(p => p.Permissao)
                 .Where(p => p.Usuario.Nome.Contains(nome))
                 .ToListAsync();
         }
-        public async Task<bool> ListarAcoesUsuariosAsync(int idAcao, int idUsuario)
+        public async Task<bool> ListarAcoesUsuariosAsync(int idPermissao, int idUsuario)
         {
             return await _dbContext.PermissoesUsuarios
-                .Where(p => p.IdPermissao == idAcao && p.IdUsuario == idUsuario)
+                .Where(p => p.IdPermissao == idPermissao && p.IdUsuario == idUsuario)
                 .AnyAsync();
         }
         public async Task ExcluirPermissaoAsync(PermissaoUsuario permissao)

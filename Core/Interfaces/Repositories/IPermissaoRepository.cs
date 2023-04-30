@@ -1,6 +1,6 @@
 namespace Core.Interfaces.Repositories
 {
-    public interface IAcaoRepository
+    public interface IPermissaoRepository
     {
         Task<IEnumerable<PermissaoDto>> ListarAsync(int id);
     }

@@ -28,11 +28,11 @@ namespace Core.Services
                     IdUsuario = permissaoDto.IdUsuario
                 };
 
-                var acaoUsuarios = await _permissaoUsuarioRepository.ListarAcoesUsuariosAsync(permissaoDto.IdPermissao, permissaoDto.IdUsuario);
+                bool temPermissao = await _permissaoUsuarioRepository.ListarAcoesUsuariosAsync(permissaoDto.IdPermissao, permissaoDto.IdUsuario);
 
-                if (!permissaoDto.TemPermissao && acaoUsuarios)
+                if (!permissaoDto.TemPermissao && temPermissao)
                     await _permissaoUsuarioRepository.ExcluirPermissaoAsync(permissaoUsuario);
-                else if (permissaoDto.TemPermissao && !acaoUsuarios)
+                else if (permissaoDto.TemPermissao && !temPermissao)
                     await _permissaoUsuarioRepository.AdicionarPermissaoAsync(permissaoUsuario);
             };
         }

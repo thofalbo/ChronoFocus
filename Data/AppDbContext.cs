@@ -5,6 +5,6 @@ public class AppDbContext : BaseDbContext
 
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Tarefa> Tarefas { get; set; }
-    public DbSet<Acao> Acoes { get; private set; }
+    public DbSet<Permissao> Permissoes { get; private set; }
     public DbSet<PermissaoUsuario> PermissoesUsuarios { get; set; }
 }

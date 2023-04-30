@@ -12,7 +12,7 @@ public class TokenService
         // var controladores = string.Join(",", usuario.Permissoes.Select(x => x.IdControlador));
         // var acoes = string.Join(",", usuario.Permissoes.Select(x => x.IdAcao));
         // var rotasControladores = string.Join(",", usuario.Permissoes.Select(x => x.Controlador.Nome));
-        // var rotasAcao = string.Join(",", usuario.Permissoes.Select(x => x.Acao.Nome));
+        // var rotasAcao = string.Join(",", usuario.Permissoes.Select(x => x.Permissao.Nome));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {

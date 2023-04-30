@@ -1,4 +1,4 @@
-@model Acao
+@model Permissao
 
 <form>
     <div class="form-group">
@@ -10,11 +10,11 @@
         <input asp-for="Rota" class="form-control" />
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary" onclick="permissaoUsuario.fnSubmit('mostrarAcao', 'cadastrar')">Search</button>
+        <button type="submit" class="btn btn-primary" onclick="permissaoUsuario.fnSubmit('mostrarPermissao', 'cadastrar')">Search</button>
     </div>
 </form>
 
-<div id="mostrarAcao"></div>
+<div id="mostrarPermissao"></div>
 
 <script src="~/js/Pages/permissaoUsuario.js" asp-append-version="true"></script>
 <script>

@@ -4,11 +4,11 @@ namespace Web.Controllers
     public class PermissaoUsuarioController : AuthenticatedController
     {
         private readonly IPermissaoUsuarioService _permissaoUsuarioService;
-        private readonly IAcaoRepository _acaoRepository;
-        public PermissaoUsuarioController(IPermissaoUsuarioService permissaoUsuarioService, IAcaoRepository acaoRepository)
+        private readonly IPermissaoRepository _permissaoRepository;
+        public PermissaoUsuarioController(IPermissaoUsuarioService permissaoUsuarioService, IPermissaoRepository permissaoRepository)
         {
             _permissaoUsuarioService = permissaoUsuarioService;
-            _acaoRepository = acaoRepository;
+            _permissaoRepository = permissaoRepository;
         }
 
         [HttpGet("inicio")]
@@ -17,7 +17,7 @@ namespace Web.Controllers
         [HttpGet("cadastrar")]
         public async Task<IActionResult> CadastrarGet()
         {
-            var acoes = await _acaoRepository.ListarAsync(1);
+            var acoes = await _permissaoRepository.ListarAsync(1);
             return View("_cadastrar", acoes);
         }
 
