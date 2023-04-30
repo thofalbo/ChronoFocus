@@ -21,6 +21,8 @@ public class UsuarioRepository : IUsuarioRepository
     {
         var usuariologado = await _dbContext.Usuarios
             .AsSingleQuery()
+                .Include(x => x.PermissoesUsuarios)
+                .ThenInclude(p => p.Permissao)
                 .Where(
                     x => x.Login.ToLower() == login.ToLower()
                     && x.Senha == senha

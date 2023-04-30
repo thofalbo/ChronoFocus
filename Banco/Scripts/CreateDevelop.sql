@@ -19,9 +19,7 @@ CREATE TABLE permissao (
 	descricao varchar(128) NOT NULL,
 	usuario_cadastro int NOT NULL,
 	data_cadastro timestamp NOT NULL,
-	CONSTRAINT pk_permissao PRIMARY KEY (id),
-	CONSTRAINT uq_permissao_controlador UNIQUE (controlador),
-	CONSTRAINT uq_permissao_rota UNIQUE (rota)
+	CONSTRAINT pk_permissao PRIMARY KEY (id)
 );
 -- tabela permissao_usuario
 CREATE TABLE permissao_usuario (
