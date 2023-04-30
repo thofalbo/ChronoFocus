@@ -1,24 +1,31 @@
-@model IEnumerable<Acao>
-
-<div class="accordion" id="acaoAccordion">
-  @foreach (var acao in Model)
-  {
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="heading-@acao.Controlador">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@acao.Controlador" aria-expanded="true" aria-controls="collapse-@acao.Controlador">
-          @acao.Controlador
-        </button>
-      </h2>
-      <div id="collapse-@acao.Controlador" class="accordion-collapse collapse" aria-labelledby="heading-@acao.Controlador" data-bs-parent="#acaoAccordion">
-        <div class="accordion-body">
-          <ul>
-            @foreach (var acaoUsuario in acao.AcaoUsuarios)
-            {
-              <li>@acaoUsuario.Usuario.Nome</li>
-            }
-          </ul>
-        </div>
-      </div>
+@model IEnumerable<AcaoUsuarioDto>
+@{
+    Layout = null;
+}
+<form id="formEditarPermissoes">
+    <div class="accordion" id="acoesAccordion">
+        @foreach (var controlador in Model.Select(a => a.Acao.Controlador).Distinct())
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="header_@controlador">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@controlador" aria-expanded="false" aria-controls="collapse_@controlador">
+                        @controlador
+                    </button>
+                </h2>
+                <div id="collapse_@controlador" class="accordion-collapse collapse" aria-labelledby="header_@controlador" data-bs-parent="#acoesAccordion">
+                    <div class="accordion-body">
+                        @foreach (var acao in Model.Where(a => a.Acao.Controlador == controlador))
+                        {
+                            <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" asp-for="@acao.TemPermissao" value="@acao.Acao.Id.ToString()" />
+                                    <label class="form-check-label ms-2" asp-for="@acao.Acao.Descricao">@acao.Acao.Descricao</label>
+                                    <input type="hidden" asp-for="@acao.Acao.Id" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-  }
-</div>
+    <a class="btn btn-primary" onclick="acao.fnSubmitar('formEditarPermissoes', 'submit')">Salvar</a>
+</form>

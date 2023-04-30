@@ -26,14 +26,12 @@ var acao = (() => {
         // }
     };
 
-    // var fnSubmitar = (form, url) => {
-    //     console.log(permitidos);
-    //     $.post(configs.urls[url], {
-    //         permitidos: permitidos
-    //     }).done(() => {
-    //         location.href = '/permissao/inicio'
-    //     });
-    // };
+    var fnSubmitar = (form, url) => {
+        var model = $(`#${form}`).serializeObject();
+        console.log(model);
+            $.post(configs.urls[url], model).done(() => {
+            });
+    };
 
     // function addPermissao(id, idUsuario, idControlador, idAcao, isChecked) {
     //     var permissao = {
@@ -54,7 +52,7 @@ var acao = (() => {
     return {
         init: init,
         fnSubmit: fnSubmit,
-        // fnSubmitar: fnSubmitar,
+        fnSubmitar: fnSubmitar,
         // addPermissao: addPermissao
     };
 })();

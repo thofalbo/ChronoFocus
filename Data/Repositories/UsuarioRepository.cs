@@ -8,21 +8,21 @@ public class UsuarioRepository : IUsuarioRepository
     public async Task<IEnumerable<Usuario>> ListarAsync() => await _dbContext.Usuarios.ToListAsync();
 
     public async Task<Usuario> ObterPorIdAsync(int id) => await _dbContext.Usuarios.FindAsync(id);
-    public async Task<Usuario> Get(string apelido, string senha)
+    public async Task<Usuario> Get(string login, string senha)
     {
         return await _dbContext.Usuarios
             .Where(
-                x => x.Apelido.ToLower() == apelido.ToLower()
+                x => x.Login.ToLower() == login.ToLower()
                 && x.Senha == senha
             ).FirstOrDefaultAsync();
     }
 
-    public async Task<Usuario> VerificaUsuario(string apelido, string senha)
+    public async Task<Usuario> VerificaUsuario(string login, string senha)
     {
         var usuariologado = await _dbContext.Usuarios
             .AsSingleQuery()
                 .Where(
-                    x => x.Apelido.ToLower() == apelido.ToLower()
+                    x => x.Login.ToLower() == login.ToLower()
                     && x.Senha == senha
                 )
                 .FirstOrDefaultAsync();
@@ -35,7 +35,7 @@ public class UsuarioRepository : IUsuarioRepository
         await _dbContext.Usuarios.AddAsync(new Usuario
         {
             Nome = usuario.Nome,
-            Apelido = usuario.Apelido,
+            Login = usuario.Login,
             Email = usuario.Email,
             Senha = usuario.Senha,
             DataCadastro = usuario.DataCadastro.ToUniversalTime()

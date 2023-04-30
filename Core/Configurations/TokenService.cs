@@ -19,7 +19,7 @@ public class TokenService
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("idUsuario", usuario.Id.ToString()),
-                new Claim("apelidoUsuario", usuario.Apelido)
+                new Claim("loginUsuario", usuario.Login)
                 // new Claim("rotasControladores", rotasControladores),
                 // new Claim("rotasAcao", rotasAcao),
                 // new Claim("usuarios", usuarios),

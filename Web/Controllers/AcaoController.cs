@@ -23,18 +23,26 @@ public class AcaoController : AuthenticatedController
     [HttpGet("cadastrar")]
     public async Task<IActionResult> CadastrarGet()
     {
-        var acoes = await _acaoRepository.ListarAsync();
+        var acoes = await _acaoRepository.ListarAsync(1);
         return View("_cadastrar", acoes);
     }
 
-    // [HttpPost("cadastrar")]
-    // public async Task<IActionResult> CadastrarPost(Tarefa tarefa)
-    // {
-    //     // if (AcoesProibidas)
-    //     //     return RedirectToAction("/");
-    //     await _tarefaService.CadastrarAsync(tarefa, IdUsuarioLogado);
-    //     return RedirectToAction(nameof(Index));
-    // }
+    [HttpPost("cadastrar")]
+    public async Task<IActionResult> CadastrarPost(IEnumerable<AcaoUsuarioDto> model)
+    {
+        var modelo = model;
+        foreach (var modelito in modelo)
+        {
+            var acoes = new AcaoUsuario
+            {
+                IdAcao = modelito.Acao.Id,
+                IdUsuario = 1
+            };
+        };
+
+        Console.WriteLine(modelo);
+        return RedirectToAction(nameof(Index));
+    }
 
     // [HttpGet("excluir/{id}")]
     // public async Task<IActionResult> ExcluirGet(int id)

@@ -2,6 +2,7 @@
 }
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,6 +15,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
@@ -55,10 +57,11 @@
         </div>
     </footer>
     @await RenderSectionAsync("Scripts", required: false)
-<script>
-site.init({
-        
-    })
-</script>
+    <script>
+        site.init({
+
+        })
+    </script>
 </body>
+
 </html>

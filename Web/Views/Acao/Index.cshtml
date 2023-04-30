@@ -1,6 +1,6 @@
 @model Acao
 
-<form asp-controller="Acao" asp-action="Search" method="get">
+<form>
     <div class="form-group">
         <label asp-for="Controlador"></label>
         <input asp-for="Controlador" class="form-control" />
@@ -14,16 +14,15 @@
     </div>
 </form>
 
-<div id="mostrarAcao">
-
-</div>
+<div id="mostrarAcao"></div>
 
 <script src="~/js/Pages/acao.js" asp-append-version="true"></script>
 <script>
     acao.init({
         urls: {
             index: '@Url.Action("inicio", "acao")',
-            cadastrar: '@Url.Action("cadastrar", "acao")'
+            cadastrar: '@Url.Action("cadastrar", "acao")',
+            submit: '@Url.Action("cadastrar", "acao")'
         }
     });
 </script>
