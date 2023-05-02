@@ -3,20 +3,13 @@
     <link rel="stylesheet" href="~/css/Pages/tarefa.css" asp-append-version="true" />
 </head>
 
-
-<div>
-    <p>
-        
-@ViewBag.Path
-    </p>    
-</div>
 <section class="container-visor">
     <form id="visorForm" action="submit">
         <div class="visor form-group d-flex">
             <div class="visor-cronometro">
                 <h1 id="relogio" class="cronometro">00:00:00</h1>
                 <div id="botoesCadastrar" class="botoes-relogio">
-                    <button class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.getCadastrar()">
+                    <button class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.hideCadastrar()">
                         <p>+</p>
                     </button>
                     <button style="display: none;" class="botao-relogio botao-cad btn btn-success" type="button" onclick="tarefa.fnCadastrarAtividade()">
