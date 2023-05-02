@@ -9,4 +9,5 @@ public interface IUsuarioRepository
     Task<Usuario> Get(string login, string senha);
     Task ExcluirAsync(int id);
     Task<Usuario> VerificaUsuario(string login, string senha);
+    Task<Usuario> BuscarUsuarioAsync(string nome);
 }

@@ -1,4 +1,4 @@
-@model Usuario
+@model PermissaoUsuarioViewModel
 
 <form id="formBuscaUsuario">
     <div class="form-group">
@@ -6,7 +6,7 @@
         <input id="nomeUsuario" asp-for="Nome" class="form-control" />
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary" onclick="permissaoUsuario.fnDandara('mostrarPermissao', 'cadastrar')">Search</button>
+        <button type="submit" class="btn btn-primary" onclick="permissaoUsuario.fnBuscar('mostrarPermissao', 'cadastrar')">Search</button>
     </div>
 </form>
 
@@ -18,7 +18,8 @@
     permissaoUsuario.init({
         urls: {
             index: '@Url.Action("inicio", "permissao-usuario")',
-            cadastrar: '@Url.Action("cadastrar", "permissao-usuario")'
+            cadastrar: '@Url.Action("cadastrar", "permissao-usuario")',
+            buscar: '@Url.Action("buscar", "permissao-usuario")'
         }
     });
 </script>

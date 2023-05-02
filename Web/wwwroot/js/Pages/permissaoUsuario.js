@@ -12,6 +12,16 @@ var permissaoUsuario = (() => {
 
     var permitidos = [];
 
+    var fnBuscar = (form, url) => {
+        if ($('#nomeUsuario').val()) {
+            var model = $('#nomeUsuario').val();
+
+            $.get(configs.urls[url], {nome: model}).done((html) => {
+                $(`#${form}`).html(html);
+            });
+        }
+    };
+
     var fnBuscarGet = (form, url) => {
         $.get(configs.urls[url]).done((html) => {
             $(`#${form}`).html(html);
@@ -49,13 +59,13 @@ var permissaoUsuario = (() => {
             });
         }
     };
-    onclick = "permissaoUsuario.fnDandara('mostrarPermissao', 'cadastrar')"
 
     return {
         init: init,
         fnBuscarGet: fnBuscarGet,
         fnSubmitar: fnSubmitar,
         addPermissao: addPermissao,
-        fnDandara: fnDandara
+        fnDandara: fnDandara,
+        fnBuscar: fnBuscar
     };
 })();
