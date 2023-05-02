@@ -22,5 +22,6 @@ global using System.Globalization;
 global using System.Text;
 
 global using Web.Configurations;
+global using Web.ViewModels;
 
 global using Microsoft.Extensions.DependencyInjection;

@@ -32,6 +32,14 @@ public class UsuarioRepository : IUsuarioRepository
         return usuariologado;
     }
 
+    public async Task<Usuario> BuscarUsuarioAsync(string nome)
+    {
+        var usuario = await _dbContext.Usuarios
+            .Where(x => x.Nome.ToLower() == nome.ToLower())
+                .FirstOrDefaultAsync();
+        return usuario;
+    }
+
     public async Task CadastrarAsync(Usuario usuario)
     {
         await _dbContext.Usuarios.AddAsync(new Usuario

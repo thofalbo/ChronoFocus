@@ -12,7 +12,17 @@ var permissaoUsuario = (() => {
 
     var permitidos = [];
 
-    var fnSubmit = (form, url) => {
+    var fnBuscar = (form, url) => {
+        if ($('#nomeUsuario').val()) {
+            var model = $('#nomeUsuario').val();
+
+            $.get(configs.urls[url], {nome: model}).done((html) => {
+                $(`#${form}`).html(html);
+            });
+        }
+    };
+
+    var fnBuscarGet = (form, url) => {
         $.get(configs.urls[url]).done((html) => {
             $(`#${form}`).html(html);
         });
@@ -40,10 +50,22 @@ var permissaoUsuario = (() => {
         permitidos.push(permissao);
     }
 
+    var fnDandara = (form, url) => {
+        if ($('#nomeUsuario').val()) {
+            var model = $('#formBuscaUsuario').serializeObject();
+            console.log(model)
+            $.get(configs.urls[url], model).done((html) => {
+                $(`#${form}`).html(html);
+            });
+        }
+    };
+
     return {
         init: init,
-        fnSubmit: fnSubmit,
+        fnBuscarGet: fnBuscarGet,
         fnSubmitar: fnSubmitar,
-        addPermissao: addPermissao
+        addPermissao: addPermissao,
+        fnDandara: fnDandara,
+        fnBuscar: fnBuscar
     };
 })();
