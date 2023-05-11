@@ -1,41 +1,43 @@
-namespace Data.Repositories;
-public class TarefaRepository : ITarefaRepository
+namespace Data.Repositories
 {
-    private readonly ApplicationDbContext _dbContext;
-    public TarefaRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
-
-    public async Task CadastrarAsync(Tarefa tarefa)
+    public class TarefaRepository : ITarefaRepository
     {
-        await _dbContext.Tarefas.AddAsync(tarefa);
-        await _dbContext.SaveChangesAsync();
-    }
+        private readonly ApplicationDbContext _dbContext;
+        public TarefaRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
 
-    public async Task ExcluirAsync(int id)
-    {
-        var tarefa = await _dbContext.Tarefas.FirstOrDefaultAsync(x => x.Id == id);
-        _dbContext.Tarefas.Remove(tarefa);
-        await _dbContext.SaveChangesAsync();
-    }
+        public async Task CadastrarAsync(Tarefa tarefa)
+        {
+            await _dbContext.Tarefas.AddAsync(tarefa);
+            await _dbContext.SaveChangesAsync();
+        }
 
-    public async Task AtualizarAsync(Tarefa tarefa)
-    {
-        _dbContext.Tarefas.Update(tarefa);
-        await _dbContext.SaveChangesAsync();
-    }
-    public async Task BuscarAsync(Tarefa tarefa)
-    {
-        _dbContext.Tarefas.Add(tarefa);
-        await _dbContext.SaveChangesAsync();
-    }
-    public async Task<Tarefa> BuscarPorIdAsync(int id) => await _dbContext.Tarefas.FindAsync(id);
+        public async Task ExcluirAsync(int id)
+        {
+            var tarefa = await _dbContext.Tarefas.FirstOrDefaultAsync(x => x.Id == id);
+            _dbContext.Tarefas.Remove(tarefa);
+            await _dbContext.SaveChangesAsync();
+        }
 
-    public async Task<IEnumerable<Tarefa>> BuscarTarefasAsync(int idUsuario)
-    {
-        var tarefas = await _dbContext.Tarefas
-            .Include(obj => obj.Usuario)
-            .Where(x => x.IdUsuario == idUsuario)
-            .ToListAsync();
+        public async Task AtualizarAsync(Tarefa tarefa)
+        {
+            _dbContext.Tarefas.Update(tarefa);
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task BuscarAsync(Tarefa tarefa)
+        {
+            _dbContext.Tarefas.Add(tarefa);
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task<Tarefa> BuscarPorIdAsync(int id) => await _dbContext.Tarefas.FindAsync(id);
 
-        return tarefas;
+        public async Task<IEnumerable<Tarefa>> BuscarTarefasAsync(int idUsuario)
+        {
+            var tarefas = await _dbContext.Tarefas
+                .Include(obj => obj.Usuario)
+                .Where(x => x.IdUsuario == idUsuario)
+                .ToListAsync();
+
+            return tarefas;
+        }
     }
 }

@@ -1,5 +1,7 @@
-namespace Core.Settings;
-public class Chave
+namespace Core.Settings
 {
-    public string Segredo { get; set; }
+    public class Chave
+    {
+        public string Segredo { get; set; }
+    }
 }

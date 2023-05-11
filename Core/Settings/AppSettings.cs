@@ -1,6 +1,8 @@
-namespace Core.Settings;
-public class AppSettings
+namespace Core.Settings
 {
-    public ConnectionString ConnectionString { get; set; }
-    public Chave Chave { get; set; }
+    public class AppSettings
+    {
+        public ConnectionString ConnectionString { get; set; }
+        public Chave Chave { get; set; }
+    }
 }

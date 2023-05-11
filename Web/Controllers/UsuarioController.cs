@@ -1,25 +1,27 @@
-namespace Web.Controllers;
-[Route("usuario")]
-public class UsuarioController : AuthenticatedController
+namespace Web.Controllers
 {
-    private readonly IUsuarioRepository _usuarioRepository;
-
-    public UsuarioController(IUsuarioRepository usuarioRepository)
+    [Route("usuario")]
+    public class UsuarioController : AuthenticatedController
     {
-        _usuarioRepository = usuarioRepository;
-    }
+        private readonly IUsuarioRepository _usuarioRepository;
 
-    [HttpGet("inicio")]
-    public async Task<IActionResult> Index() => View(await _usuarioRepository.BuscarUsuariosAsync());
+        public UsuarioController(IUsuarioRepository usuarioRepository)
+        {
+            _usuarioRepository = usuarioRepository;
+        }
 
-    [HttpGet("excluir")]
-    public async Task<IActionResult> Excluir(int id) => View("_excluir", await _usuarioRepository.BuscarUsuarioAsync(new Usuario { Id = id }));
+        [HttpGet("inicio")]
+        public async Task<IActionResult> Index() => View(await _usuarioRepository.BuscarUsuariosAsync());
 
-    [HttpPost("excluir")]
-    public async Task<IActionResult> ExcluirUsuario(int id)
-    {
-        await _usuarioRepository.ExcluirAsync(id);
+        [HttpGet("excluir")]
+        public async Task<IActionResult> Excluir(int id) => View("_excluir", await _usuarioRepository.BuscarUsuarioAsync(new Usuario { Id = id }));
 
-        return RedirectToAction("Index");
+        [HttpPost("excluir")]
+        public async Task<IActionResult> ExcluirUsuario(int id)
+        {
+            await _usuarioRepository.ExcluirAsync(id);
+
+            return RedirectToAction("Index");
+        }
     }
 }

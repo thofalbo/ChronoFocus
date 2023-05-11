@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+
 <form id="formEditarPermissoes">
     <div class="accordion" id="acoesAccordion">
         @foreach (var controlador in Model.Select(a => a.Controlador).Distinct())

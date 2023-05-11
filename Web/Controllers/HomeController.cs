@@ -1,7 +1,8 @@
-﻿namespace Web.Controllers;
-
-public class HomeController : Controller
+﻿namespace Web.Controllers
 {
-    public IActionResult Index() => View();
-    public IActionResult Error() => View();
+    public class HomeController : Controller
+    {
+        public IActionResult Index() => View();
+        public IActionResult Error() => View();
+    }
 }

@@ -1,36 +1,38 @@
-namespace Data;
-public class BaseDbContext : DbContext
+namespace Data
 {
-    private readonly string _configurationFolder;
-    private readonly AppSettings _appSettings;
-    public BaseDbContext(AppSettings appSettings, string configurationFolder)
+    public class BaseDbContext : DbContext
     {
-        _appSettings = appSettings;
-        _configurationFolder = configurationFolder;
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql(_appSettings.ConnectionString.Default, options =>
+        private readonly string _configurationFolder;
+        private readonly AppSettings _appSettings;
+        public BaseDbContext(AppSettings appSettings, string configurationFolder)
         {
-            options.MaxBatchSize(100);
-            options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-        });
+            _appSettings = appSettings;
+            _configurationFolder = configurationFolder;
+        }
 
-        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
-    }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(_appSettings.ConnectionString.Default, options =>
+            {
+                options.MaxBatchSize(100);
+                options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+            });
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            relationship.DeleteBehavior = DeleteBehavior.NoAction;
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
+        }
 
-        var executingAssembly = Assembly.GetExecutingAssembly();
-        var filter = $"{executingAssembly.GetName().Name}.Configurations.{_configurationFolder}";
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
 
-        modelBuilder.ApplyConfigurationsFromAssembly(
-            executingAssembly,
-            x => x.Namespace.Equals(filter)
-        );
+            var executingAssembly = Assembly.GetExecutingAssembly();
+            var filter = $"{executingAssembly.GetName().Name}.Configurations.{_configurationFolder}";
+
+            modelBuilder.ApplyConfigurationsFromAssembly(
+                executingAssembly,
+                x => x.Namespace.Equals(filter)
+            );
+        }
     }
 }
