@@ -13,26 +13,31 @@ namespace Core.Services
 
         public async Task EditarPermissoesAsync(PermissoesDto permissoes)
         {
+            // no controler pra ja chegar certo
+            /*
+            permissoes.Permitidos.Select(x => new PermissaoUsuario
+            {
+
+            });
+            */
+
+            // buscar as permissoes antes do for
+
+
+
             foreach (var permitido in permissoes.Permitidos)
             {
-                var permissaoDto = new PermissaoDto
-                {
-                    IdPermissao = permitido.IdPermissao,
-                    IdUsuario = permitido.IdUsuario,
-                    TemPermissao = permitido.TemPermissao
-                };
-
                 var permissaoUsuario = new PermissaoUsuario
                 {
-                    IdPermissao = permissaoDto.IdPermissao,
-                    IdUsuario = permissaoDto.IdUsuario
+                    IdPermissao = permitido.IdPermissao,
+                    IdUsuario = permitido.IdUsuario
                 };
 
-                bool temPermissao = await _permissaoUsuarioRepository.ListarAcoesUsuariosAsync(permissaoDto.IdPermissao, permissaoDto.IdUsuario);
+                bool temPermissao = await _permissaoUsuarioRepository.ListarAcoesUsuariosAsync(permitido.IdPermissao, permitido.IdUsuario);
 
-                if (!permissaoDto.TemPermissao && temPermissao)
+                if (!permitido.TemPermissao && temPermissao)
                     await _permissaoUsuarioRepository.ExcluirPermissaoAsync(permissaoUsuario);
-                else if (permissaoDto.TemPermissao && !temPermissao)
+                else if (permitido.TemPermissao && !temPermissao)
                     await _permissaoUsuarioRepository.AdicionarPermissaoAsync(permissaoUsuario);
             };
         }

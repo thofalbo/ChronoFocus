@@ -12,20 +12,13 @@ public class TarefaService : ITarefaService
         _tarefaRepository = tarefaRepository;
         _usuarioRepository = usuarioRepository;
     }
-
-    public IEnumerable<Tarefa> MostrarTarefas(int idUsuario)
-    {
-        var tarefas = _tarefaRepository.MostrarTarefas(idUsuario);
-
-        return tarefas;
-    }
-
+    
     public async Task CadastrarAsync(Tarefa tarefa, int usuarioLogado)
     {
         if (tarefa.TempoTarefa == default)
             return;
 
-        var tarefas = _tarefaRepository.MostrarTarefas(usuarioLogado);
+        var tarefas = await _tarefaRepository.BuscarTarefasAsync(usuarioLogado);
 
         var tarefaRepetida = tarefas.FirstOrDefault(x =>
             x.Atividade?.ToLower() == tarefa.Atividade?.ToLower() &&

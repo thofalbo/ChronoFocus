@@ -1,16 +1,9 @@
 namespace Data.Repositories;
 public class TarefaRepository : ITarefaRepository
 {
-    private readonly AppDbContext _dbContext;
-    public TarefaRepository(AppDbContext dbContext) => _dbContext = dbContext;
-    public IEnumerable<Tarefa> MostrarTarefas(int idUsuario)
-    {
-        var tarefas = _dbContext.Tarefas
-            .Include(obj => obj.Usuario)
-            .ToList()
-            .Where(x => x.IdUsuario == idUsuario);
-        return tarefas;
-    }
+    private readonly ApplicationDbContext _dbContext;
+    public TarefaRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
+
     public async Task CadastrarAsync(Tarefa tarefa)
     {
         await _dbContext.Tarefas.AddAsync(tarefa);
@@ -35,4 +28,14 @@ public class TarefaRepository : ITarefaRepository
         await _dbContext.SaveChangesAsync();
     }
     public async Task<Tarefa> BuscarPorIdAsync(int id) => await _dbContext.Tarefas.FindAsync(id);
+
+    public async Task<IEnumerable<Tarefa>> BuscarTarefasAsync(int idUsuario)
+    {
+        var tarefas = await _dbContext.Tarefas
+            .Include(obj => obj.Usuario)
+            .Where(x => x.IdUsuario == idUsuario)
+            .ToListAsync();
+
+        return tarefas;
+    }
 }

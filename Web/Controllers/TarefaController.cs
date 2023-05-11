@@ -2,22 +2,16 @@ namespace Web.Controllers;
 [Route("tarefa")]
 public class TarefaController : AuthenticatedController
 {
-    private readonly AppDbContext _dbContext;
     private readonly ITarefaRepository _tarefaRepository;
     private readonly ITarefaService _tarefaService;
-    public TarefaController(
-        AppDbContext dbContext,
-        ITarefaRepository tarefaRepository,
-        ITarefaService tarefaService
-    )
+    public TarefaController(ITarefaRepository tarefaRepository, ITarefaService tarefaService)
     {
-        _dbContext = dbContext;
         _tarefaRepository = tarefaRepository;
         _tarefaService = tarefaService;
     }
 
     [HttpGet("inicio")]
-    public IActionResult Index() => View(_tarefaService.MostrarTarefas(IdUsuarioLogado));
+    public async Task<IActionResult> Index() => View(await _tarefaRepository.BuscarTarefasAsync(IdUsuarioLogado));
 
     [HttpGet("cadastrar")]
     public IActionResult CadastrarGet()

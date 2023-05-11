@@ -29,10 +29,6 @@ var tarefa = (() => {
         $('.botoes-relogio').toggle();
     };
 
-    var getExcluir = () => {
-        location.href = configs.urls.excluir;
-    };
-
     var cadastrar = () => {
         if ($('#cadastroAtividade').val()) {
             $('#tempoTarefa').val($('#relogio').text());
@@ -105,7 +101,6 @@ var tarefa = (() => {
         };
     };
 
-    
     const fnFinalizarAtividade = () => {        
         if ($('#cadastroAtividade').val()) {
             $('.botoes-relogio').toggle();
@@ -136,7 +131,6 @@ var tarefa = (() => {
         init: init,
         cadastrar: cadastrar,
         getCadastrar: getCadastrar,
-        getExcluir: getExcluir,
         excluir: excluir,
         fnContador: fnContador,
         playPause: playPause,

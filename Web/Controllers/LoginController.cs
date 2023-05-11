@@ -17,7 +17,7 @@ public class LoginController : Controller
     [HttpPost("autenticar")]
     public async Task<ActionResult> Autenticar(Usuario model)
     {
-        var usuario = await _usuarioRepository.VerificaUsuario(model.Login, model.Senha);
+        var usuario = await _usuarioRepository.BuscarUsuarioAsync(model);
 
         if (usuario == null)
             return NotFound("Usuário ou senha inválidos");

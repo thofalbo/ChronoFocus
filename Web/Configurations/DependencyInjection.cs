@@ -26,7 +26,7 @@ public static class DependencyInjection
             };
         });
 
-        services.AddScoped<AppDbContext>();
+        services.AddScoped<ApplicationDbContext>();
 
         services.AddScoped<IPermissaoRepository, PermissaoRepository>();
         services.AddScoped<IPermissaoUsuarioRepository, PermissaoUsuarioRepository>();

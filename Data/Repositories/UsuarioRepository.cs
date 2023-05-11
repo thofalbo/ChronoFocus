@@ -1,20 +1,34 @@
 namespace Data.Repositories;
 public class UsuarioRepository : IUsuarioRepository
 {
-    private readonly AppDbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext;
 
-    public UsuarioRepository(AppDbContext dbContext) => _dbContext = dbContext;
+    public UsuarioRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
 
-    public async Task<IEnumerable<Usuario>> ListarAsync() => await _dbContext.Usuarios.ToListAsync();
+    public async Task<IEnumerable<Usuario>> BuscarUsuariosAsync() => await _dbContext.Usuarios.ToListAsync();
 
-    public async Task<Usuario> ObterPorIdAsync(int id) => await _dbContext.Usuarios.FindAsync(id);
-    public async Task<Usuario> Get(string login, string senha)
-    {
-        return await _dbContext.Usuarios
-            .Where(
-                x => x.Login.ToLower() == login.ToLower()
-                && x.Senha == senha
-            ).FirstOrDefaultAsync();
+    public async Task<Usuario> BuscarUsuarioAsync(Usuario usuario)
+    { 
+        if (usuario.Login != null && usuario.Senha != null)
+            return await _dbContext.Usuarios
+                .AsSingleQuery()
+                    .Include(x => x.PermissoesUsuarios)
+                    .ThenInclude(p => p.Permissao)
+                    .Where(
+                        x => x.Login.ToLower() == usuario.Login.ToLower()
+                        && x.Senha == usuario.Senha
+                    )
+                    .FirstOrDefaultAsync();
+
+        else if (usuario.Id != default)
+            return await _dbContext.Usuarios
+                .Where(x => x.Email == usuario.Email)
+                .FirstOrDefaultAsync();
+
+        else    
+            return await _dbContext.Usuarios.FindAsync(usuario.Id);
+
+        
     }
 
     public async Task<Usuario> VerificaUsuario(string login, string senha)

@@ -2,9 +2,9 @@ namespace Data.Repositories
 {
     public class PermissaoUsuarioRepository : IPermissaoUsuarioRepository
     {
-        private readonly AppDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public PermissaoUsuarioRepository(AppDbContext dbContext)
+        public PermissaoUsuarioRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
