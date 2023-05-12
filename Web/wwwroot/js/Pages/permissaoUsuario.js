@@ -12,28 +12,22 @@ var permissaoUsuario = (() => {
 
     var permitidos = [];
 
-    var fnBuscar = (form, url) => {
-        if ($('#nomeUsuario').val()) {
-            var model = $('#nomeUsuario').val();
-
-            $.get(configs.urls[url], {nome: model}).done((html) => {
-                $(`#${form}`).html(html);
+    var mostrarPermissoesUsuario = (model, url, partialView) => {
+            $.get(configs.urls[url], $(`#${model}`).serializeObject()).done((html) => {
+                $(`#${partialView}`).html(html);
+                site.toast.success('Acoes encontradas com sucesso');
+            }).fail((msg) => {
+                site.toast.error(msg);
             });
-        }
     };
 
-    var fnBuscarGet = (form, url) => {
-        $.get(configs.urls[url]).done((html) => {
-            $(`#${form}`).html(html);
-        });
-    };
-
-    var fnSubmitar = (form, url) => {
+    var alterarPermissoesUsuario = (url) => {
         var model = {
             permitidos: permitidos
         };
+
         $.post(configs.urls[url], model).done(() => {
-            location.href = configs.urls.index;
+            location.reload();
         });
     };
 
@@ -50,22 +44,10 @@ var permissaoUsuario = (() => {
         permitidos.push(permissao);
     }
 
-    var fnDandara = (form, url) => {
-        if ($('#nomeUsuario').val()) {
-            var model = $('#formBuscaUsuario').serializeObject();
-            console.log(model)
-            $.get(configs.urls[url], model).done((html) => {
-                $(`#${form}`).html(html);
-            });
-        }
-    };
-
     return {
         init: init,
-        fnBuscarGet: fnBuscarGet,
-        fnSubmitar: fnSubmitar,
+        alterarPermissoesUsuario: alterarPermissoesUsuario,
         addPermissao: addPermissao,
-        fnDandara: fnDandara,
-        fnBuscar: fnBuscar
+        mostrarPermissoesUsuario: mostrarPermissoesUsuario
     };
 })();

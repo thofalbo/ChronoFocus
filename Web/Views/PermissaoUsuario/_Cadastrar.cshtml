@@ -5,7 +5,7 @@
 
 <form id="formEditarPermissoes">
     <div class="accordion" id="acoesAccordion">
-        @foreach (var controlador in Model.Select(a => a.Controlador).Distinct())
+        @foreach (var controlador in Model.Select(x => x.Controlador).Distinct())
         {
             <div class="accordion-item">
                 <h2 class="accordion-header" id="header_@controlador">
@@ -15,12 +15,11 @@
                 </h2>
                 <div id="collapse_@controlador" class="accordion-collapse collapse" aria-labelledby="header_@controlador" data-bs-parent="#acoesAccordion">
                     <div class="accordion-body">
-                        @foreach (var permissao in Model.Where(a => a.Controlador == controlador))
+                        @foreach (var permissao in Model.Where(x => x.Controlador == controlador))
                         {
                             <div class="form-check">
                                     <input class="form-check-input" type="checkbox" asp-for="@permissao.TemPermissao" onclick="permissaoUsuario.addPermissao('@permissao.IdPermissao', '@permissao.IdUsuario', this.checked)" />
-                                    <label class="form-check-label ms-2" asp-for="@permissao.Descricao">@permissao.Descricao</label>
-                                    <input type="hidden" asp-for="@permissao.IdPermissao" />
+                                    <label class="form-check-label ms-2" >@permissao.Descricao</label>
                             </div>
                         }
                     </div>
@@ -28,5 +27,5 @@
             </div>
         }
     </div>
-    <a class="btn btn-primary" onclick="permissaoUsuario.fnSubmitar('formEditarPermissoes', 'cadastrar')">Salvar</a>
+    <a class="btn btn-primary" onclick="permissaoUsuario.alterarPermissoesUsuario('cadastrar')">Salvar</a>
 </form>
