@@ -6,7 +6,7 @@
         <input id="nomeUsuario" asp-for="Nome" class="form-control" />
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary" onclick="permissaoUsuario.mostrarPermissoesUsuario('formBuscaUsuario', 'cadastrar', 'mostrarPermissao')">Search</button>
+        <button type="submit" class="btn btn-primary" onclick="permissaoUsuario.mostrarPermissoesUsuario('formBuscaUsuario', 'editar', 'mostrarPermissao')">Search</button>
     </div>
 </form>
 
@@ -18,7 +18,7 @@
     permissaoUsuario.init({
         urls: {
             index: '@Url.Action("inicio", "permissao-usuario")',
-            cadastrar: '@Url.Action("cadastrar", "permissao-usuario")',
+            editar: '@Url.Action("editar", "permissao-usuario")',
             buscar: '@Url.Action("buscar", "permissao-usuario")'
         }
     });

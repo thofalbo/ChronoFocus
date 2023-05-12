@@ -1,4 +1,5 @@
 
+global using Core.Helpers;
 global using Core.Interfaces;
 global using Core.Interfaces.Base;
 global using Core.Interfaces.Repositories;

@@ -37,7 +37,6 @@ namespace Web.Configurations
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             services.AddScoped<ITarefaService, TarefaService>();
-            services.AddScoped<IPermissaoUsuarioService, PermissaoUsuarioService>();
         }
     }
 }
