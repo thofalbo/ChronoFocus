@@ -20,12 +20,12 @@ namespace Data.Repositories
 
         public async Task AtualizarAsync(Tarefa tarefa)
         {
-            _dbContext.Tarefas.Update(tarefa);
-            await _dbContext.SaveChangesAsync();
-        }
-        public async Task BuscarAsync(Tarefa tarefa)
-        {
-            _dbContext.Tarefas.Add(tarefa);
+            await _dbContext.UpdateEntryAsync<Tarefa>(tarefa.Id, new {
+                Atividade = tarefa.Atividade,
+                TipoAtividade = tarefa.TipoAtividade,
+                Plataforma = tarefa.Plataforma,
+                TempoTarefa = tarefa.TempoTarefa
+            });
             await _dbContext.SaveChangesAsync();
         }
         public async Task<Tarefa> BuscarPorIdAsync(int id) => await _dbContext.Tarefas.FindAsync(id);

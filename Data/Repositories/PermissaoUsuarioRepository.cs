@@ -11,70 +11,36 @@ namespace Data.Repositories
             _notification = notification;
         }
 
-        public async Task<IEnumerable<PermissaoUsuario>> ListarAsync()
-        {
-            return await _dbContext.PermissoesUsuarios
-                .Include(p => p.Usuario)
-                .Include(p => p.Permissao)
-                .ToListAsync();
-        }
-        public async Task<IEnumerable<PermissaoUsuario>> ListarPorFuncionarioAsync(string nome)
-        {
-            return await _dbContext.PermissoesUsuarios
-                .Include(p => p.Usuario)
-                .Include(p => p.Permissao)
-                .Where(p => p.Usuario.Nome.Contains(nome))
-                .ToListAsync();
-        }
-        public async Task<bool> ListarAcoesUsuariosAsync(int idPermissao, int idUsuario)
-        {
-            return await _dbContext.PermissoesUsuarios
-                .Where(p => p.IdPermissao == idPermissao && p.IdUsuario == idUsuario)
-                .AnyAsync();
-        }
-        public async Task ExcluirPermissaoAsync(PermissaoUsuario permissao)
-        {
-            _dbContext.PermissoesUsuarios.Remove(permissao);
-            await _dbContext.SaveChangesAsync();
-        }
-        public async Task AdicionarPermissaoAsync(PermissaoUsuario permissao)
-        {
-            await _dbContext.PermissoesUsuarios.AddAsync(permissao);
-            await _dbContext.SaveChangesAsync();
-        }
-
         public async Task EditarPermissoesAsync(IEnumerable<PermissaoDto> permitidos)
         {
             var permissoesUsuario = await _dbContext.PermissoesUsuarios.ToListAsync();
 
-            var AdicionarPermissoesAsync = permitidos
-                .Where(permissao => permissao.TemPermissao && !permissoesUsuario
-                    .Any(x => x.IdUsuario == permissao.IdUsuario && x.IdPermissao == permissao.IdPermissao))
-                .Select(permissao => new PermissaoUsuario
+            var permissoesAdicionar = permitidos
+                .Where(p => p.TemPermissao && !permissoesUsuario
+                    .Any(pu => pu.IdUsuario == p.IdUsuario && pu.IdPermissao == p.IdPermissao))
+                .Select(p => new PermissaoUsuario
                 {
-                    IdPermissao = permissao.IdPermissao,
-                    IdUsuario = permissao.IdUsuario
-                })
-                .ToList();
+                    IdPermissao = p.IdPermissao,
+                    IdUsuario = p.IdUsuario
+                });
 
-            var RemoverPermissoesAsync = permitidos
-                .Where(permissao => !permissao.TemPermissao && permissoesUsuario
-                    .Any(x => x.IdUsuario == permissao.IdUsuario && x.IdPermissao == permissao.IdPermissao))
-                .Select(permissao => new PermissaoUsuario
+            var permissoesRemover = permitidos
+                .Where(p => !p.TemPermissao && permissoesUsuario
+                    .Any(pu => pu.IdUsuario == p.IdUsuario && pu.IdPermissao == p.IdPermissao))
+                .Select(p => new PermissaoUsuario
                 {
-                    IdPermissao = permissao.IdPermissao,
-                    IdUsuario = permissao.IdUsuario
-                })
-                .ToList();
+                    IdPermissao = p.IdPermissao,
+                    IdUsuario = p.IdUsuario
+                });
 
-            if (!RemoverPermissoesAsync.Any() && !AdicionarPermissoesAsync.Any())
+            if (!(permissoesRemover.Any() || permissoesAdicionar.Any()))
             {
                 _notification.Add("Nenhuma alteração feita");
                 return;
             }
 
-            _dbContext.PermissoesUsuarios.RemoveRange(RemoverPermissoesAsync);
-            await _dbContext.PermissoesUsuarios.AddRangeAsync(AdicionarPermissoesAsync);
+            _dbContext.PermissoesUsuarios.RemoveRange(permissoesRemover);
+            await _dbContext.PermissoesUsuarios.AddRangeAsync(permissoesAdicionar);
 
             await _dbContext.SaveChangesAsync();
             _notification.Add("Permissões editadas com sucesso");

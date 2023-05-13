@@ -5,7 +5,7 @@
 
 <label class="form-label mt-4"></label>
 <div class="form-floating mb-3">
-    <input id="cadastroAtividade" asp-for="Atividade"  type="text" class="form-control" placeholder="Atividade">
+    <input asp-for="Atividade" id="cadastroAtividade"  type="text" class="form-control" placeholder="Atividade">
     <label asp-for="Atividade"></label>
 </div>
 <div class="form-floating mb-3">
@@ -17,7 +17,7 @@
     <label asp-for="Plataforma"></label>
 </div>
 <div class="form-group">
-    <input id="tempoTarefa" type="hidden" asp-for="TempoTarefa" />
+    <input asp-for="TempoTarefa"  id="tempoTarefa" type="hidden" />
 </div>
 <div class="form-group">
     <input type="hidden" asp-for="DataCadastro" value="@DateTime.Now" />

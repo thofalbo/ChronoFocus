@@ -8,6 +8,8 @@ global using Core.Dto;
 global using Core.Models;
 global using Core.Settings;
 
+global using Data.Extensions;
+
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Storage;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

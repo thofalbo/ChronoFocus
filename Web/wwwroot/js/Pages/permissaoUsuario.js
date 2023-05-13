@@ -1,4 +1,4 @@
-var permissaoUsuario = (() => {
+var permissaoUsuario = (function () {
     var configs = {
         urls: {
             index: '',
@@ -6,13 +6,13 @@ var permissaoUsuario = (() => {
         },
     };
 
-    var init = ($configs) => {
+    var init = function ($configs) {
         configs = $configs;
     };
 
     var permitidos = [];
 
-    var mostrarPermissoesUsuario = (model, url, partialView) => {
+    var mostrarPermissoesUsuario = function (model, url, partialView) {
         $.get(configs.urls[url], $(`#${model}`).serializeObject()).done((html) => {
             $(`#${partialView}`).html(html);
             site.toast.success('Acoes encontradas com sucesso');
@@ -21,7 +21,7 @@ var permissaoUsuario = (() => {
         });
     };
 
-    var alterarPermissoesUsuario = (url) => {
+    var alterarPermissoesUsuario = function (url) {
         var model = {
             permitidos: permitidos
         };
@@ -36,7 +36,7 @@ var permissaoUsuario = (() => {
         });
     };
 
-    var addPermissao = (idPermissao, idUsuario, isChecked) => {
+    var addPermissao = function (idPermissao, idUsuario, isChecked) {
         var permissao = {
             IdPermissao: idPermissao,
             IdUsuario: idUsuario,

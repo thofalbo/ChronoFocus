@@ -7,37 +7,37 @@
 <h4>Tem certeza que quer excluir esta tarefa?</h4>
 <hr />
 <dl class="row">
-  <dt class="col-sm-1">
-    @Html.DisplayNameFor(Model => Model.Atividade)
-  </dt>
-  <dd class="col-sm-11">
-    @Html.DisplayFor(Model => Model.Atividade)
-  </dd>
-  <dt class="col-sm-1">
-    @Html.DisplayNameFor(Model => Model.TipoAtividade)
-  </dt>
-  <dd class="col-sm-11">
-    @Html.DisplayFor(Model => Model.TipoAtividade)
-  </dd>
-  <dt class="col-sm-1">
-    @Html.DisplayNameFor(Model => Model.Plataforma)
-  </dt>
-  <dd class="col-sm-11">
-    @Html.DisplayFor(Model => Model.Plataforma)
-  </dd>
-  <dt class="col-sm-1">
-    @Html.DisplayNameFor(Model => Model.TempoTarefa)
-  </dt>
-  <dd class="col-sm-11">
-    @Html.DisplayFor(Model => Model.TempoTarefa)
-  </dd>
+    <dt class="col-sm-1">
+        @Html.DisplayNameFor(Model => Model.Atividade)
+    </dt>
+    <dd class="col-sm-11">
+        @Html.DisplayFor(Model => Model.Atividade)
+    </dd>
+    <dt class="col-sm-1">
+        @Html.DisplayNameFor(Model => Model.TipoAtividade)
+    </dt>
+    <dd class="col-sm-11">
+        @Html.DisplayFor(Model => Model.TipoAtividade)
+    </dd>
+    <dt class="col-sm-1">
+        @Html.DisplayNameFor(Model => Model.Plataforma)
+    </dt>
+    <dd class="col-sm-11">
+        @Html.DisplayFor(Model => Model.Plataforma)
+    </dd>
+    <dt class="col-sm-1">
+        @Html.DisplayNameFor(Model => Model.TempoTarefa)
+    </dt>
+    <dd class="col-sm-11">
+        @Html.DisplayFor(Model => Model.TempoTarefa)
+    </dd>
 </dl>
-<form  id="formExcluir" onsubmit="tarefa.excluir()">
-  <input type="hidden" asp-for="Id" />
-  <input type="submit" value="Excluir" class="btn btn-danger" />
-  <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+<form id="formExcluir" onsubmit="tarefa.excluir()">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Excluir" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
 </form>
-    <script src="~/js/Pages/tarefa.js" asp-append-version="true"></script>
+<script src="~/js/Pages/tarefa.js" asp-append-version="true"></script>
 <script>
     tarefa.init({
         urls: {
