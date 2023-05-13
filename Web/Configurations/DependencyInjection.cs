@@ -30,7 +30,6 @@ namespace Web.Configurations
             services.AddScoped<Notification>();
             services.AddScoped<ApplicationDbContext>();
 
-
             services.AddScoped<IPermissaoRepository, PermissaoRepository>();
             services.AddScoped<IPermissaoUsuarioRepository, PermissaoUsuarioRepository>();
             services.AddScoped<ITarefaRepository, TarefaRepository>();

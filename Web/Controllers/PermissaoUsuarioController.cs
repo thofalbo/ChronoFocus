@@ -31,35 +31,18 @@ namespace Web.Controllers
                 
             var usuario = await _usuarioRepository.BuscarUsuarioAsync(usuarioViewModel.Nome);
 
-            var permissoes = await _permissaoRepository.ListarAsync(usuario.Id);
+            var permissoes = await _permissaoRepository.BuscarPermissoesPorUsuarioAsync(usuario.Id);
+
+            if (!permissoes.Any())
+                return BadRequest(string.Join(", ", _notification.Get()));
 
             return View("_Editar", permissoes);
         }
 
         [HttpPost("editar")]
-        public async Task<IActionResult> EditarPermissaoUsuarioAsync(PermissoesViewModel permissoes)
+        public async Task<IActionResult> EditarPermissaoUsuarioAsync(IEnumerable<PermissaoDto> permitidos)
         {
-            if (!permissoes.IsValid(_notification))
-                return Ok(string.Join(", ", _notification.Get()));
-
-            var permitidos = new List<PermissaoUsuario>();
-            var negados = new List<PermissaoUsuario>();
-
-            foreach (var permissao in permissoes.Permitidos)
-            {
-                var usuario = new PermissaoUsuario
-                    {
-                        IdPermissao = permissao.IdPermissao,
-                        IdUsuario = permissao.IdUsuario
-                    };
-
-                if (permissao.TemPermissao)
-                    permitidos.Add(usuario);
-                else
-                    negados.Add(usuario);
-            }
-
-            await _permissaoUsuarioRepository.EditarPermissoesAsync(permitidos, negados);
+            await _permissaoUsuarioRepository.EditarPermissoesAsync(permitidos);
 
             return Ok(string.Join(", ", _notification.Get()));
         }

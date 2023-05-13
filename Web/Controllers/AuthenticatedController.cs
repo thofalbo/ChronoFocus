@@ -4,7 +4,6 @@ namespace Web.Controllers
     {
         protected int IdUsuarioLogado { get; set; }
         protected string[] Rotas { get; set; }
-        protected string Rota { get; set; }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
@@ -17,18 +16,9 @@ namespace Web.Controllers
             {
                 IdUsuarioLogado = TokenService.IdUsuarioLogado(jwtToken);
                 Rotas = TokenService.BuscaPermissoes(jwtToken, 2).Split(',');
-                Rota = Request.Path.Value;
 
-                var temRota = 0;
-                foreach (var rota in Rotas)
-                {
-                    if (Rota.StartsWith(rota))
-                        temRota++;
-                }
-
-                if (temRota == 0)
+                if (!Rotas.Any(rota => Request.Path.Value.StartsWith(rota)))
                     context.Result = new RedirectResult("/Home/Error");
-
             }
 
             if (context.HttpContext.Response.StatusCode == 200)

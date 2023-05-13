@@ -9,7 +9,7 @@ namespace Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<PermissaoDto>> ListarAsync(int id)
+        public async Task<IEnumerable<PermissaoDto>> BuscarPermissoesPorUsuarioAsync(int id)
         {
             return await _dbContext.Permissoes
                 .Include(ac => ac.PermissoesUsuarios)

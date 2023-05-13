@@ -43,25 +43,31 @@ namespace Data.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task EditarPermissoesAsync(IEnumerable<PermissaoUsuario> permitidos, IEnumerable<PermissaoUsuario> negados)
+        public async Task EditarPermissoesAsync(IEnumerable<PermissaoDto> permitidos)
         {
-            var AdicionarPermissoesAsync = new List<PermissaoUsuario>();
-            var RemoverPermissoesAsync = new List<PermissaoUsuario>();
+            var permissoesUsuario = await _dbContext.PermissoesUsuarios.ToListAsync();
 
-            var permissoesUsuario = await _dbContext.PermissoesUsuarios
-                .Where(x => x.IdUsuario == permitidos.Select(x => x.IdUsuario).FirstOrDefault()
-                    || x.IdUsuario == negados.Select(x => x.IdUsuario).FirstOrDefault())
-                .ToListAsync();
+            var AdicionarPermissoesAsync = permitidos
+                .Where(permissao => permissao.TemPermissao && !permissoesUsuario
+                    .Any(x => x.IdUsuario == permissao.IdUsuario && x.IdPermissao == permissao.IdPermissao))
+                .Select(permissao => new PermissaoUsuario
+                {
+                    IdPermissao = permissao.IdPermissao,
+                    IdUsuario = permissao.IdUsuario
+                })
+                .ToList();
 
-            foreach (var permissao in negados)
-                if (permissoesUsuario.Any(p => p.IdPermissao == permissao.IdPermissao))
-                    RemoverPermissoesAsync.Add(permissao);
+            var RemoverPermissoesAsync = permitidos
+                .Where(permissao => !permissao.TemPermissao && permissoesUsuario
+                    .Any(x => x.IdUsuario == permissao.IdUsuario && x.IdPermissao == permissao.IdPermissao))
+                .Select(permissao => new PermissaoUsuario
+                {
+                    IdPermissao = permissao.IdPermissao,
+                    IdUsuario = permissao.IdUsuario
+                })
+                .ToList();
 
-            foreach (var permissao in permitidos)
-                if (!permissoesUsuario.Any(p => p.IdPermissao == permissao.IdPermissao))
-                    AdicionarPermissoesAsync.Add(permissao);
-
-            if (RemoverPermissoesAsync.Count() == 0 && AdicionarPermissoesAsync.Count() == 0)
+            if (!RemoverPermissoesAsync.Any() && !AdicionarPermissoesAsync.Any())
             {
                 _notification.Add("Nenhuma alteração feita");
                 return;

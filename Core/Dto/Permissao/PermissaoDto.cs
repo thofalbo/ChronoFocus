@@ -1,3 +1,5 @@
+using Core.Helpers;
+
 namespace Core.Dto
 {
     public class PermissaoDto
@@ -7,6 +9,5 @@ namespace Core.Dto
         public string Controlador { get; set; }
         public string Descricao { get; set; }
         public bool TemPermissao { get; set; }
-
     }
 }
